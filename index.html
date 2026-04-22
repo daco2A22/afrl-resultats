@@ -419,7 +419,12 @@ const STATUS_DOT = {done:'dot-done',live:'dot-live',upcoming:''};
 // ══════════════════════════════════════
 function getImgUrl(path){
   const cloudName = localStorage.getItem('afrl_cloudname') || 'doxgg82iy';
-  const publicId = path.replace('images/','afrl/').replace('.png','').replace('.jpg','');
+  // path = "images/general/classement_general.png"
+  // → public_id = "afrl/general/classement_general"
+  const publicId = path
+    .replace('images/', 'afrl/')
+    .replace(/\.png$/i, '')
+    .replace(/\.jpg$/i, '');
   return `https://res.cloudinary.com/${cloudName}/image/upload/${publicId}.png`;
 }
 

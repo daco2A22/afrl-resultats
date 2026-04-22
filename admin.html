@@ -451,8 +451,10 @@ async function doUpload(){
 
   if(!cloudName || !preset || !currentFile || !semaine || !type) return;
 
-  // Nom du fichier public_id = images/semaine/type
-  const publicId = `afrl/${semaine}/${type}`;
+  // Nom du fichier public_id = afrl/semaine/type
+  // On force "general" sans accent
+  const folder = semaine === 'general' ? 'general' : semaine;
+  const publicId = `afrl/${folder}/${type}`;
 
   // UI
   const btn = document.getElementById('uploadBtn');
