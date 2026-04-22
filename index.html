@@ -326,7 +326,85 @@ const ALL_WEEKS = [
   },
 ];
 
+const CLASSES_DONE = ['s01','s02']; // semaines avec résultats par classe
 
+// ══════════════════════════════════════
+// CLASSES
+// ══════════════════════════════════════
+const CLASSES = [
+  {name:'Rally2 / R5',drivers:[
+    {pos:1,nom:'ABS Rallye',voiture:'Skoda Fabia RS Rally2',pts:117},
+    {pos:2,nom:'nicoN2s',voiture:'Skoda Fabia RS Rally2',pts:51},
+    {pos:3,nom:'Lefevre Alonso',voiture:'Hyundai i20 N Rally2',pts:33},
+    {pos:4,nom:'Ylan SULPICE',voiture:'Skoda Fabia RS Rally2',pts:7},
+    {pos:5,nom:'Maxou',voiture:'Hyundai i20 N Rally2',pts:7},
+  ]},
+  {name:'Super 2000',drivers:[
+    {pos:1,nom:'Daco2A',voiture:'Peugeot 207 S2000 Evolution Plus',pts:105},
+    {pos:2,nom:'jojopallone',voiture:'Skoda Fabia S2000 Evo 2',pts:84},
+    {pos:3,nom:'juliendu06',voiture:'Peugeot 207 S2000 Evolution Plus',pts:71},
+    {pos:4,nom:'nathan_thegoat',voiture:'Peugeot 207 S2000 Evolution Plus',pts:51},
+    {pos:5,nom:'las2picque',voiture:'Peugeot 207 S2000 Evolution Plus',pts:30},
+  ]},
+  {name:'RGT',drivers:[
+    {pos:1,nom:'ArnoRallye84_Art',voiture:'Porsche 911 GT3 RS (2010) RGT',pts:105},
+    {pos:2,nom:'Kev_VR46',voiture:'Porsche 911 GT3 RS (2007) RGT',pts:72},
+  ]},
+  {name:'Rally3',drivers:[
+    {pos:1,nom:'fclna',voiture:'Renault Clio Rally3',pts:89},
+    {pos:2,nom:'Ludovic BERTAINA',voiture:'Renault Clio Rally3',pts:60},
+    {pos:3,nom:'rallye06',voiture:'Renault Clio Rally3',pts:46},
+    {pos:4,nom:'Fiftar',voiture:'Renault Clio Rally3',pts:39},
+    {pos:5,nom:'Flo62',voiture:'Renault Clio Rally3',pts:18},
+  ]},
+  {name:'A8',drivers:[
+    {pos:1,nom:'Nicolcpm',voiture:'Ford Escort Mk V RS Cosworth GrpA',pts:117},
+    {pos:2,nom:'Team-Vrac',voiture:'Toyota Celica 2000GT(ST185) GrpA',pts:68},
+    {pos:3,nom:'Eyygo',voiture:'Subaru Impreza GC8 555 GrpA',pts:66},
+    {pos:4,nom:'Gostair',voiture:'BMW M3 E30 GrpA',pts:51},
+    {pos:5,nom:'Gabriel31',voiture:'Ford Escort Mk V RS Cosworth GrpA',pts:15},
+  ]},
+  {name:'N4',drivers:[{pos:1,nom:'Ludo08',voiture:'Mitsubishi Lancer Evo IX N4',pts:45}]},
+  {name:'R4',drivers:[
+    {pos:1,nom:'fangio62',voiture:'Mitsubishi Lancer Evo IX R4',pts:69},
+    {pos:2,nom:'Skyzo66',voiture:'Mitsubishi Lancer Evo IX R4',pts:54},
+    {pos:3,nom:'Vad',voiture:'Mitsubishi Lancer Evo X R4',pts:45},
+  ]},
+  {name:'Rally4',drivers:[
+    {pos:1,nom:'jo_e60',voiture:'Peugeot 208 Rally4',pts:63},
+    {pos:2,nom:'gglaspi11',voiture:'Peugeot 208 Rally4',pts:31},
+    {pos:3,nom:'JeremyRaylix',voiture:'Peugeot 208 Rally4',pts:30},
+    {pos:4,nom:'Ludo-Troch_ART',voiture:'Peugeot 208 Rally4',pts:30},
+    {pos:5,nom:'Loulou',voiture:'Peugeot 208 Rally4',pts:12},
+  ]},
+  {name:'R3',drivers:[
+    {pos:1,nom:'ymer07',voiture:'Citroën DS3 R3-MAX',pts:132},
+    {pos:2,nom:'SEB1515',voiture:'Renault Clio III R3',pts:69},
+    {pos:3,nom:'Janko23',voiture:'Renault Clio III R3',pts:57},
+  ]},
+  {name:'Super 1600',drivers:[]},
+  {name:'R2',drivers:[
+    {pos:1,nom:'Daalen',voiture:'Peugeot 208 R2',pts:84},
+    {pos:2,nom:'Teuzzza',voiture:'Peugeot 208 R2',pts:45},
+    {pos:3,nom:'Miam',voiture:'Peugeot 208 R2',pts:12},
+  ]},
+  {name:'A7',drivers:[
+    {pos:1,nom:'clio16s74',voiture:'Renault Clio 16S Williams GrpA',pts:87},
+    {pos:2,nom:'Remi RABELLE',voiture:'VW Golf II GTI 16V GrpA',pts:57},
+    {pos:3,nom:'lcracing',voiture:'Renault Clio 16S Williams GrpA',pts:9},
+  ]},
+  {name:'A6',drivers:[
+    {pos:1,nom:'Jonathan FRADA',voiture:'Peugeot 106 Rallye S20 GrpA',pts:30},
+    {pos:2,nom:'maxence laborie',voiture:'Peugeot 106 Rallye S20 GrpA',pts:27},
+    {pos:3,nom:'LudoRallySim',voiture:'Peugeot 106 Rallye S20 GrpA',pts:15},
+  ]},
+  {name:'Rally5',drivers:[
+    {pos:1,nom:'lejean',voiture:'Renault Clio Rally5',pts:135},
+    {pos:2,nom:'VBR_Yug88',voiture:'Renault Clio Rally5',pts:24},
+    {pos:3,nom:'MOMOMERMILLOD',voiture:'Renault Clio Rally5',pts:12},
+  ]},
+  {name:'R1',drivers:[]},
+];
 
 // ══════════════════════════════════════
 // BUILD
@@ -335,10 +413,24 @@ const STATUS_STAG = {done:'stag-done',live:'stag-live',upcoming:'stag-upcoming'}
 const STATUS_LABEL = {done:'Terminé',live:'En cours',upcoming:'À venir'};
 const STATUS_DOT = {done:'dot-done',live:'dot-live',upcoming:''};
 
+// ══════════════════════════════════════
+// CLOUDINARY — charge les images depuis Cloudinary
+// Si pas dispo → placeholder
+// ══════════════════════════════════════
+function getImgUrl(path){
+  const cloudName = localStorage.getItem('afrl_cloudname') || 'doxgg82iy';
+  const publicId = path.replace('images/','afrl/').replace('.png','').replace('.jpg','');
+  return `https://res.cloudinary.com/${cloudName}/image/upload/${publicId}.png`;
+}
+
 function mkCard(c){
-  return `<div class="card" onclick="openLB('${c.img}','${c.label}')">
+  const src = getImgUrl(c.img);
+  return `<div class="card" onclick="openLB('${src}','${c.label}')">
     <div class="card-head"><span class="card-label">${c.label}</span><span class="card-chip ${c.chip}">${c.chipLabel}</span></div>
-    <div class="card-img"><div class="placeholder"><span>🏁</span><span>Image à ajouter</span></div></div>
+    <div class="card-img">
+      <img src="${src}" alt="${c.label}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" style="width:100%;height:100%;object-fit:cover;" />
+      <div class="placeholder" style="display:none"><span>🏁</span><span>Image à ajouter</span></div>
+    </div>
     <div class="card-foot"><span class="card-date">${c.date||''}</span><span class="card-cta">Agrandir →</span></div>
   </div>`;
 }

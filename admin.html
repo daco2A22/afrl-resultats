@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AFRL — Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --bg:#06080f;--surface:#0d1220;--surface2:#111827;
+      --border:rgba(255,255,255,0.07);--accent:#e8192c;
+      --accent3:#3b82f6;--text:#f0f4ff;--muted:#6b7a99;
+      --gold:#fbbf24;--green:#4ade80;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-height:100vh;}
+    body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(232,25,44,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(232,25,44,0.025) 1px,transparent 1px);background-size:44px 44px;pointer-events:none;z-index:0;}
+
+    /* ── LOGIN ── */
+    .login-wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:100;background:var(--bg);}
+    .login-box{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:6px;padding:2.5rem;width:100%;max-width:380px;text-align:center;}
+    .login-logo{height:40px;margin-bottom:1.5rem;}
+    .login-title{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem;}
+    .login-input{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'Exo 2',sans-serif;font-size:.9rem;padding:.75rem 1rem;border-radius:4px;margin-bottom:1rem;outline:none;transition:border-color .2s;}
+    .login-input:focus{border-color:var(--accent);}
+    .login-btn{width:100%;background:var(--accent);color:#fff;border:none;font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.75rem;border-radius:4px;cursor:pointer;transition:background .2s;}
+    .login-btn:hover{background:#c8111f;}
+    .login-error{color:var(--accent);font-size:.78rem;margin-top:.5rem;display:none;}
+
+    /* ── HEADER ── */
+    header{position:relative;z-index:20;background:rgba(6,8,15,0.97);border-bottom:1px solid var(--border);}
+    .header-inner{max-width:1100px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:64px;}
+    .header-logo{height:36px;}
+    .header-right{display:flex;align-items:center;gap:1rem;}
+    .admin-badge{font-family:'Rajdhani',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.15em;background:var(--accent);color:#fff;padding:3px 9px;border-radius:2px;text-transform:uppercase;}
+    .logout-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:3px;cursor:pointer;transition:all .2s;}
+    .logout-btn:hover{color:var(--text);border-color:rgba(255,255,255,.2);}
+
+    /* ── MAIN ── */
+    .admin-wrap{display:none;flex-direction:column;min-height:100vh;}
+    .admin-wrap.visible{display:flex;}
+    main{position:relative;z-index:5;max-width:1100px;margin:0 auto;padding:2rem 1.5rem;width:100%;}
+
+    /* ── PAGE TITLE ── */
+    .page-title{font-family:'Rajdhani',sans-serif;font-size:1.5rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem;}
+    .page-sub{font-size:.82rem;color:var(--muted);margin-bottom:2rem;}
+
+    /* ── UPLOAD CARD ── */
+    .upload-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1.5rem;}
+    .upload-card-head{background:#0a0e1a;padding:.75rem 1.2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.75rem;}
+    .upload-card-title{font-family:'Rajdhani',sans-serif;font-size:.9rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;}
+    .upload-card-body{padding:1.5rem;}
+
+    /* ── FORM GRID ── */
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem;}
+    .form-group{display:flex;flex-direction:column;gap:.4rem;}
+    .form-label{font-family:'Rajdhani',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+    .form-select,.form-input{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'Exo 2',sans-serif;font-size:.85rem;padding:.6rem .9rem;border-radius:4px;outline:none;transition:border-color .2s;width:100%;}
+    .form-select:focus,.form-input:focus{border-color:var(--accent);}
+    .form-select option{background:var(--surface2);}
+
+    /* ── DROP ZONE ── */
+    .drop-zone{border:2px dashed rgba(232,25,44,.3);border-radius:6px;padding:2.5rem;text-align:center;transition:all .25s;cursor:pointer;background:rgba(232,25,44,.02);}
+    .drop-zone:hover,.drop-zone.dragover{border-color:var(--accent);background:rgba(232,25,44,.05);}
+    .drop-icon{font-size:2.5rem;opacity:.3;margin-bottom:.75rem;}
+    .drop-text{font-family:'Rajdhani',sans-serif;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;}
+    .drop-sub{font-size:.75rem;color:var(--muted);opacity:.6;}
+    .drop-input{display:none;}
+
+    /* ── PREVIEW ── */
+    .preview-wrap{display:none;margin-top:1rem;position:relative;}
+    .preview-wrap img{width:100%;max-height:300px;object-fit:contain;border-radius:4px;border:1px solid var(--border);background:var(--surface2);}
+    .preview-name{font-size:.75rem;color:var(--muted);margin-top:.4rem;text-align:center;}
+    .preview-remove{position:absolute;top:.5rem;right:.5rem;background:var(--accent);border:none;color:#fff;width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center;}
+
+    /* ── UPLOAD BTN ── */
+    .upload-btn{background:var(--accent);color:#fff;border:none;font-family:'Rajdhani',sans-serif;font-size:.95rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.75rem 2rem;border-radius:4px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.5rem;margin-top:1.2rem;}
+    .upload-btn:hover{background:#c8111f;}
+    .upload-btn:disabled{background:var(--muted);cursor:not-allowed;}
+    .upload-btn .spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+
+    /* ── PROGRESS ── */
+    .progress-bar{height:4px;background:var(--surface2);border-radius:2px;margin-top:1rem;overflow:hidden;display:none;}
+    .progress-fill{height:100%;background:var(--accent);border-radius:2px;width:0%;transition:width .3s;}
+
+    /* ── TOAST ── */
+    .toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:.9rem 1.2rem;display:flex;align-items:center;gap:.75rem;z-index:200;transform:translateY(100px);opacity:0;transition:all .3s;max-width:340px;}
+    .toast.show{transform:translateY(0);opacity:1;}
+    .toast.success{border-left:3px solid var(--green);}
+    .toast.error{border-left:3px solid var(--accent);}
+    .toast-icon{font-size:1.2rem;}
+    .toast-msg{font-size:.83rem;line-height:1.4;}
+    .toast-title{font-family:'Rajdhani',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.06em;}
+
+    /* ── HISTORY ── */
+    .history-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.75rem;margin-top:.5rem;}
+    .history-item{background:var(--surface2);border:1px solid var(--border);border-radius:4px;overflow:hidden;position:relative;}
+    .history-img{width:100%;aspect-ratio:16/9;object-fit:cover;}
+    .history-info{padding:.4rem .6rem;}
+    .history-slot{font-family:'Rajdhani',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);}
+    .history-name{font-size:.7rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .history-del{position:absolute;top:.3rem;right:.3rem;background:rgba(232,25,44,.8);border:none;color:#fff;width:20px;height:20px;border-radius:50%;cursor:pointer;font-size:.65rem;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;}
+    .history-item:hover .history-del{opacity:1;}
+
+    /* ── CLOUDINARY CONFIG ── */
+    .config-note{background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.2);border-radius:4px;padding:1rem 1.2rem;font-size:.8rem;color:var(--muted);line-height:1.6;margin-bottom:1.5rem;}
+    .config-note strong{color:var(--text);}
+    .config-note code{background:rgba(255,255,255,.07);padding:1px 5px;border-radius:2px;font-size:.78rem;color:var(--accent3);}
+
+    /* ── BACK LINK ── */
+    .back-link{display:inline-flex;align-items:center;gap:.4rem;font-family:'Rajdhani',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;margin-bottom:1.5rem;}
+    .back-link:hover{color:var(--text);}
+
+    @media(max-width:600px){.form-grid{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+
+<!-- ── LOGIN ── -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <img src="afrl_logo.png" alt="AFRL" class="login-logo" />
+    <div class="login-title">Panneau Admin</div>
+    <input type="password" class="login-input" id="loginInput" placeholder="Mot de passe admin" onkeydown="if(event.key==='Enter')doLogin()" />
+    <button class="login-btn" onclick="doLogin()">Se connecter</button>
+    <div class="login-error" id="loginError">Mot de passe incorrect</div>
+  </div>
+</div>
+
+<!-- ── ADMIN ── -->
+<div class="admin-wrap" id="adminWrap">
+
+  <header>
+    <div class="header-inner">
+      <img src="afrl_logo.png" alt="AFRL" class="header-logo" />
+      <div class="header-right">
+        <span class="admin-badge">Admin</span>
+        <button class="logout-btn" onclick="doLogout()">Déconnexion</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <a href="index.html" class="back-link">← Retour au site</a>
+
+    <div class="page-title">Gestion des images</div>
+    <div class="page-sub">Uploade tes PNG directement ici — ils apparaissent instantanément sur le site.</div>
+
+    <!-- Config Cloudinary -->
+    <div class="config-note">
+      <strong>Configuration Cloudinary</strong> — Renseigne tes identifiants ci-dessous. Ils sont sauvegardés localement dans ton navigateur.<br/>
+      Trouve-les sur <strong>cloudinary.com → Dashboard</strong> : <code>Cloud name</code>, <code>API Key</code> et <code>Upload preset</code> (non signé).
+    </div>
+
+    <div class="upload-card">
+      <div class="upload-card-head">
+        <span class="upload-card-title">⚙️ Connexion Cloudinary</span>
+      </div>
+      <div class="upload-card-body">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Cloud Name</label>
+            <input class="form-input" id="cfCloudName" placeholder="ex: dxyz123abc" oninput="saveConfig()" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Upload Preset (non signé)</label>
+            <input class="form-input" id="cfPreset" placeholder="ex: afrl_unsigned" oninput="saveConfig()" />
+          </div>
+        </div>
+        <div style="font-size:.75rem;color:var(--muted);">
+          💡 Dans Cloudinary → Settings → Upload → <strong>Add upload preset</strong> → mode <strong>Unsigned</strong> → copie le nom ici.
+        </div>
+      </div>
+    </div>
+
+    <!-- Upload -->
+    <div class="upload-card">
+      <div class="upload-card-head">
+        <span class="upload-card-title">📤 Uploader une image</span>
+      </div>
+      <div class="upload-card-body">
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Semaine</label>
+            <select class="form-select" id="selSemaine" onchange="updateTypeOptions()">
+              <option value="">-- Choisir --</option>
+              <option value="general">🏆 Général Saison</option>
+              <optgroup label="──────────────"></optgroup>
+              <option value="s01">S01 — Centre Alsace & Faverge</option>
+              <option value="s02">S02 — Pays du Gier & Neufchâtel</option>
+              <option value="s03">S03 — Autocourse & Balcon Vercors</option>
+              <option value="s04">S04 — Lys & Coteaux du Layon</option>
+              <option value="s05">S05 — Bassin Annonéen & Cœur de Lion</option>
+              <option value="s06">S06 — Val d'Agout & Beaufortain</option>
+              <option value="s07">S07 — Pays de Seyssel & Val d'Orain</option>
+              <option value="s08">S08 — Val d'Ance & Lochois</option>
+              <option value="s09">S09 — Tréport & Clain</option>
+              <option value="s10">S10 — Nice Jean Behra & Vienne et Glane</option>
+              <option value="s11">S11 — Bornes & Sidobre</option>
+              <option value="s12">S12 — Vins de Chinon & Sauveterre</option>
+              <option value="s13">S13 — Saint-Marcellin & Côte Roannaise</option>
+              <option value="s14">S14 — Bourgogne & Le Mans</option>
+              <option value="s15">S15 — Saintonge & Bagnols-les-Bains</option>
+              <option value="s16">S16 — Montagne Noire & Plaine</option>
+              <option value="s17">S17 — Fourmies & Gap Racing</option>
+              <option value="s18">S18 — Autun & Florival</option>
+              <option value="s19">S19 — Basse Normandie & Sel</option>
+              <option value="s20">S20 — Pays Saint-Affricain & Vallées</option>
+              <option value="s21">S21 — Basse Normandie & Sel</option>
+              <option value="s22">S22 — Pays Saint-Affricain & Vallées</option>
+              <option value="s23">S23 — Pays Basque & Chartreuse</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Type d'image</label>
+            <select class="form-select" id="selType">
+              <option value="">-- Choisir la semaine d'abord --</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Drop zone -->
+        <div class="drop-zone" id="dropZone"
+          ondragover="event.preventDefault();this.classList.add('dragover')"
+          ondragleave="this.classList.remove('dragover')"
+          ondrop="handleDrop(event)"
+          onclick="document.getElementById('fileInput').click()">
+          <div class="drop-icon">🖼️</div>
+          <div class="drop-text">Glisse ton PNG ici</div>
+          <div class="drop-sub">ou clique pour sélectionner</div>
+          <input type="file" id="fileInput" class="drop-input" accept="image/png,image/jpeg" onchange="handleFile(this.files[0])" />
+        </div>
+
+        <div class="preview-wrap" id="previewWrap">
+          <img id="previewImg" src="" alt="preview" />
+          <div class="preview-name" id="previewName"></div>
+          <button class="preview-remove" onclick="clearPreview()">✕</button>
+        </div>
+
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <button class="upload-btn" id="uploadBtn" onclick="doUpload()" disabled>
+          <div class="spinner" id="spinner"></div>
+          <span id="uploadBtnText">📤 Uploader</span>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Historique -->
+    <div class="upload-card">
+      <div class="upload-card-head">
+        <span class="upload-card-title">🗂️ Images uploadées</span>
+      </div>
+      <div class="upload-card-body">
+        <div class="history-grid" id="historyGrid">
+          <div style="color:var(--muted);font-size:.8rem;grid-column:1/-1;">Aucune image uploadée pour l'instant.</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span class="toast-icon" id="toastIcon"></span>
+  <div><div class="toast-title" id="toastTitle"></div><div class="toast-msg" id="toastMsg"></div></div>
+</div>
+
+<script>
+// ══════════════════════════════════════
+// CONFIG — change le mot de passe ici
+// ══════════════════════════════════════
+const ADMIN_PASSWORD = 'afrl2026';
+
+// ══════════════════════════════════════
+// Types d'images disponibles par contexte
+// ══════════════════════════════════════
+const TYPES_GENERAL = [
+  {value:'classement_general',    label:'Classement Général Saison'},
+  {value:'general_classe',        label:'Général par Classe Saison'},
+  {value:'classe_rally2_r5',      label:'Classe Rally2/R5'},
+  {value:'classe_super_2000',     label:'Classe Super 2000'},
+  {value:'classe_rgt',            label:'Classe RGT'},
+  {value:'classe_rally3',         label:'Classe Rally3'},
+  {value:'classe_a8',             label:'Classe A8'},
+  {value:'classe_n4',             label:'Classe N4'},
+  {value:'classe_r4',             label:'Classe R4'},
+  {value:'classe_rally4',         label:'Classe Rally4'},
+  {value:'classe_r3',             label:'Classe R3'},
+  {value:'classe_r2',             label:'Classe R2'},
+  {value:'classe_a7',             label:'Classe A7'},
+  {value:'classe_a6',             label:'Classe A6'},
+  {value:'classe_rally5',         label:'Classe Rally5'},
+  {value:'classe_r1',             label:'Classe R1'},
+];
+
+const TYPES_SEMAINE = [
+  {value:'s{n}_r1_general',      label:'🔵 Général — Rallye Nationale (R1)'},
+  {value:'r1_general_classe',    label:'🔵 Général par Classe — R1 Nationale'},
+  {value:'s{n}_r2_general',      label:'🔴 Général — Rallye Régionale (R2)'},
+  {value:'r2_general_classe',    label:'🔴 Général par Classe — R2 Régionale'},
+  {value:'general',              label:'🏆 Classement Général Semaine'},
+  {value:'general_classe',       label:'📊 Général par Classe Semaine'},
+  {value:'r1_classe_rally2_r5',  label:'🔵 Classe Rally2/R5 — R1'},
+  {value:'r1_classe_super_2000', label:'🔵 Classe Super 2000 — R1'},
+  {value:'r1_classe_rgt',        label:'🔵 Classe RGT — R1'},
+  {value:'r1_classe_rally3',     label:'🔵 Classe Rally3 — R1'},
+  {value:'r1_classe_a8',         label:'🔵 Classe A8 — R1'},
+  {value:'r1_classe_n4',         label:'🔵 Classe N4 — R1'},
+  {value:'r1_classe_r4',         label:'🔵 Classe R4 — R1'},
+  {value:'r1_classe_rally4',     label:'🔵 Classe Rally4 — R1'},
+  {value:'r1_classe_r3',         label:'🔵 Classe R3 — R1'},
+  {value:'r1_classe_r2',         label:'🔵 Classe R2 — R1'},
+  {value:'r1_classe_a7',         label:'🔵 Classe A7 — R1'},
+  {value:'r1_classe_a6',         label:'🔵 Classe A6 — R1'},
+  {value:'r1_classe_rally5',     label:'🔵 Classe Rally5 — R1'},
+  {value:'r2_classe_rally2_r5',  label:'🔴 Classe Rally2/R5 — R2'},
+  {value:'r2_classe_super_2000', label:'🔴 Classe Super 2000 — R2'},
+  {value:'r2_classe_rgt',        label:'🔴 Classe RGT — R2'},
+  {value:'r2_classe_rally3',     label:'🔴 Classe Rally3 — R2'},
+  {value:'r2_classe_a8',         label:'🔴 Classe A8 — R2'},
+  {value:'r2_classe_n4',         label:'🔴 Classe N4 — R2'},
+  {value:'r2_classe_r4',         label:'🔴 Classe R4 — R2'},
+  {value:'r2_classe_rally4',     label:'🔴 Classe Rally4 — R2'},
+  {value:'r2_classe_r3',         label:'🔴 Classe R3 — R2'},
+  {value:'r2_classe_r2',         label:'🔴 Classe R2 — R2'},
+  {value:'r2_classe_a7',         label:'🔴 Classe A7 — R2'},
+  {value:'r2_classe_a6',         label:'🔴 Classe A6 — R2'},
+  {value:'r2_classe_rally5',     label:'🔴 Classe Rally5 — R2'},
+];
+
+// ══════════════════════════════════════
+// LOGIN
+// ══════════════════════════════════════
+function doLogin(){
+  const val = document.getElementById('loginInput').value;
+  if(val === ADMIN_PASSWORD){
+    sessionStorage.setItem('afrl_admin', '1');
+    document.getElementById('loginWrap').style.display = 'none';
+    document.getElementById('adminWrap').classList.add('visible');
+    loadConfig();
+    loadHistory();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+    document.getElementById('loginInput').value = '';
+  }
+}
+
+function doLogout(){
+  sessionStorage.removeItem('afrl_admin');
+  location.reload();
+}
+
+// Auto-login si déjà connecté dans la session
+if(sessionStorage.getItem('afrl_admin')){
+  document.getElementById('loginWrap').style.display = 'none';
+  document.getElementById('adminWrap').classList.add('visible');
+  loadConfig();
+  loadHistory();
+}
+
+// ══════════════════════════════════════
+// CONFIG CLOUDINARY (sauvée en localStorage)
+// ══════════════════════════════════════
+function saveConfig(){
+  localStorage.setItem('afrl_cloudname', document.getElementById('cfCloudName').value);
+  localStorage.setItem('afrl_preset', document.getElementById('cfPreset').value);
+}
+
+function loadConfig(){
+  document.getElementById('cfCloudName').value = localStorage.getItem('afrl_cloudname') || 'doxgg82iy';
+  document.getElementById('cfPreset').value    = localStorage.getItem('afrl_preset') || 'afrl_upload';
+  // Sauvegarder direct si pas encore en localStorage
+  if(!localStorage.getItem('afrl_cloudname')) localStorage.setItem('afrl_cloudname','doxgg82iy');
+  if(!localStorage.getItem('afrl_preset'))    localStorage.setItem('afrl_preset','afrl_upload');
+}
+
+// ══════════════════════════════════════
+// TYPE SELECT
+// ══════════════════════════════════════
+function updateTypeOptions(){
+  const sem = document.getElementById('selSemaine').value;
+  const sel = document.getElementById('selType');
+  sel.innerHTML = '';
+  if(!sem){ sel.innerHTML = '<option value="">-- Choisir la semaine d\'abord --</option>'; return; }
+
+  const types = sem === 'general' ? TYPES_GENERAL : TYPES_SEMAINE;
+  types.forEach(t=>{
+    const val = t.value.replace('{n}', sem); // remplace s{n} par le vrai id
+    const opt = document.createElement('option');
+    opt.value = val;
+    opt.textContent = t.label;
+    sel.appendChild(opt);
+  });
+  checkReady();
+}
+
+// ══════════════════════════════════════
+// FILE HANDLING
+// ══════════════════════════════════════
+let currentFile = null;
+
+function handleDrop(e){
+  e.preventDefault();
+  document.getElementById('dropZone').classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if(file) handleFile(file);
+}
+
+function handleFile(file){
+  if(!file) return;
+  currentFile = file;
+  const url = URL.createObjectURL(file);
+  document.getElementById('previewImg').src = url;
+  document.getElementById('previewName').textContent = file.name;
+  document.getElementById('previewWrap').style.display = 'block';
+  checkReady();
+}
+
+function clearPreview(){
+  currentFile = null;
+  document.getElementById('previewWrap').style.display = 'none';
+  document.getElementById('previewImg').src = '';
+  document.getElementById('fileInput').value = '';
+  checkReady();
+}
+
+function checkReady(){
+  const ready = currentFile &&
+    document.getElementById('selSemaine').value &&
+    document.getElementById('selType').value &&
+    document.getElementById('cfCloudName').value &&
+    document.getElementById('cfPreset').value;
+  document.getElementById('uploadBtn').disabled = !ready;
+}
+
+// ══════════════════════════════════════
+// UPLOAD CLOUDINARY
+// ══════════════════════════════════════
+async function doUpload(){
+  const cloudName = document.getElementById('cfCloudName').value.trim();
+  const preset    = document.getElementById('cfPreset').value.trim();
+  const semaine   = document.getElementById('selSemaine').value;
+  const type      = document.getElementById('selType').value;
+
+  if(!cloudName || !preset || !currentFile || !semaine || !type) return;
+
+  // Nom du fichier public_id = images/semaine/type
+  const publicId = `afrl/${semaine}/${type}`;
+
+  // UI
+  const btn = document.getElementById('uploadBtn');
+  btn.disabled = true;
+  document.getElementById('spinner').style.display = 'block';
+  document.getElementById('uploadBtnText').textContent = 'Upload en cours...';
+  document.getElementById('progressBar').style.display = 'block';
+  document.getElementById('progressFill').style.width = '0%';
+
+  try {
+    const formData = new FormData();
+    formData.append('file', currentFile);
+    formData.append('upload_preset', preset);
+    formData.append('public_id', publicId);
+    formData.append('overwrite', 'true');
+
+    // Simuler progression
+    let prog = 0;
+    const progInterval = setInterval(()=>{
+      prog = Math.min(prog + 8, 85);
+      document.getElementById('progressFill').style.width = prog + '%';
+    }, 150);
+
+    const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+      method: 'POST',
+      body: formData
+    });
+
+    clearInterval(progInterval);
+    document.getElementById('progressFill').style.width = '100%';
+
+    if(!res.ok) throw new Error(`Erreur ${res.status}`);
+    const data = await res.json();
+
+    // Sauvegarder dans l'historique
+    saveHistory({
+      url: data.secure_url,
+      slot: `${semaine}/${type}`,
+      name: currentFile.name,
+      date: new Date().toLocaleDateString('fr-FR')
+    });
+
+    showToast('success', '✅ Image uploadée !', `${semaine}/${type} mis à jour sur le site.`);
+    clearPreview();
+    loadHistory();
+
+  } catch(err){
+    showToast('error', '❌ Erreur', err.message);
+  } finally {
+    btn.disabled = false;
+    document.getElementById('spinner').style.display = 'none';
+    document.getElementById('uploadBtnText').textContent = '📤 Uploader';
+    setTimeout(()=>{
+      document.getElementById('progressBar').style.display = 'none';
+      document.getElementById('progressFill').style.width = '0%';
+    }, 1500);
+    checkReady();
+  }
+}
+
+// ══════════════════════════════════════
+// HISTORIQUE
+// ══════════════════════════════════════
+function saveHistory(item){
+  const hist = JSON.parse(localStorage.getItem('afrl_history') || '[]');
+  hist.unshift(item);
+  if(hist.length > 50) hist.pop();
+  localStorage.setItem('afrl_history', JSON.stringify(hist));
+}
+
+function loadHistory(){
+  const hist = JSON.parse(localStorage.getItem('afrl_history') || '[]');
+  const g = document.getElementById('historyGrid');
+  if(hist.length === 0){
+    g.innerHTML = '<div style="color:var(--muted);font-size:.8rem;grid-column:1/-1;">Aucune image uploadée pour l\'instant.</div>';
+    return;
+  }
+  g.innerHTML = hist.map((h,i)=>`
+    <div class="history-item">
+      <img class="history-img" src="${h.url}" alt="${h.slot}" />
+      <div class="history-info">
+        <div class="history-slot">${h.slot}</div>
+        <div class="history-name">${h.name}</div>
+        <div class="history-name">${h.date}</div>
+      </div>
+      <button class="history-del" onclick="deleteHistory(${i})">✕</button>
+    </div>`).join('');
+}
+
+function deleteHistory(idx){
+  const hist = JSON.parse(localStorage.getItem('afrl_history') || '[]');
+  hist.splice(idx, 1);
+  localStorage.setItem('afrl_history', JSON.stringify(hist));
+  loadHistory();
+}
+
+// ══════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════
+let toastTimer;
+function showToast(type, title, msg){
+  const t = document.getElementById('toast');
+  document.getElementById('toastTitle').textContent = title;
+  document.getElementById('toastMsg').textContent = msg;
+  t.className = `toast ${type} show`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>{ t.classList.remove('show'); }, 4000);
+}
+</script>
+</body>
+</html>
