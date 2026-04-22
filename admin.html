@@ -467,7 +467,7 @@ async function doUpload(){
     formData.append('file', currentFile);
     formData.append('upload_preset', preset);
     formData.append('public_id', publicId);
-    formData.append('overwrite', 'true');
+    // Note: overwrite non supporté en mode non signé
 
     // Simuler progression
     let prog = 0;
