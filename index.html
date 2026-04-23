@@ -789,6 +789,48 @@ loadVersions().then(()=>{
   buildClasses();
   buildCalendar();
 });
+
+// ══════════════════════════════════════
+// AUTO-REFRESH — vérifie JSONbin toutes les 10s
+// Met à jour uniquement les images modifiées
+// sans recharger la page
+// ══════════════════════════════════════
+setInterval(async ()=>{
+  try {
+    const r = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, {
+      headers:{'X-Master-Key': JSONBIN_KEY}
+    });
+    const d = await r.json();
+    const newVersions = d.record.versions || {};
+
+    // Comparer avec les versions actuelles
+    let changed = false;
+    Object.keys(newVersions).forEach(publicId => {
+      if(newVersions[publicId] !== IMG_VERSIONS[publicId]){
+        changed = true;
+        IMG_VERSIONS[publicId] = newVersions[publicId];
+        // Mettre à jour toutes les images avec ce publicId
+        const cloudName = 'doxgg82iy';
+        const newUrl = `https://res.cloudinary.com/${cloudName}/image/upload/v${newVersions[publicId]}/${publicId}.png`;
+        document.querySelectorAll(`img[src*="${publicId}"]`).forEach(img => {
+          img.src = newUrl;
+          img.closest('.card').style.display = '';
+        });
+      }
+    });
+
+    // Vérifier les images supprimées
+    Object.keys(IMG_VERSIONS).forEach(publicId => {
+      if(!newVersions[publicId] && IMG_VERSIONS[publicId]){
+        delete IMG_VERSIONS[publicId];
+        document.querySelectorAll(`img[src*="${publicId}"]`).forEach(img => {
+          img.closest('.card').style.display = 'none';
+        });
+      }
+    });
+
+  } catch(e){}
+}, 10000);
 </script>
 </body>
 </html>
