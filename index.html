@@ -409,22 +409,17 @@ const STATUS_DOT = {done:'dot-done',live:'dot-live',upcoming:''};
 // Si pas dispo → placeholder
 // ══════════════════════════════════════
 // ══════════════════════════════════════
-// JSONBIN — charge les versions au démarrage
+// VERSIONS — stockées sur npoint.io (public)
 // ══════════════════════════════════════
-const JSONBIN_ID  = '69ea3fecaaba8821972da88c';
-const JSONBIN_KEY = '$2a$10$yM9onKHZGLNgnH8dbxWPPuPabLAkcBemA6iP0l5NwRI79mFTrtPh.';
-let IMG_VERSIONS  = {};
+const NPOINT_URL = 'https://api.npoint.io/0d9e981f5eb2bb67cb86';
+let IMG_VERSIONS = {};
 
 async function loadVersions(){
   try {
-    const r = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, {
-      headers:{
-        'X-Master-Key': JSONBIN_KEY,
-        'X-Bin-Meta': 'false'
-      }
-    });
+    const r = await fetch(NPOINT_URL);
+    if(!r.ok){ IMG_VERSIONS = {}; return; }
     const d = await r.json();
-    IMG_VERSIONS = d.record.versions || {};
+    IMG_VERSIONS = d.versions || {};
   } catch(e){ IMG_VERSIONS = {}; }
 }
 
@@ -730,14 +725,9 @@ loadVersions().then(()=>{
 // ══════════════════════════════════════
 setInterval(async ()=>{
   try {
-    const r = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, {
-      headers:{
-        'X-Master-Key': JSONBIN_KEY,
-        'X-Bin-Meta': 'false'
-      }
-    });
+    const r = await fetch(NPOINT_URL);
     const d = await r.json();
-    const newVersions = d.record.versions || {};
+    const newVersions = d.versions || {};
 
     // Comparer avec les versions actuelles
     Object.keys(newVersions).forEach(key => {

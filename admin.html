@@ -340,26 +340,22 @@ const TYPES_SEMAINE = [
 ];
 
 // ══════════════════════════════════════
-// JSONBIN — versions partagées
+// NPOINT — versions partagées (public)
 // ══════════════════════════════════════
-const JSONBIN_ID  = '69ea3fecaaba8821972da88c';
-const JSONBIN_KEY = '$2a$10$yM9onKHZGLNgnH8dbxWPPuPabLAkcBemA6iP0l5NwRI79mFTrtPh.';
-const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_ID}`;
+const NPOINT_URL = 'https://api.npoint.io/0d9e981f5eb2bb67cb86';
 
 async function getVersions(){
   try {
-    const r = await fetch(JSONBIN_URL+'/latest', {
-      headers:{'X-Master-Key': JSONBIN_KEY}
-    });
+    const r = await fetch(NPOINT_URL);
     const d = await r.json();
-    return d.record.versions || {};
+    return d.versions || {};
   } catch(e){ return {}; }
 }
 
 async function saveVersions(versions){
-  await fetch(JSONBIN_URL, {
-    method:'PUT',
-    headers:{'Content-Type':'application/json','X-Master-Key':JSONBIN_KEY},
+  await fetch(NPOINT_URL, {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
     body: JSON.stringify({versions})
   });
 }
