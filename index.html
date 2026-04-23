@@ -430,12 +430,15 @@ async function loadVersions(){
 
 function getImgUrl(path){
   const cloudName = 'doxgg82iy';
-  const publicId = path
-    .replace('images/', 'afrl/')
+  const key = path
+    .replace('images/afrl/', '')
+    .replace('images/', '')
     .replace(/\.png$/i, '')
     .replace(/\.jpg$/i, '');
-  const v = IMG_VERSIONS[publicId] ? `/v${IMG_VERSIONS[publicId]}` : '';
-  return `https://res.cloudinary.com/${cloudName}/image/upload${v}/${publicId}.png`;
+  // Si on a l'URL complète dans JSONbin → l'utiliser directement
+  if(IMG_VERSIONS[key]) return IMG_VERSIONS[key];
+  // Sinon fallback Cloudinary classique
+  return `https://res.cloudinary.com/${cloudName}/image/upload/afrl/${key}.png`;
 }
 
 function mkCard(c){
@@ -737,27 +740,37 @@ setInterval(async ()=>{
     const newVersions = d.record.versions || {};
 
     // Comparer avec les versions actuelles
-    let changed = false;
-    Object.keys(newVersions).forEach(publicId => {
-      if(newVersions[publicId] !== IMG_VERSIONS[publicId]){
-        changed = true;
-        IMG_VERSIONS[publicId] = newVersions[publicId];
-        // Mettre à jour toutes les images avec ce publicId
-        const cloudName = 'doxgg82iy';
-        const newUrl = `https://res.cloudinary.com/${cloudName}/image/upload/v${newVersions[publicId]}/${publicId}.png`;
-        document.querySelectorAll(`img[src*="${publicId}"]`).forEach(img => {
-          img.src = newUrl;
-          img.closest('.card').style.display = '';
+    Object.keys(newVersions).forEach(key => {
+      if(newVersions[key] !== IMG_VERSIONS[key]){
+        IMG_VERSIONS[key] = newVersions[key];
+        // Mettre à jour toutes les images avec cette clé
+        document.querySelectorAll('img').forEach(img => {
+          const imgKey = img.src
+            .replace(/.*afrl\//, '')
+            .replace(/\.png.*$/, '')
+            .replace(/_\d{13}$/, ''); // enlever timestamp
+          if(imgKey === key){
+            img.src = newVersions[key];
+            const card = img.closest('.card');
+            if(card) card.style.display = '';
+          }
         });
       }
     });
 
     // Vérifier les images supprimées
-    Object.keys(IMG_VERSIONS).forEach(publicId => {
-      if(!newVersions[publicId] && IMG_VERSIONS[publicId]){
-        delete IMG_VERSIONS[publicId];
-        document.querySelectorAll(`img[src*="${publicId}"]`).forEach(img => {
-          img.closest('.card').style.display = 'none';
+    Object.keys(IMG_VERSIONS).forEach(key => {
+      if(!newVersions[key]){
+        delete IMG_VERSIONS[key];
+        document.querySelectorAll('img').forEach(img => {
+          const imgKey = img.src
+            .replace(/.*afrl\//, '')
+            .replace(/\.png.*$/, '')
+            .replace(/_\d{13}$/, '');
+          if(imgKey === key){
+            const card = img.closest('.card');
+            if(card) card.style.display = 'none';
+          }
         });
       }
     });

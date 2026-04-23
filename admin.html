@@ -479,7 +479,8 @@ async function doUpload(){
   // Nom du fichier public_id = afrl/semaine/type
   // On force "general" sans accent
   const folder = semaine === 'general' ? 'general' : semaine;
-  const publicId = `afrl/${folder}/${type}`;
+  const ts = Date.now();
+  const publicId = `afrl/${folder}/${type}_${ts}`;
 
   // UI
   const btn = document.getElementById('uploadBtn');
@@ -514,9 +515,9 @@ async function doUpload(){
     if(!res.ok) throw new Error(`Erreur ${res.status}`);
     const data = await res.json();
 
-    // Mettre à jour JSONbin avec la nouvelle version
+    // Mettre à jour JSONbin avec l'URL complète
     const versions = await getVersions();
-    versions[publicId] = data.version;
+    versions[`${folder}/${type}`] = data.secure_url;
     await saveVersions(versions);
 
     // Sauvegarder dans l'historique
@@ -580,11 +581,11 @@ async function deleteHistory(idx){
   const hist = JSON.parse(localStorage.getItem('afrl_history') || '[]');
   const item = hist[idx];
 
-  // Supprimer la version dans JSONbin pour que le site ne charge plus l'image
-  if(item && item.publicId){
+  // Supprimer dans JSONbin avec la clé semaine/type
+  if(item && item.slot){
     try {
       const versions = await getVersions();
-      delete versions[item.publicId];
+      delete versions[item.slot];
       await saveVersions(versions);
     } catch(e){}
   }
