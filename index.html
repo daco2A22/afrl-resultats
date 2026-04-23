@@ -177,18 +177,7 @@
 
   <div class="panel active" id="panel-general">
     <div class="sec-title">Classement Général Saison <span class="stag stag-live">En cours</span></div>
-    <div class="results-grid">
-      <div class="card" onclick="openLB('images/general/classement_general.png','Classement Général Saison')">
-        <div class="card-head"><span class="card-label">Classement Général</span><span class="card-chip chip-general">Général</span></div>
-        <div class="card-img"><div class="placeholder"><span>🏆</span><span>Image à ajouter</span></div></div>
-        <div class="card-foot"><span class="card-date">Saison 2026</span><span class="card-cta">Agrandir →</span></div>
-      </div>
-      <div class="card" onclick="openLB('images/general/general_classe.png','Général par Classe — Saison')">
-        <div class="card-head"><span class="card-label">Général par Classe</span><span class="card-chip chip-genclasse">Gén. Classe</span></div>
-        <div class="card-img"><div class="placeholder"><span>📊</span><span>Image à ajouter</span></div></div>
-        <div class="card-foot"><span class="card-date">Saison 2026</span><span class="card-cta">Agrandir →</span></div>
-      </div>
-    </div>
+    <div class="results-grid" id="generalGrid"></div>
   </div>
 
   <div class="panel" id="panel-classes">
@@ -418,7 +407,6 @@ const STATUS_DOT = {done:'dot-done',live:'dot-live',upcoming:''};
 // Si pas dispo → placeholder
 // ══════════════════════════════════════
 function getImgUrl(path){
-  // Cloud name Cloudinary hardcodé
   const cloudName = 'doxgg82iy';
   const publicId = path
     .replace('images/', 'afrl/')
@@ -760,6 +748,16 @@ function decoupeClasses(img){
   });
 }
 
+function buildGeneral(){
+  const g = document.getElementById('generalGrid');
+  const cards = [
+    {label:'Classement Général',chip:'chip-general',chipLabel:'Général',img:'images/general/classement_general.png',date:'Saison 2026'},
+    {label:'Général par Classe',chip:'chip-genclasse',chipLabel:'Gén. Classe',img:'images/general/general_classe.png',date:'Saison 2026'},
+  ];
+  g.innerHTML = cards.map(mkCard).join('');
+}
+
+buildGeneral();
 buildNav();
 buildWeekPanels();
 buildClasses();
