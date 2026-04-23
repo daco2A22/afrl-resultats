@@ -418,7 +418,10 @@ let IMG_VERSIONS  = {};
 async function loadVersions(){
   try {
     const r = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, {
-      headers:{'X-Master-Key': JSONBIN_KEY}
+      headers:{
+        'X-Master-Key': JSONBIN_KEY,
+        'X-Bin-Meta': 'false'
+      }
     });
     const d = await r.json();
     IMG_VERSIONS = d.record.versions || {};
@@ -673,103 +676,30 @@ const CLASSE_NAMES = [
 
 function buildClasses(){
   const g = document.getElementById('classesGrid');
-  // On génère d'abord les cartes avec canvas pour la découpe
-  CLASSE_NAMES.forEach((name, idx)=>{
-    const canvasId = `canvas_classe_${idx}`;
-    g.innerHTML += `
-      <div class="card card-classe" onclick="openLB('images/general/general_classe.png','Classe ${name}')" id="card_classe_${idx}">
-        <div class="card-head">
-          <span class="card-label">${name}</span>
-          <span class="card-chip chip-classe">Classe</span>
-        </div>
-        <div class="card-img" id="cardimg_${idx}">
-          <canvas id="${canvasId}" style="width:100%;display:none;"></canvas>
-          <div class="placeholder" id="placeholder_${idx}"><span>🏁</span><span>Image à ajouter</span></div>
-        </div>
-        <div class="card-foot"><span class="card-date">Saison 2026</span><span class="card-cta">Agrandir →</span></div>
-      </div>`;
-  });
-
-  // Charger le PNG complet et découper automatiquement
-  const src = 'images/general/general_classe.png';
-  const img = new Image();
-  img.crossOrigin = 'anonymous';
-  img.onload = () => decoupeClasses(img);
-  img.onerror = () => {}; // image pas encore dispo → placeholders restent
-  img.src = src;
-}
-
-function decoupeClasses(img){
-  // 1. Dessiner l'image entière dans un canvas off-screen
-  const offCanvas = document.createElement('canvas');
-  offCanvas.width = img.naturalWidth;
-  offCanvas.height = img.naturalHeight;
-  const ctx = offCanvas.getContext('2d');
-  ctx.drawImage(img, 0, 0);
-
-  const W = img.naturalWidth;
-  const H = img.naturalHeight;
-  const data = ctx.getImageData(0, 0, W, H).data;
-
-  // 2. Détecter les lignes "séparateur" = lignes dont la couleur de fond
-  //    est distincte du contenu (ligne presque uniforme et foncée/colorée)
-  //    On cherche les bandes horizontales qui changent de teinte brusquement
-  const rowColors = [];
-  for(let y = 0; y < H; y++){
-    // Prendre la couleur du pixel tout à gauche (fond)
-    const i = y * W * 4;
-    rowColors.push([data[i], data[i+1], data[i+2]]);
-  }
-
-  // Trouver les zones de chaque classe : on cherche des bandes colorées
-  // (les headers de classe sont rouges/orange dans le PNG AFRL)
-  // On coupe à chaque fois que la couleur rouge domine sur une ligne
-  const cuts = [0];
-  let prevIsHeader = false;
-  for(let y = 1; y < H; y++){
-    const [r,g,b] = rowColors[y];
-    // Header rouge AFRL : rouge dominant, assez saturé
-    const isHeader = r > 150 && r > g * 1.8 && r > b * 1.8;
-    if(isHeader && !prevIsHeader && y > 10){
-      cuts.push(y);
-    }
-    prevIsHeader = isHeader;
-  }
-  cuts.push(H);
-
-  // 3. On a cuts.length-1 sections, on les associe aux classes
-  const sections = [];
-  for(let i = 0; i < cuts.length - 1; i++){
-    sections.push({ y: cuts[i], h: cuts[i+1] - cuts[i] });
-  }
-
-  // 4. Dessiner chaque section dans son canvas de carte
-  // On ignore la première section si c'est un header global
-  const validSections = sections.filter(s => s.h > 20);
-
-  CLASSE_NAMES.forEach((name, idx)=>{
-    const section = validSections[idx];
-    if(!section) return;
-
-    const canvas = document.getElementById(`canvas_classe_${idx}`);
-    if(!canvas) return;
-
-    canvas.width = W;
-    canvas.height = section.h;
-    const cCtx = canvas.getContext('2d');
-    cCtx.drawImage(offCanvas, 0, section.y, W, section.h, 0, 0, W, section.h);
-
-    // Afficher le canvas, cacher le placeholder
-    canvas.style.display = 'block';
-    const ph = document.getElementById(`placeholder_${idx}`);
-    if(ph) ph.style.display = 'none';
-
-    // Clic sur la carte → ouvrir l'image complète
-    const card = document.getElementById(`card_classe_${idx}`);
-    if(card){
-      card.onclick = () => openLB('images/general/general_classe.png', `Classe ${name}`);
-    }
-  });
+  const CLASSE_KEYS = [
+    {label:'Rally2 / R5', key:'rally2_r5'},
+    {label:'Super 2000',  key:'super_2000'},
+    {label:'RGT',         key:'rgt'},
+    {label:'Rally3',      key:'rally3'},
+    {label:'A8',          key:'a8'},
+    {label:'N4',          key:'n4'},
+    {label:'R4',          key:'r4'},
+    {label:'Rally4',      key:'rally4'},
+    {label:'R3',          key:'r3'},
+    {label:'Super 1600',  key:'super_1600'},
+    {label:'R2',          key:'r2'},
+    {label:'A7',          key:'a7'},
+    {label:'A6',          key:'a6'},
+    {label:'Rally5',      key:'rally5'},
+    {label:'R1',          key:'r1'},
+  ];
+  g.innerHTML = CLASSE_KEYS.map(c => mkCard({
+    label: c.label,
+    chip: 'chip-classe',
+    chipLabel: 'Classe',
+    img: `images/general/classe_${c.key}.png`,
+    date: 'Saison 2026'
+  })).join('');
 }
 
 function buildGeneral(){
@@ -798,7 +728,10 @@ loadVersions().then(()=>{
 setInterval(async ()=>{
   try {
     const r = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, {
-      headers:{'X-Master-Key': JSONBIN_KEY}
+      headers:{
+        'X-Master-Key': JSONBIN_KEY,
+        'X-Bin-Meta': 'false'
+      }
     });
     const d = await r.json();
     const newVersions = d.record.versions || {};
