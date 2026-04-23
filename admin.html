@@ -340,24 +340,48 @@ const TYPES_SEMAINE = [
 ];
 
 // ══════════════════════════════════════
-// NPOINT — versions partagées (public)
+// GITHUB API — versions.json dans le repo
 // ══════════════════════════════════════
-const NPOINT_URL = 'https://api.npoint.io/0d9e981f5eb2bb67cb86';
+const GH_TOKEN  = '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';
+const GH_REPO   = 'daco2A22/afrl-resultats';
+const GH_FILE   = 'versions.json';
+const GH_API    = `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`;
 
 async function getVersions(){
   try {
-    const r = await fetch(NPOINT_URL);
+    const r = await fetch(GH_API, {
+      headers:{'Authorization':`token ${GH_TOKEN}`,'Accept':'application/vnd.github.v3+json'}
+    });
+    if(!r.ok) return {};
     const d = await r.json();
-    return d.versions || {};
+    const content = JSON.parse(atob(d.content.replace(/\n/g,'')));
+    return content.versions || {};
   } catch(e){ return {}; }
 }
 
 async function saveVersions(versions){
-  await fetch(NPOINT_URL, {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({versions})
-  });
+  try {
+    // Récupérer le SHA actuel du fichier
+    let sha = '';
+    const r = await fetch(GH_API, {
+      headers:{'Authorization':`token ${GH_TOKEN}`,'Accept':'application/vnd.github.v3+json'}
+    });
+    if(r.ok){
+      const d = await r.json();
+      sha = d.sha;
+    }
+    // Mettre à jour le fichier
+    const content = btoa(JSON.stringify({versions}, null, 2));
+    await fetch(GH_API, {
+      method:'PUT',
+      headers:{'Authorization':`token ${GH_TOKEN}`,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},
+      body: JSON.stringify({
+        message:'Update versions.json',
+        content,
+        sha: sha || undefined
+      })
+    });
+  } catch(e){ console.error('saveVersions error', e); }
 }
 function doLogin(){
   const val = document.getElementById('loginInput').value;

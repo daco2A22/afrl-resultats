@@ -409,14 +409,14 @@ const STATUS_DOT = {done:'dot-done',live:'dot-live',upcoming:''};
 // Si pas dispo → placeholder
 // ══════════════════════════════════════
 // ══════════════════════════════════════
-// VERSIONS — stockées sur npoint.io (public)
+// VERSIONS — lues depuis GitHub (public)
 // ══════════════════════════════════════
-const NPOINT_URL = 'https://api.npoint.io/0d9e981f5eb2bb67cb86';
+const VERSIONS_URL = 'https://raw.githubusercontent.com/daco2A22/afrl-resultats/main/versions.json';
 let IMG_VERSIONS = {};
 
 async function loadVersions(){
   try {
-    const r = await fetch(NPOINT_URL);
+    const r = await fetch(VERSIONS_URL + '?t=' + Date.now());
     if(!r.ok){ IMG_VERSIONS = {}; return; }
     const d = await r.json();
     IMG_VERSIONS = d.versions || {};
@@ -725,7 +725,7 @@ loadVersions().then(()=>{
 // ══════════════════════════════════════
 setInterval(async ()=>{
   try {
-    const r = await fetch(NPOINT_URL);
+    const r = await fetch(VERSIONS_URL + '?t=' + Date.now());
     const d = await r.json();
     const newVersions = d.versions || {};
 
