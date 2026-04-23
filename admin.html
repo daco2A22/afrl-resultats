@@ -301,9 +301,9 @@ const TYPES_GENERAL = [
 ];
 
 const TYPES_SEMAINE = [
-  {value:'s{n}_r1_general',      label:'🔵 Général — Rallye Nationale (R1)'},
+  {value:'{id}_r1_general',      label:'🔵 Général — Rallye Nationale (R1)'},
   {value:'r1_general_classe',    label:'🔵 Général par Classe — R1 Nationale'},
-  {value:'s{n}_r2_general',      label:'🔴 Général — Rallye Régionale (R2)'},
+  {value:'{id}_r2_general',      label:'🔴 Général — Rallye Régionale (R2)'},
   {value:'r2_general_classe',    label:'🔴 Général par Classe — R2 Régionale'},
   {value:'general',              label:'🏆 Classement Général Semaine'},
   {value:'general_classe',       label:'📊 Général par Classe Semaine'},
@@ -392,7 +392,7 @@ function updateTypeOptions(){
 
   const types = sem === 'general' ? TYPES_GENERAL : TYPES_SEMAINE;
   types.forEach(t=>{
-    const val = t.value.replace('{n}', sem); // remplace s{n} par le vrai id
+    const val = t.value.replace('{id}', sem); // ex: s01_r1_general
     const opt = document.createElement('option');
     opt.value = val;
     opt.textContent = t.label;
@@ -502,7 +502,7 @@ async function doUpload(){
     loadHistory();
 
   } catch(err){
-    showToast('error', '❌ Erreur', err.message);
+    showToast('error', '❌ Erreur', err.message + ' — Si l\'image existe déjà sur Cloudinary, supprime-la d\'abord puis re-uploade.');
   } finally {
     btn.disabled = false;
     document.getElementById('spinner').style.display = 'none';
