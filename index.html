@@ -406,13 +406,31 @@ const STATUS_DOT = {done:'dot-done',live:'dot-live',upcoming:''};
 // CLOUDINARY — charge les images depuis Cloudinary
 // Si pas dispo → placeholder
 // ══════════════════════════════════════
+// ══════════════════════════════════════
+// JSONBIN — charge les versions au démarrage
+// ══════════════════════════════════════
+const JSONBIN_ID  = '69ea3fecaaba8821972da88c';
+const JSONBIN_KEY = '$2a$10$yM9onKHZGLNgnH8dbxWPPuPabLAkcBemA6iP0l5NwRI79mFTrtPh.';
+let IMG_VERSIONS  = {};
+
+async function loadVersions(){
+  try {
+    const r = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, {
+      headers:{'X-Master-Key': JSONBIN_KEY}
+    });
+    const d = await r.json();
+    IMG_VERSIONS = d.record.versions || {};
+  } catch(e){ IMG_VERSIONS = {}; }
+}
+
 function getImgUrl(path){
   const cloudName = 'doxgg82iy';
   const publicId = path
     .replace('images/', 'afrl/')
     .replace(/\.png$/i, '')
     .replace(/\.jpg$/i, '');
-  return `https://res.cloudinary.com/${cloudName}/image/upload/${publicId}.png`;
+  const v = IMG_VERSIONS[publicId] ? `/v${IMG_VERSIONS[publicId]}` : '';
+  return `https://res.cloudinary.com/${cloudName}/image/upload${v}/${publicId}.png`;
 }
 
 function mkCard(c){
@@ -757,11 +775,14 @@ function buildGeneral(){
   g.innerHTML = cards.map(mkCard).join('');
 }
 
-buildGeneral();
-buildNav();
-buildWeekPanels();
-buildClasses();
-buildCalendar();
+// Charger les versions depuis JSONbin puis construire le site
+loadVersions().then(()=>{
+  buildGeneral();
+  buildNav();
+  buildWeekPanels();
+  buildClasses();
+  buildCalendar();
+});
 </script>
 </body>
 </html>

@@ -336,8 +336,29 @@ const TYPES_SEMAINE = [
 ];
 
 // ══════════════════════════════════════
-// LOGIN
+// JSONBIN — versions partagées
 // ══════════════════════════════════════
+const JSONBIN_ID  = '69ea3fecaaba8821972da88c';
+const JSONBIN_KEY = '$2a$10$yM9onKHZGLNgnH8dbxWPPuPabLAkcBemA6iP0l5NwRI79mFTrtPh.';
+const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_ID}`;
+
+async function getVersions(){
+  try {
+    const r = await fetch(JSONBIN_URL+'/latest', {
+      headers:{'X-Master-Key': JSONBIN_KEY}
+    });
+    const d = await r.json();
+    return d.record.versions || {};
+  } catch(e){ return {}; }
+}
+
+async function saveVersions(versions){
+  await fetch(JSONBIN_URL, {
+    method:'PUT',
+    headers:{'Content-Type':'application/json','X-Master-Key':JSONBIN_KEY},
+    body: JSON.stringify({versions})
+  });
+}
 function doLogin(){
   const val = document.getElementById('loginInput').value;
   if(val === ADMIN_PASSWORD){
@@ -489,12 +510,19 @@ async function doUpload(){
     if(!res.ok) throw new Error(`Erreur ${res.status}`);
     const data = await res.json();
 
+    // Mettre à jour JSONbin avec la nouvelle version
+    const versions = await getVersions();
+    versions[publicId] = data.version;
+    await saveVersions(versions);
+
     // Sauvegarder dans l'historique
     saveHistory({
       url: data.secure_url,
       slot: `${semaine}/${type}`,
       name: currentFile.name,
-      date: new Date().toLocaleDateString('fr-FR')
+      date: new Date().toLocaleDateString('fr-FR'),
+      version: data.version,
+      publicId: publicId
     });
 
     showToast('success', '✅ Image uploadée !', `${semaine}/${type} mis à jour sur le site.`);
