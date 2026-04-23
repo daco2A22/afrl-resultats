@@ -572,11 +572,23 @@ function loadHistory(){
     </div>`).join('');
 }
 
-function deleteHistory(idx){
+async function deleteHistory(idx){
   const hist = JSON.parse(localStorage.getItem('afrl_history') || '[]');
+  const item = hist[idx];
+
+  // Supprimer la version dans JSONbin pour que le site ne charge plus l'image
+  if(item && item.publicId){
+    try {
+      const versions = await getVersions();
+      delete versions[item.publicId];
+      await saveVersions(versions);
+    } catch(e){}
+  }
+
   hist.splice(idx, 1);
   localStorage.setItem('afrl_history', JSON.stringify(hist));
   loadHistory();
+  showToast('success', '✅ Supprimé', 'Image retirée du site pour tous les visiteurs.');
 }
 
 // ══════════════════════════════════════
