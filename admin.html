@@ -438,6 +438,12 @@ async function deleteHistory(idx){
     hist.splice(idx,1);
     localStorage.setItem('afrl_history', JSON.stringify(hist));
     loadHistory();
+    // Notifier tous les onglets de la suppression
+    try {
+      const bc = new BroadcastChannel('afrl_updates');
+      bc.postMessage({key: item.slot, url: null, deleted: true});
+      bc.close();
+    } catch(e){}
     showToast('success','✅ Supprimé','Image retirée du site.');
   } catch(e){
     showToast('error','❌ Erreur', e.message);

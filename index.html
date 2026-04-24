@@ -458,19 +458,23 @@ document.addEventListener('DOMContentLoaded', ()=>{
 try {
   const bc = new BroadcastChannel('afrl_updates');
   bc.onmessage = (e)=>{
-    const {key, url} = e.data;
-    if(!key || !url) return;
-    VERSIONS[key] = url;
-    // Mettre à jour toutes les cartes avec cette clé
-    document.querySelectorAll('.card').forEach(card=>{
-      const img = card.querySelector('img');
-      if(img && img.dataset.key === key){
+    const {key, url, deleted} = e.data;
+    if(!key) return;
+    if(deleted){
+      // Supprimer l'image du site
+      delete VERSIONS[key];
+      document.querySelectorAll(`img[data-key="${key}"]`).forEach(img=>{
+        img.closest('.card').style.display = 'none';
+      });
+    } else if(url){
+      // Ajouter/mettre à jour l'image
+      VERSIONS[key] = url;
+      document.querySelectorAll(`img[data-key="${key}"]`).forEach(img=>{
         img.src = url;
-        card.style.display = '';
-      }
-    });
-    // Si la carte n'existe pas encore, reconstruire le panneau
-    rebuildPanel(key);
+        img.closest('.card').style.display = '';
+      });
+      rebuildPanel(key);
+    }
   };
 } catch(e){}
 
