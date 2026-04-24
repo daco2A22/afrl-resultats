@@ -101,6 +101,7 @@ main{max-width:1100px;margin:0 auto;padding:2rem 1.5rem;width:100%;}
     <img src="afrl_logo.png" alt="AFRL" class="login-logo"/>
     <div class="login-title">Panneau Admin</div>
     <input type="password" class="login-input" id="loginInput" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')doLogin()"/>
+    <input type="text" class="login-input" id="tokenInput" placeholder="GitHub Token (ghp_...)" style="font-size:.75rem;"/>
     <button class="login-btn" onclick="doLogin()">Se connecter</button>
     <div class="login-error" id="loginError">Mot de passe incorrect</div>
   </div>
@@ -215,10 +216,12 @@ main{max-width:1100px;margin:0 auto;padding:2rem 1.5rem;width:100%;}
 const ADMIN_PASSWORD = 'afrl2026';
 const CLOUDINARY_CLOUD  = 'doxgg82iy';
 const CLOUDINARY_PRESET = 'afrl_upload';
-const GH_TOKEN = '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';
 const GH_REPO  = 'daco2A22/afrl-resultats';
 const GH_FILE  = 'versions.json';
 const GH_API   = `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`;
+
+// Token stocké dans localStorage — jamais dans le code
+function getToken(){ return localStorage.getItem('afrl_gh_token') || ''; }
 
 // ══════════════════════════════════════
 // TYPES
@@ -253,8 +256,10 @@ function getTypesSemaine(sid){
 // LOGIN
 // ══════════════════════════════════════
 function doLogin(){
-  if(document.getElementById('loginInput').value === ADMIN_PASSWORD){
+  const token = document.getElementById('tokenInput').value.trim();
+  if(document.getElementById('loginInput').value === ADMIN_PASSWORD && token){
     sessionStorage.setItem('afrl_admin','1');
+    localStorage.setItem('afrl_gh_token', token);
     document.getElementById('loginWrap').style.display = 'none';
     document.getElementById('adminWrap').classList.add('visible');
     loadHistory();
@@ -323,7 +328,7 @@ function checkReady(){
 // GITHUB — lire/écrire versions.json
 // ══════════════════════════════════════
 async function ghRead(){
-  const r = await fetch(GH_API,{headers:{'Authorization':`token ${GH_TOKEN}`,'Accept':'application/vnd.github.v3+json'}});
+  const r = await fetch(GH_API,{headers:{'Authorization':`token ${getToken()}`,'Accept':'application/vnd.github.v3+json'}});
   if(!r.ok) return {versions:{}, sha:''};
   const d = await r.json();
   return {versions: JSON.parse(atob(d.content.replace(/\n/g,''))).versions || {}, sha: d.sha};
@@ -333,7 +338,7 @@ async function ghWrite(versions, sha){
   if(sha) body.sha = sha;
   await fetch(GH_API,{
     method:'PUT',
-    headers:{'Authorization':`token ${GH_TOKEN}`,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},
+    headers:{'Authorization':`token ${getToken()}`,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},
     body: JSON.stringify(body)
   });
 }
