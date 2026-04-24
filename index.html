@@ -1,162 +1,132 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AFRL — Résultats Coupe de France 2026</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg:#06080f; --surface:#0d1220; --surface2:#111827;
-      --border:rgba(255,255,255,0.07); --accent:#e8192c;
-      --accent3:#3b82f6; --text:#f0f4ff;
-      --muted:#6b7a99; --gold:#fbbf24; --silver:#94a3b8; --bronze:#cd7c3a;
-    }
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-height:100vh;overflow-x:hidden;}
-    body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(232,25,44,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(232,25,44,0.025) 1px,transparent 1px);background-size:44px 44px;pointer-events:none;z-index:0;}
-    /* Image de fond */
-    body::after{content:'';position:fixed;inset:0;background:url('bg.webp') center/cover no-repeat;opacity:0.07;pointer-events:none;z-index:0;}
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AFRL — Résultats Coupe de France 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#06080f;--surface:#0d1220;--surface2:#111827;
+  --border:rgba(255,255,255,0.07);--accent:#e8192c;
+  --accent3:#3b82f6;--text:#f0f4ff;--muted:#6b7a99;
+  --gold:#fbbf24;--silver:#94a3b8;--bronze:#cd7c3a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(232,25,44,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(232,25,44,0.025) 1px,transparent 1px);background-size:44px 44px;pointer-events:none;z-index:0;}
+body::after{content:'';position:fixed;inset:0;background:url('bg.webp') center/cover no-repeat;opacity:0.07;pointer-events:none;z-index:0;}
 
-    header{position:relative;z-index:20;background:rgba(6,8,15,0.97);border-bottom:1px solid var(--border);}
-    .header-inner{max-width:1300px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:64px;}
-    .logo{display:flex;align-items:center;gap:.8rem;}
-    .logo-text{font-family:'Rajdhani',sans-serif;font-size:2.1rem;font-weight:700;letter-spacing:.05em;}
-    .logo-text em{color:var(--accent);font-style:normal;}
-    .logo-badge{background:var(--accent);color:#fff;font-family:'Rajdhani',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.15em;padding:2px 7px;border-radius:2px;}
-    .header-right{font-family:'Rajdhani',sans-serif;font-size:.8rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;}
+/* HEADER */
+header{position:relative;z-index:20;background:rgba(6,8,15,0.97);border-bottom:1px solid var(--border);}
+.header-inner{max-width:1300px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:64px;}
+.header-right{font-family:'Rajdhani',sans-serif;font-size:.8rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;}
 
-    .hero{position:relative;z-index:5;text-align:center;padding:2.5rem 1rem 1.5rem;}
-    .hero-eyebrow{font-family:'Rajdhani',sans-serif;font-size:.75rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem;}
-    .hero h1{font-family:'Rajdhani',sans-serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:700;letter-spacing:.06em;text-transform:uppercase;line-height:1.1;}
-    .hero-line{width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);margin:1rem auto 0;}
+/* HERO */
+.hero{position:relative;z-index:5;text-align:center;padding:2.5rem 1rem 1.5rem;}
+.hero-eyebrow{font-family:'Rajdhani',sans-serif;font-size:.75rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem;}
+.hero h1{font-family:'Rajdhani',sans-serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:700;letter-spacing:.06em;text-transform:uppercase;line-height:1.1;}
+.hero-line{width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);margin:1rem auto 0;}
 
-    .nav-wrap{position:sticky;top:0;z-index:30;background:rgba(6,8,15,0.97);border-bottom:1px solid var(--border);}
-    .nav-scroll-wrap{position:relative;max-width:1300px;margin:0 auto;}
-    .nav-inner{padding:0 2.2rem;display:flex;gap:.1rem;overflow-x:auto;scrollbar-width:none;}
-    .nav-inner::-webkit-scrollbar{display:none;}
-    .nav-arrow{position:absolute;top:0;bottom:1px;width:2rem;display:flex;align-items:center;justify-content:center;background:linear-gradient(90deg,rgba(6,8,15,1),rgba(6,8,15,0.5));border:none;color:var(--muted);cursor:pointer;font-size:.9rem;z-index:2;transition:color .2s;}
-    .nav-arrow.right{background:linear-gradient(270deg,rgba(6,8,15,1),rgba(6,8,15,0.5));}
-    .nav-arrow:hover{color:var(--text);}
-    .nav-arrow.left{left:0;}
-    .nav-arrow.right{right:0;}
-    .tab-btn{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:.88rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:.85rem .9rem;cursor:pointer;transition:all .2s;white-space:nowrap;margin-bottom:-1px;display:flex;align-items:center;gap:.35rem;}
-    .tab-btn:hover{color:var(--text);}
-    .tab-btn.active{color:var(--text);border-bottom-color:var(--accent);}
-    .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-    .dot-done{background:#4ade80;}
-    .dot-live{background:var(--gold);animation:blink 1.2s infinite;}
-    @keyframes blink{0%,100%{opacity:1;}50%{opacity:.25;}}
+/* NAV */
+.nav-wrap{position:sticky;top:0;z-index:30;background:rgba(6,8,15,0.97);border-bottom:1px solid var(--border);}
+.nav-scroll-wrap{position:relative;max-width:1300px;margin:0 auto;}
+.nav-inner{padding:0 2.2rem;display:flex;gap:.1rem;overflow-x:auto;scrollbar-width:none;}
+.nav-inner::-webkit-scrollbar{display:none;}
+.nav-arrow{position:absolute;top:0;bottom:1px;width:2rem;display:flex;align-items:center;justify-content:center;background:rgba(6,8,15,0.97);border:none;color:var(--muted);cursor:pointer;font-size:.9rem;z-index:2;}
+.nav-arrow.left{left:0;background:linear-gradient(90deg,rgba(6,8,15,1),rgba(6,8,15,0));}
+.nav-arrow.right{right:0;background:linear-gradient(270deg,rgba(6,8,15,1),rgba(6,8,15,0));}
+.nav-arrow:hover{color:var(--text);}
+.tab-btn{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:.88rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:.85rem .9rem;cursor:pointer;transition:all .2s;white-space:nowrap;margin-bottom:-1px;display:flex;align-items:center;gap:.35rem;}
+.tab-btn:hover{color:var(--text);}
+.tab-btn.active{color:var(--text);border-bottom-color:var(--accent);}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.dot-done{background:#4ade80;}
+.dot-live{background:var(--gold);animation:blink 1.2s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.25;}}
 
-    main{position:relative;z-index:5;max-width:1300px;margin:0 auto;padding:1.5rem;}
-    .panel{display:none;}
-    .panel.active{display:block;animation:panelIn .25s ease;}
-    @keyframes panelIn{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
+/* MAIN */
+main{position:relative;z-index:5;max-width:1300px;margin:0 auto;padding:1.5rem;}
+.panel{display:none;}
+.panel.active{display:block;animation:panelIn .25s ease;}
+@keyframes panelIn{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
 
-    .sec-title{font-family:'Rajdhani',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;margin-top:1.8rem;}
-    .sec-title:first-child{margin-top:0;}
-    .sec-title::after{content:'';flex:1;height:1px;background:var(--border);}
-    .stag{padding:2px 8px;border-radius:2px;font-size:.63rem;letter-spacing:.1em;}
-    .stag-done{background:rgba(74,222,128,.12);color:#4ade80;}
-    .stag-live{background:rgba(251,191,36,.18);color:var(--gold);}
-    .stag-upcoming{background:rgba(107,122,153,.12);color:var(--muted);}
+/* SECTION TITLE */
+.sec-title{font-family:'Rajdhani',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;margin-top:1.8rem;}
+.sec-title:first-child{margin-top:0;}
+.sec-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.stag{padding:2px 8px;border-radius:2px;font-size:.63rem;letter-spacing:.1em;}
+.stag-done{background:rgba(74,222,128,.12);color:#4ade80;}
+.stag-live{background:rgba(251,191,36,.18);color:var(--gold);}
+.stag-upcoming{background:rgba(107,122,153,.12);color:var(--muted);}
 
-    .results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.85rem;}
-    .card{background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden;cursor:pointer;transition:all .22s;position:relative;}
-    .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),transparent);opacity:0;transition:opacity .22s;}
-    .card:hover{border-color:rgba(232,25,44,.3);transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.5);}
-    .card:hover::before{opacity:1;}
-    .card-head{padding:.6rem .9rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
-    .card-label{font-family:'Rajdhani',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;}
-    .card-chip{font-family:'Rajdhani',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:2px;}
-    .chip-general{background:rgba(251,191,36,.15);color:var(--gold);}
-    .chip-classe{background:rgba(59,130,246,.15);color:var(--accent3);}
-    .chip-genclasse{background:rgba(168,85,247,.15);color:#c084fc;}
-    .card-img{width:100%;aspect-ratio:16/9;background:var(--surface2);overflow:hidden;display:flex;align-items:center;justify-content:center;}
-    .card-img img{width:100%;height:100%;object-fit:cover;transition:transform .3s;}
-    .card:hover .card-img img{transform:scale(1.03);}
-    .placeholder{display:flex;flex-direction:column;align-items:center;gap:.4rem;color:var(--muted);}
-    .placeholder span:first-child{font-size:2rem;opacity:.2;}
-    .placeholder span:last-child{font-family:'Rajdhani',sans-serif;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;opacity:.3;}
-    .card-foot{padding:.5rem .9rem;display:flex;align-items:center;justify-content:space-between;}
-    .card-date{font-size:.7rem;color:var(--muted);}
-    .card-cta{font-family:'Rajdhani',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.07em;color:var(--accent);text-transform:uppercase;}
+/* CARDS */
+.results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.85rem;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden;cursor:pointer;transition:all .22s;position:relative;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),transparent);opacity:0;transition:opacity .22s;}
+.card:hover{border-color:rgba(232,25,44,.3);transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.5);}
+.card:hover::before{opacity:1;}
+.card-head{padding:.6rem .9rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
+.card-label{font-family:'Rajdhani',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;}
+.card-chip{font-family:'Rajdhani',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:2px;}
+.chip-general{background:rgba(251,191,36,.15);color:var(--gold);}
+.chip-classe{background:rgba(59,130,246,.15);color:var(--accent3);}
+.chip-genclasse{background:rgba(168,85,247,.15);color:#c084fc;}
+.card-img{width:100%;aspect-ratio:16/9;background:var(--surface2);overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.card-img img{width:100%;height:100%;object-fit:cover;}
+.card-foot{padding:.5rem .9rem;display:flex;align-items:center;justify-content:space-between;}
+.card-date{font-size:.7rem;color:var(--muted);}
+.card-cta{font-family:'Rajdhani',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.07em;color:var(--accent);text-transform:uppercase;}
 
-    /* CARTE CLASSE — grand nom comme sur l'image */
-    .card-classe .card-head{padding:.75rem 1rem;border-bottom:1px solid var(--border);}
-    .card-classe .card-label{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text);}
-    .card-classe .card-img{aspect-ratio:16/7;}
-    .classes-result-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.85rem;}
+/* CALENDAR */
+.cal-intro{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent3);border-radius:4px;padding:1rem 1.2rem;margin-bottom:1.2rem;font-size:.82rem;color:var(--muted);line-height:1.6;}
+.cal-intro strong{color:var(--text);}
+.cal-grid{display:flex;flex-direction:column;gap:.45rem;}
+.week-block{background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden;}
+.week-head{background:#0a0e1a;padding:.5rem 1rem;display:flex;align-items:center;gap:.7rem;border-bottom:1px solid var(--border);}
+.week-num{font-family:'Rajdhani',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.12em;background:var(--accent);color:#fff;padding:2px 7px;border-radius:2px;}
+.week-label{font-family:'Rajdhani',sans-serif;font-size:.8rem;font-weight:600;color:var(--text);}
+.week-status{font-family:'Rajdhani',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.1em;padding:2px 8px;border-radius:2px;margin-left:auto;}
+.ws-done{background:rgba(74,222,128,.12);color:#4ade80;}
+.ws-live{background:rgba(251,191,36,.18);color:var(--gold);}
+.ws-upcoming{background:rgba(107,122,153,.1);color:var(--muted);}
+.week-rallyes{display:grid;grid-template-columns:1fr 1fr;}
+.w-rally{padding:.6rem 1rem;display:flex;flex-direction:column;gap:.2rem;}
+.w-rally.right{border-left:1px solid var(--border);}
+.rtype{font-family:'Rajdhani',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.05rem;}
+.rtype-n{color:#60a5fa;}.rtype-r{color:#f87171;}
+.rname{font-family:'Rajdhani',sans-serif;font-size:.85rem;font-weight:600;color:var(--text);}
+.rdept{font-size:.7rem;color:var(--muted);}
 
-    /* CALENDAR */
-    .cal-intro{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent3);border-radius:4px;padding:1rem 1.2rem;margin-bottom:1.2rem;font-size:.82rem;color:var(--muted);line-height:1.6;}
-    .cal-intro strong{color:var(--text);}
-    .cal-grid{display:flex;flex-direction:column;gap:.45rem;}
-    .week-block{background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden;}
-    .week-head{background:#0a0e1a;padding:.5rem 1rem;display:flex;align-items:center;gap:.7rem;border-bottom:1px solid var(--border);}
-    .week-num{font-family:'Rajdhani',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.12em;background:var(--accent);color:#fff;padding:2px 7px;border-radius:2px;}
-    .week-label{font-family:'Rajdhani',sans-serif;font-size:.8rem;font-weight:600;color:var(--text);}
-    .week-status{font-family:'Rajdhani',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.1em;padding:2px 8px;border-radius:2px;margin-left:auto;}
-    .ws-done{background:rgba(74,222,128,.12);color:#4ade80;}
-    .ws-live{background:rgba(251,191,36,.18);color:var(--gold);}
-    .ws-upcoming{background:rgba(107,122,153,.1);color:var(--muted);}
-    .week-rallyes{display:grid;grid-template-columns:1fr 1fr;}
-    .w-rally{padding:.6rem 1rem;display:flex;flex-direction:column;gap:.2rem;}
-    .rtype{font-family:'Rajdhani',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.05rem;}
-    .rtype-n{color:#60a5fa;}.rtype-r{color:#f87171;}
-    .rname{font-family:'Rajdhani',sans-serif;font-size:.85rem;font-weight:600;color:var(--text);}
-    .rdept{font-size:.7rem;color:var(--muted);}
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:3rem;color:var(--muted);}
+.empty-state .ei{font-size:3rem;opacity:.15;margin-bottom:1rem;}
+.empty-state .et{font-family:'Rajdhani',sans-serif;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;}
 
-    /* CLASSES */
-    .classes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:1rem;}
-    .cls-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden;}
-    .cls-head{padding:.55rem 1rem;background:#0a0e1a;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.6rem;}
-    .cls-name{font-family:'Rajdhani',sans-serif;font-size:.92rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
-    .cls-count{font-family:'Rajdhani',sans-serif;font-size:.65rem;color:var(--muted);margin-left:auto;}
-    table{width:100%;border-collapse:collapse;}
-    thead th{font-family:'Rajdhani',sans-serif;font-size:.63rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:.4rem .8rem;text-align:left;border-bottom:1px solid var(--border);}
-    thead th.right{text-align:right;}
-    tbody tr{border-bottom:1px solid var(--border);transition:background .15s;}
-    tbody tr:last-child{border-bottom:none;}
-    tbody tr:hover{background:rgba(255,255,255,.025);}
-    td{padding:.42rem .8rem;font-size:.82rem;}
-    .pos-cell{display:flex;align-items:center;gap:.5rem;}
-    .pnum{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.88rem;min-width:1.3rem;}
-    .p1 .pnum{color:var(--gold);}.p2 .pnum{color:var(--silver);}.p3 .pnum{color:var(--bronze);}
-    .pts-cell{text-align:right;}
-    .pts{font-family:'Rajdhani',sans-serif;font-size:.8rem;font-weight:700;padding:1px 8px;border-radius:2px;}
-    .pts-0{background:rgba(232,25,44,.13);color:var(--accent);}
-    .pts-1{background:rgba(251,191,36,.15);color:var(--gold);}
-    .pts-2{background:rgba(148,163,184,.1);color:var(--silver);}
-    .pts-3{background:rgba(205,124,58,.15);color:var(--bronze);}
+/* LIGHTBOX */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:1000;flex-direction:column;backdrop-filter:blur(6px);}
+.lightbox.open{display:flex;}
+.lb-bar{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:.75rem 1.2rem;border-bottom:1px solid var(--border);background:rgba(6,8,15,.95);}
+.lb-title{font-family:'Rajdhani',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);}
+.lb-controls{display:flex;align-items:center;gap:.5rem;}
+.lb-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);height:28px;padding:0 10px;border-radius:3px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-size:.8rem;font-weight:600;transition:all .2s;}
+.lb-btn:hover{background:rgba(255,255,255,.1);}
+.lb-close{background:var(--surface);border:1px solid var(--border);color:var(--text);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.lb-close:hover{background:var(--accent);border-color:var(--accent);}
+.lb-scroll{flex:1;overflow:auto;display:flex;justify-content:center;padding:1.5rem 1rem;}
+.lb-img-wrap{display:inline-block;transform-origin:top center;transition:transform .15s;}
+.lb-img-wrap img{display:block;width:min(900px,90vw);border-radius:4px;border:1px solid var(--border);}
+.lb-zoom-info{font-family:'Rajdhani',sans-serif;font-size:.78rem;color:var(--muted);min-width:3.2rem;text-align:center;}
 
-    /* LIGHTBOX — scrollable + zoomable */
-    .lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:1000;flex-direction:column;backdrop-filter:blur(6px);}
-    .lightbox.open{display:flex;}
-    .lb-bar{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:.75rem 1.2rem;border-bottom:1px solid var(--border);background:rgba(6,8,15,.95);}
-    .lb-title{font-family:'Rajdhani',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);}
-    .lb-controls{display:flex;align-items:center;gap:.5rem;}
-    .lb-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);height:28px;padding:0 10px;border-radius:3px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.05em;transition:all .2s;}
-    .lb-btn:hover{background:rgba(255,255,255,.1);}
-    .lb-close{background:var(--surface);border:1px solid var(--border);color:var(--text);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:all .2s;}
-    .lb-close:hover{background:var(--accent);border-color:var(--accent);}
-    .lb-scroll{flex:1;overflow:auto;display:flex;justify-content:center;padding:1.5rem 1rem;}
-    .lb-img-wrap{display:inline-block;transform-origin:top center;transition:transform .15s;}
-    .lb-img-wrap img{display:block;width:min(900px,90vw);border-radius:4px;border:1px solid var(--border);}
-    .lb-zoom-info{font-family:'Rajdhani',sans-serif;font-size:.78rem;color:var(--muted);min-width:3.2rem;text-align:center;}
-    .empty-state{text-align:center;padding:3rem;color:var(--muted);}
-    .empty-state .ei{font-size:3rem;opacity:.15;margin-bottom:1rem;}
-    .empty-state .et{font-family:'Rajdhani',sans-serif;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;}
-    @media(max-width:640px){.week-rallyes{grid-template-columns:1fr;}.w-rally:first-child{border-right:none;border-bottom:1px solid var(--border);}.header-right{display:none;}.results-grid{grid-template-columns:1fr;}.classes-grid{grid-template-columns:1fr;}}
-  </style>
+footer{position:relative;z-index:5;text-align:center;padding:2rem;border-top:1px solid var(--border);color:var(--muted);font-size:.72rem;letter-spacing:.08em;}
+@media(max-width:640px){.week-rallyes{grid-template-columns:1fr;}.w-rally.right{border-left:none;border-top:1px solid var(--border);}.header-right{display:none;}.results-grid{grid-template-columns:1fr;}}
+</style>
 </head>
 <body>
 
 <header>
   <div class="header-inner">
-    <div class="logo">
-      <img src="afrl_logo.png" alt="AFRL" style="height:38px;width:auto;" />
-    </div>
+    <img src="afrl_logo.png" alt="AFRL" style="height:38px;width:auto;"/>
     <div class="header-right">Coupe de France 2026</div>
   </div>
 </header>
@@ -176,26 +146,18 @@
 </div>
 
 <main id="mainContent">
-
   <div class="panel active" id="panel-general">
     <div class="sec-title">Classement Général Saison <span class="stag stag-live">En cours</span></div>
     <div class="results-grid" id="generalGrid"></div>
   </div>
-
   <div class="panel" id="panel-classes">
     <div class="sec-title">Classements par Classe <span class="stag stag-live">En cours</span></div>
-    <div class="classes-result-grid" id="classesGrid"></div>
+    <div class="results-grid" id="classesGrid"></div>
   </div>
-
-  <div class="panel" id="panel-classes-dummy" style="display:none"></div>
-
   <div class="panel" id="panel-calendrier">
-    <div class="cal-intro">
-      Calendrier <strong>Coupe de France AFRL 2026</strong> — 23 semaines · <span style="color:#60a5fa">◼ Nationale</span> &nbsp;<span style="color:#f87171">◼ Régionale</span>
-    </div>
+    <div class="cal-intro">Calendrier <strong>Coupe de France AFRL 2026</strong> — 23 semaines · <span style="color:#60a5fa">◼ Nationale</span> &nbsp;<span style="color:#f87171">◼ Régionale</span></div>
     <div class="cal-grid" id="calGrid"></div>
   </div>
-
 </main>
 
 <div class="lightbox" id="lightbox">
@@ -211,7 +173,7 @@
   </div>
   <div class="lb-scroll" id="lbScroll">
     <div class="lb-img-wrap" id="lbWrap">
-      <img id="lbImg" src="" alt="" />
+      <img id="lbImg" src="" alt=""/>
     </div>
   </div>
 </div>
@@ -220,386 +182,237 @@
 
 <script>
 // ══════════════════════════════════════
-// TOUTES LES SEMAINES — S01 à S23
+// VERSIONS — GitHub raw (public)
 // ══════════════════════════════════════
-const ALL_WEEKS = [
-  { id:'s01', label:'S01', status:'done',
-    title:'S01 — Centre Alsace & Faverge',
-    rallyes:[{type:'N',name:'Centre Alsace',dept:''},{type:'R',name:'Faverge',dept:''}]
-  },
-  { id:'s02', label:'S02', status:'done',
-    title:'S02 — Pays du Gier & Neufchâtel-en-Bray',
-    rallyes:[{type:'N',name:'Pays du Gier',dept:''},{type:'R',name:'Neufchâtel-en-Bray',dept:''}]
-  },
-  { id:'s03', label:'S03', status:'live',
-    title:'S03 — Semaine 1 — 13/19 Avril',
-    rallyes:[{type:'N',name:'Rallye Autocourse',dept:'37 – Indre-et-Loire'},{type:'R',name:'Balcon Est du Vercors',dept:'38 – Isère'}]
-  },
-  { id:'s04', label:'S04', status:'upcoming',
-    title:'S04 — Semaine 2 — 13/19 Avril (suite)',
-    rallyes:[{type:'N',name:'Rallye de la Lys',dept:'62 – Pas-de-Calais'},{type:'R',name:'Coteaux du Layon',dept:'49 – Maine-et-Loire'}]
-  },
-  { id:'s05', label:'S05', status:'upcoming',
-    title:'S05 — Semaine 3 — 20/26 Avril',
-    rallyes:[{type:'N',name:'Rallye du Bassin Annonéen',dept:'07 – Ardèche'},{type:'R',name:'Rallye Cœur de Lion',dept:'27 – Eure'}]
-  },
-  { id:'s06', label:'S06', status:'upcoming',
-    title:'S06 — Semaine 4 — 27 Avr / 3 Mai',
-    rallyes:[{type:'N',name:"Rallye du Val d'Agout",dept:'81 – Tarn'},{type:'R',name:'Rallye du Beaufortain',dept:'73 – Savoie'}]
-  },
-  { id:'s07', label:'S07', status:'upcoming',
-    title:'S07 — Semaine 5 — 4/10 Mai',
-    rallyes:[{type:'N',name:'Rallye des Monts de Blond',dept:'87 – Haute-Vienne'},{type:'R',name:'Rallye des Monts de Vaucluse',dept:'84 – Vaucluse'}]
-  },
-  { id:'s08', label:'S08', status:'upcoming',
-    title:'S08 — Semaine 6 — 11/17 Mai',
-    rallyes:[{type:'N',name:'Rallye du Saint-Émilion',dept:'33 – Gironde'},{type:'R',name:'Rallye de Mézidon',dept:'14 – Calvados'}]
-  },
-  { id:'s09', label:'S09', status:'upcoming',
-    title:'S09 — Semaine 7 — 18/24 Mai',
-    rallyes:[{type:'N',name:'Rallye du Pays de Seyssel',dept:'74 – Haute-Savoie'},{type:'R',name:"Rallye du Val d'Orain",dept:'39 – Jura'}]
-  },
-  { id:'s10', label:'S10', status:'upcoming',
-    title:'S10 — Semaine 8 — 25/31 Mai',
-    rallyes:[{type:'N',name:"Rallye du Val d'Ance",dept:'43 – Haute-Loire'},{type:'R',name:'Rallye du Lochois',dept:'37 – Indre-et-Loire'}]
-  },
-  { id:'s11', label:'S11', status:'upcoming',
-    title:'S11 — Semaine 9 — 1/7 Juin',
-    rallyes:[{type:'N',name:'Rallye du Tréport',dept:'76 – Seine-Maritime'},{type:'R',name:'Rallye du Clain',dept:'86 – Vienne'}]
-  },
-  { id:'s12', label:'S12', status:'upcoming',
-    title:'S12 — Semaine 10 — 8/14 Juin',
-    rallyes:[{type:'N',name:'Rallye Nice – Jean Behra',dept:'06 – Alpes-Maritimes'},{type:'R',name:'Rallye Vienne et Glane',dept:'87 – Haute-Vienne'}]
-  },
-  { id:'s13', label:'S13', status:'upcoming',
-    title:'S13 — Semaine 11 — 15/21 Juin',
-    rallyes:[{type:'N',name:'Rallye des Bornes',dept:'74 – Haute-Savoie'},{type:'R',name:'Rallye du Sidobre',dept:'81 – Tarn'}]
-  },
-  { id:'s14', label:'S14', status:'upcoming',
-    title:'S14 — Semaine 12 — 22/28 Juin',
-    rallyes:[{type:'N',name:'Rallye des Vins de Chinon',dept:'37 – Indre-et-Loire'},{type:'R',name:'Rallye de Sauveterre',dept:'47 – Lot-et-Garonne'}]
-  },
-  { id:'s15', label:'S15', status:'upcoming',
-    title:'S15 — Semaine 13 — 29 Juin / 5 Juil',
-    rallyes:[{type:'N',name:'Rallye de Saint-Marcellin',dept:'38 – Isère'},{type:'R',name:'Rallye de la Côte Roannaise',dept:'42 – Loire'}]
-  },
-  { id:'s16', label:'S16', status:'upcoming',
-    title:'S16 — Semaine 14 — 6/12 Juil',
-    rallyes:[{type:'N',name:'Rallye de Bourgogne – Côte Chalonnaise',dept:'71 – Saône-et-Loire'},{type:'R',name:'Rallye Le Mans',dept:'72 – Sarthe'}]
-  },
-  { id:'s17', label:'S17', status:'upcoming',
-    title:'S17 — Semaine 15 — 13/19 Juil',
-    rallyes:[{type:'N',name:'Rallye de Saintonge',dept:'17 – Charente-Maritime'},{type:'R',name:'Rallye de Bagnols-les-Bains',dept:'48 – Lozère'}]
-  },
-  { id:'s18', label:'S18', status:'upcoming',
-    title:'S18 — Semaine 16 — 20/26 Juil',
-    rallyes:[{type:'N',name:'Rallye Montagne Noire',dept:'81 – Tarn'},{type:'R',name:'Rallye de la Plaine',dept:'88 – Vosges'}]
-  },
-  { id:'s19', label:'S19', status:'upcoming',
-    title:'S19 — Semaine 17 — 27 Juil / 2 Août',
-    rallyes:[{type:'N',name:'Rallye de Fourmies en Avesnois',dept:'59 – Nord'},{type:'R',name:'Rallye du Gap Racing',dept:'05 – Hautes-Alpes'}]
-  },
-  { id:'s20', label:'S20', status:'upcoming',
-    title:'S20 — Semaine 18 — 3/9 Août',
-    rallyes:[{type:'N',name:"Rallye d'Autun",dept:'71 – Saône-et-Loire'},{type:'R',name:'Rallye du Florival',dept:'68 – Haut-Rhin'}]
-  },
-  { id:'s21', label:'S21', status:'upcoming',
-    title:'S21 — Semaine 19 — 10/16 Août',
-    rallyes:[{type:'N',name:'Rallye de Basse Normandie',dept:'50 – Manche'},{type:'R',name:'Rallye du Sel',dept:'39 – Jura'}]
-  },
-  { id:'s22', label:'S22', status:'upcoming',
-    title:'S22 — Semaine 20 — 17/23 Août',
-    rallyes:[{type:'N',name:'Rallye du Pays Saint-Affricain',dept:'12 – Aveyron'},{type:'R',name:'Rallye des Vallées',dept:'88 – Vosges'}]
-  },
-  { id:'s23', label:'S23', status:'upcoming',
-    title:'S23 — Semaine 21 — 24/31 Août',
-    rallyes:[{type:'N',name:'Rallye du Pays Basque',dept:'64 – Pyrénées-Atlantiques'},{type:'R',name:'Rallye de Chartreuse',dept:'38 – Isère'}]
-  },
-];
-
-const CLASSES_DONE = ['s01','s02']; // semaines avec résultats par classe
-
-// ══════════════════════════════════════
-// CLASSES
-// ══════════════════════════════════════
-const CLASSES = [
-  {name:'Rally2 / R5',drivers:[
-    {pos:1,nom:'ABS Rallye',voiture:'Skoda Fabia RS Rally2',pts:117},
-    {pos:2,nom:'nicoN2s',voiture:'Skoda Fabia RS Rally2',pts:51},
-    {pos:3,nom:'Lefevre Alonso',voiture:'Hyundai i20 N Rally2',pts:33},
-    {pos:4,nom:'Ylan SULPICE',voiture:'Skoda Fabia RS Rally2',pts:7},
-    {pos:5,nom:'Maxou',voiture:'Hyundai i20 N Rally2',pts:7},
-  ]},
-  {name:'Super 2000',drivers:[
-    {pos:1,nom:'Daco2A',voiture:'Peugeot 207 S2000 Evolution Plus',pts:105},
-    {pos:2,nom:'jojopallone',voiture:'Skoda Fabia S2000 Evo 2',pts:84},
-    {pos:3,nom:'juliendu06',voiture:'Peugeot 207 S2000 Evolution Plus',pts:71},
-    {pos:4,nom:'nathan_thegoat',voiture:'Peugeot 207 S2000 Evolution Plus',pts:51},
-    {pos:5,nom:'las2picque',voiture:'Peugeot 207 S2000 Evolution Plus',pts:30},
-  ]},
-  {name:'RGT',drivers:[
-    {pos:1,nom:'ArnoRallye84_Art',voiture:'Porsche 911 GT3 RS (2010) RGT',pts:105},
-    {pos:2,nom:'Kev_VR46',voiture:'Porsche 911 GT3 RS (2007) RGT',pts:72},
-  ]},
-  {name:'Rally3',drivers:[
-    {pos:1,nom:'fclna',voiture:'Renault Clio Rally3',pts:89},
-    {pos:2,nom:'Ludovic BERTAINA',voiture:'Renault Clio Rally3',pts:60},
-    {pos:3,nom:'rallye06',voiture:'Renault Clio Rally3',pts:46},
-    {pos:4,nom:'Fiftar',voiture:'Renault Clio Rally3',pts:39},
-    {pos:5,nom:'Flo62',voiture:'Renault Clio Rally3',pts:18},
-  ]},
-  {name:'A8',drivers:[
-    {pos:1,nom:'Nicolcpm',voiture:'Ford Escort Mk V RS Cosworth GrpA',pts:117},
-    {pos:2,nom:'Team-Vrac',voiture:'Toyota Celica 2000GT(ST185) GrpA',pts:68},
-    {pos:3,nom:'Eyygo',voiture:'Subaru Impreza GC8 555 GrpA',pts:66},
-    {pos:4,nom:'Gostair',voiture:'BMW M3 E30 GrpA',pts:51},
-    {pos:5,nom:'Gabriel31',voiture:'Ford Escort Mk V RS Cosworth GrpA',pts:15},
-  ]},
-  {name:'N4',drivers:[{pos:1,nom:'Ludo08',voiture:'Mitsubishi Lancer Evo IX N4',pts:45}]},
-  {name:'R4',drivers:[
-    {pos:1,nom:'fangio62',voiture:'Mitsubishi Lancer Evo IX R4',pts:69},
-    {pos:2,nom:'Skyzo66',voiture:'Mitsubishi Lancer Evo IX R4',pts:54},
-    {pos:3,nom:'Vad',voiture:'Mitsubishi Lancer Evo X R4',pts:45},
-  ]},
-  {name:'Rally4',drivers:[
-    {pos:1,nom:'jo_e60',voiture:'Peugeot 208 Rally4',pts:63},
-    {pos:2,nom:'gglaspi11',voiture:'Peugeot 208 Rally4',pts:31},
-    {pos:3,nom:'JeremyRaylix',voiture:'Peugeot 208 Rally4',pts:30},
-    {pos:4,nom:'Ludo-Troch_ART',voiture:'Peugeot 208 Rally4',pts:30},
-    {pos:5,nom:'Loulou',voiture:'Peugeot 208 Rally4',pts:12},
-  ]},
-  {name:'R3',drivers:[
-    {pos:1,nom:'ymer07',voiture:'Citroën DS3 R3-MAX',pts:132},
-    {pos:2,nom:'SEB1515',voiture:'Renault Clio III R3',pts:69},
-    {pos:3,nom:'Janko23',voiture:'Renault Clio III R3',pts:57},
-  ]},
-  {name:'Super 1600',drivers:[]},
-  {name:'R2',drivers:[
-    {pos:1,nom:'Daalen',voiture:'Peugeot 208 R2',pts:84},
-    {pos:2,nom:'Teuzzza',voiture:'Peugeot 208 R2',pts:45},
-    {pos:3,nom:'Miam',voiture:'Peugeot 208 R2',pts:12},
-  ]},
-  {name:'A7',drivers:[
-    {pos:1,nom:'clio16s74',voiture:'Renault Clio 16S Williams GrpA',pts:87},
-    {pos:2,nom:'Remi RABELLE',voiture:'VW Golf II GTI 16V GrpA',pts:57},
-    {pos:3,nom:'lcracing',voiture:'Renault Clio 16S Williams GrpA',pts:9},
-  ]},
-  {name:'A6',drivers:[
-    {pos:1,nom:'Jonathan FRADA',voiture:'Peugeot 106 Rallye S20 GrpA',pts:30},
-    {pos:2,nom:'maxence laborie',voiture:'Peugeot 106 Rallye S20 GrpA',pts:27},
-    {pos:3,nom:'LudoRallySim',voiture:'Peugeot 106 Rallye S20 GrpA',pts:15},
-  ]},
-  {name:'Rally5',drivers:[
-    {pos:1,nom:'lejean',voiture:'Renault Clio Rally5',pts:135},
-    {pos:2,nom:'VBR_Yug88',voiture:'Renault Clio Rally5',pts:24},
-    {pos:3,nom:'MOMOMERMILLOD',voiture:'Renault Clio Rally5',pts:12},
-  ]},
-  {name:'R1',drivers:[]},
-];
-
-// ══════════════════════════════════════
-// BUILD
-// ══════════════════════════════════════
-const STATUS_STAG = {done:'stag-done',live:'stag-live',upcoming:'stag-upcoming'};
-const STATUS_LABEL = {done:'Terminé',live:'En cours',upcoming:'À venir'};
-const STATUS_DOT = {done:'dot-done',live:'dot-live',upcoming:''};
-
-// ══════════════════════════════════════
-// CLOUDINARY — charge les images depuis Cloudinary
-// Si pas dispo → placeholder
-// ══════════════════════════════════════
-// ══════════════════════════════════════
-// VERSIONS — lues depuis GitHub (public)
-// ══════════════════════════════════════
-const VERSIONS_URL = 'https://raw.githubusercontent.com/daco2A22/afrl-resultats/main/versions.json';
-let IMG_VERSIONS = {};
+const GH_RAW = 'https://raw.githubusercontent.com/daco2A22/afrl-resultats/main/versions.json';
+let VERSIONS = {};
 
 async function loadVersions(){
   try {
-    const r = await fetch(VERSIONS_URL + '?t=' + Date.now());
-    if(!r.ok){ IMG_VERSIONS = {}; return; }
-    const d = await r.json();
-    IMG_VERSIONS = d.versions || {};
-  } catch(e){ IMG_VERSIONS = {}; }
+    const r = await fetch(GH_RAW + '?t=' + Date.now());
+    if(r.ok){ const d = await r.json(); VERSIONS = d.versions || {}; }
+  } catch(e){ VERSIONS = {}; }
 }
 
-function getImgUrl(path){
-  const cloudName = 'doxgg82iy';
-  const key = path
-    .replace('images/afrl/', '')
-    .replace('images/', '')
-    .replace(/\.png$/i, '')
-    .replace(/\.jpg$/i, '');
-  // Si on a l'URL complète dans JSONbin → l'utiliser directement
-  if(IMG_VERSIONS[key]) return IMG_VERSIONS[key];
-  // Sinon fallback Cloudinary classique
-  return `https://res.cloudinary.com/${cloudName}/image/upload/afrl/${key}.png`;
+// ══════════════════════════════════════
+// IMAGE URL
+// Clé = "general/classement_general"
+//       "s01/s01_r1_general" etc.
+// ══════════════════════════════════════
+function imgUrl(key){
+  if(VERSIONS[key]) return VERSIONS[key];
+  // Pas encore uploadé → retourne null
+  return null;
 }
 
-function mkCard(c){
-  const src = getImgUrl(c.img);
-  return `<div class="card" id="card_${src.replace(/[^a-z0-9]/gi,'_')}" onclick="openLB('${src}','${c.label}')">
-    <div class="card-head"><span class="card-label">${c.label}</span><span class="card-chip ${c.chip}">${c.chipLabel}</span></div>
-    <div class="card-img">
-      <img src="${src}" alt="${c.label}"
-        onload="this.closest('.card').style.display=''"
-        onerror="this.closest('.card').style.display='none'"
-        style="width:100%;height:100%;object-fit:cover;" />
-    </div>
-    <div class="card-foot"><span class="card-date">${c.date||''}</span><span class="card-cta">Agrandir →</span></div>
+// ══════════════════════════════════════
+// CARD
+// ══════════════════════════════════════
+function mkCard(key, label, chip, chipLabel, date){
+  const url = imgUrl(key);
+  if(!url) return ''; // Cacher si pas d'image
+  return `<div class="card" onclick="openLB('${url}','${label}')">
+    <div class="card-head"><span class="card-label">${label}</span><span class="card-chip ${chip}">${chipLabel}</span></div>
+    <div class="card-img"><img src="${url}" alt="${label}" onerror="this.closest('.card').style.display='none'"/></div>
+    <div class="card-foot"><span class="card-date">${date}</span><span class="card-cta">Agrandir →</span></div>
   </div>`;
 }
 
+// ══════════════════════════════════════
+// DONNÉES SEMAINES
+// ══════════════════════════════════════
+const ALL_WEEKS = [
+  {id:'s01',label:'S01',status:'done',title:'S01 — Centre Alsace & Faverge',
+    rallyes:[{type:'N',name:'Centre Alsace',dept:''},{type:'R',name:'Faverge',dept:''}]},
+  {id:'s02',label:'S02',status:'done',title:'S02 — Pays du Gier & Neufchâtel-en-Bray',
+    rallyes:[{type:'N',name:'Pays du Gier',dept:''},{type:'R',name:'Neufchâtel-en-Bray',dept:''}]},
+  {id:'s03',label:'S03',status:'live',title:'S03 — Semaine 1 — 13/19 Avril',
+    rallyes:[{type:'N',name:'Rallye Autocourse',dept:'37 – Indre-et-Loire'},{type:'R',name:'Balcon Est du Vercors',dept:'38 – Isère'}]},
+  {id:'s04',label:'S04',status:'upcoming',title:'S04 — Semaine 2 — 13/19 Avr (suite)',
+    rallyes:[{type:'N',name:'Rallye de la Lys',dept:'62 – Pas-de-Calais'},{type:'R',name:'Coteaux du Layon',dept:'49 – Maine-et-Loire'}]},
+  {id:'s05',label:'S05',status:'upcoming',title:'S05 — Semaine 3 — 20/26 Avr',
+    rallyes:[{type:'N',name:'Rallye du Bassin Annonéen',dept:'07 – Ardèche'},{type:'R',name:'Rallye Cœur de Lion',dept:'27 – Eure'}]},
+  {id:'s06',label:'S06',status:'upcoming',title:'S06 — Semaine 4 — 27 Avr/3 Mai',
+    rallyes:[{type:'N',name:"Rallye du Val d'Agout",dept:'81 – Tarn'},{type:'R',name:'Rallye du Beaufortain',dept:'73 – Savoie'}]},
+  {id:'s07',label:'S07',status:'upcoming',title:'S07 — Semaine 5 — 4/10 Mai',
+    rallyes:[{type:'N',name:'Rallye des Monts de Blond',dept:'87 – Haute-Vienne'},{type:'R',name:'Rallye des Monts de Vaucluse',dept:'84 – Vaucluse'}]},
+  {id:'s08',label:'S08',status:'upcoming',title:'S08 — Semaine 6 — 11/17 Mai',
+    rallyes:[{type:'N',name:'Rallye du Saint-Émilion',dept:'33 – Gironde'},{type:'R',name:'Rallye de Mézidon',dept:'14 – Calvados'}]},
+  {id:'s09',label:'S09',status:'upcoming',title:'S09 — Semaine 7 — 18/24 Mai',
+    rallyes:[{type:'N',name:'Rallye du Pays de Seyssel',dept:'74 – Haute-Savoie'},{type:'R',name:"Rallye du Val d'Orain",dept:'39 – Jura'}]},
+  {id:'s10',label:'S10',status:'upcoming',title:'S10 — Semaine 8 — 25/31 Mai',
+    rallyes:[{type:'N',name:"Rallye du Val d'Ance",dept:'43 – Haute-Loire'},{type:'R',name:'Rallye du Lochois',dept:'37 – Indre-et-Loire'}]},
+  {id:'s11',label:'S11',status:'upcoming',title:'S11 — Semaine 9 — 1/7 Juin',
+    rallyes:[{type:'N',name:'Rallye du Tréport',dept:'76 – Seine-Maritime'},{type:'R',name:'Rallye du Clain',dept:'86 – Vienne'}]},
+  {id:'s12',label:'S12',status:'upcoming',title:'S12 — Semaine 10 — 8/14 Juin',
+    rallyes:[{type:'N',name:'Rallye Nice – Jean Behra',dept:'06 – Alpes-Maritimes'},{type:'R',name:'Rallye Vienne et Glane',dept:'87 – Haute-Vienne'}]},
+  {id:'s13',label:'S13',status:'upcoming',title:'S13 — Semaine 11 — 15/21 Juin',
+    rallyes:[{type:'N',name:'Rallye des Bornes',dept:'74 – Haute-Savoie'},{type:'R',name:'Rallye du Sidobre',dept:'81 – Tarn'}]},
+  {id:'s14',label:'S14',status:'upcoming',title:'S14 — Semaine 12 — 22/28 Juin',
+    rallyes:[{type:'N',name:'Rallye des Vins de Chinon',dept:'37 – Indre-et-Loire'},{type:'R',name:'Rallye de Sauveterre',dept:'47 – Lot-et-Garonne'}]},
+  {id:'s15',label:'S15',status:'upcoming',title:'S15 — Semaine 13 — 29 Juin/5 Juil',
+    rallyes:[{type:'N',name:'Rallye de Saint-Marcellin',dept:'38 – Isère'},{type:'R',name:'Rallye de la Côte Roannaise',dept:'42 – Loire'}]},
+  {id:'s16',label:'S16',status:'upcoming',title:'S16 — Semaine 14 — 6/12 Juil',
+    rallyes:[{type:'N',name:'Rallye de Bourgogne – Côte Chalonnaise',dept:'71 – Saône-et-Loire'},{type:'R',name:'Rallye Le Mans',dept:'72 – Sarthe'}]},
+  {id:'s17',label:'S17',status:'upcoming',title:'S17 — Semaine 15 — 13/19 Juil',
+    rallyes:[{type:'N',name:'Rallye de Saintonge',dept:'17 – Charente-Maritime'},{type:'R',name:'Rallye de Bagnols-les-Bains',dept:'48 – Lozère'}]},
+  {id:'s18',label:'S18',status:'upcoming',title:'S18 — Semaine 16 — 20/26 Juil',
+    rallyes:[{type:'N',name:'Rallye Montagne Noire',dept:'81 – Tarn'},{type:'R',name:'Rallye de la Plaine',dept:'88 – Vosges'}]},
+  {id:'s19',label:'S19',status:'upcoming',title:'S19 — Semaine 17 — 27 Juil/2 Août',
+    rallyes:[{type:'N',name:'Rallye de Fourmies en Avesnois',dept:'59 – Nord'},{type:'R',name:'Rallye du Gap Racing',dept:'05 – Hautes-Alpes'}]},
+  {id:'s20',label:'S20',status:'upcoming',title:'S20 — Semaine 18 — 3/9 Août',
+    rallyes:[{type:'N',name:"Rallye d'Autun",dept:'71 – Saône-et-Loire'},{type:'R',name:'Rallye du Florival',dept:'68 – Haut-Rhin'}]},
+  {id:'s21',label:'S21',status:'upcoming',title:'S21 — Semaine 19 — 10/16 Août',
+    rallyes:[{type:'N',name:'Rallye de Basse Normandie',dept:'50 – Manche'},{type:'R',name:'Rallye du Sel',dept:'39 – Jura'}]},
+  {id:'s22',label:'S22',status:'upcoming',title:'S22 — Semaine 20 — 17/23 Août',
+    rallyes:[{type:'N',name:'Rallye du Pays Saint-Affricain',dept:'12 – Aveyron'},{type:'R',name:'Rallye des Vallées',dept:'88 – Vosges'}]},
+  {id:'s23',label:'S23',status:'upcoming',title:'S23 — Semaine 21 — 24/31 Août',
+    rallyes:[{type:'N',name:'Rallye du Pays Basque',dept:'64 – Pyrénées-Atlantiques'},{type:'R',name:'Rallye de Chartreuse',dept:'38 – Isère'}]},
+];
+
+const CLASSES = [
+  {label:'Rally2 / R5',key:'rally2_r5'},
+  {label:'Super 2000', key:'super_2000'},
+  {label:'RGT',        key:'rgt'},
+  {label:'Rally3',     key:'rally3'},
+  {label:'A8',         key:'a8'},
+  {label:'N4',         key:'n4'},
+  {label:'R4',         key:'r4'},
+  {label:'Rally4',     key:'rally4'},
+  {label:'R3',         key:'r3'},
+  {label:'Super 1600', key:'super_1600'},
+  {label:'R2',         key:'r2'},
+  {label:'A7',         key:'a7'},
+  {label:'A6',         key:'a6'},
+  {label:'Rally5',     key:'rally5'},
+  {label:'R1',         key:'r1'},
+];
+
+const STATUS_DOT   = {done:'dot-done',live:'dot-live',upcoming:''};
+const STATUS_STAG  = {done:'stag-done',live:'stag-live',upcoming:'stag-upcoming'};
+const STATUS_LABEL = {done:'Terminé',live:'En cours',upcoming:'À venir'};
+
+// ══════════════════════════════════════
+// BUILD NAV
+// ══════════════════════════════════════
 function buildNav(){
   const nav = document.getElementById('navInner');
-  nav.innerHTML = `<button class="tab-btn" onclick="switchTab('calendrier',this)">📅 Calendrier</button>`;
-  nav.innerHTML += `<button class="tab-btn active" onclick="switchTab('general',this)">🏆 Général</button>`;
-  nav.innerHTML += `<button class="tab-btn" onclick="switchTab('classes',this)">📊 Classes</button>`;
+  let html = `<button class="tab-btn" onclick="switchTab('calendrier',this)">📅 Calendrier</button>`;
+  html += `<button class="tab-btn active" onclick="switchTab('general',this)">🏆 Général</button>`;
+  html += `<button class="tab-btn" onclick="switchTab('classes',this)">📊 Classes</button>`;
   ALL_WEEKS.forEach(w=>{
     const dot = STATUS_DOT[w.status] ? `<span class="dot ${STATUS_DOT[w.status]}"></span>` : '';
-    nav.innerHTML += `<button class="tab-btn" onclick="switchTab('${w.id}',this)">${dot}${w.label}</button>`;
+    html += `<button class="tab-btn" onclick="switchTab('${w.id}',this)">${dot}${w.label}</button>`;
   });
+  nav.innerHTML = html;
 }
 
+// ══════════════════════════════════════
+// BUILD GENERAL
+// ══════════════════════════════════════
+function buildGeneral(){
+  const g = document.getElementById('generalGrid');
+  g.innerHTML = [
+    mkCard('general/classement_general','Classement Général','chip-general','Général','Saison 2026'),
+    mkCard('general/general_classe','Général par Classe','chip-genclasse','Gén. Classe','Saison 2026'),
+  ].join('');
+}
+
+// ══════════════════════════════════════
+// BUILD CLASSES
+// ══════════════════════════════════════
+function buildClasses(){
+  const g = document.getElementById('classesGrid');
+  g.innerHTML = CLASSES.map(c=>
+    mkCard(`general/classe_${c.key}`, c.label, 'chip-classe', 'Classe', 'Saison 2026')
+  ).join('');
+}
+
+// ══════════════════════════════════════
+// BUILD WEEK PANELS
+// ══════════════════════════════════════
 function buildWeekPanels(){
   const main = document.getElementById('mainContent');
   ALL_WEEKS.forEach(w=>{
     const stag = `<span class="stag ${STATUS_STAG[w.status]}">${STATUS_LABEL[w.status]}</span>`;
-    const isDone = w.status === 'done';
-    const isLive = w.status === 'live';
+    const r = w.rallyes;
+    const sid = w.id;
 
-    if(isDone || isLive){
-      // Panneau avec cartes résultats
-      const r = w.rallyes;
+    if(w.status === 'done' || w.status === 'live'){
+      // Cartes générales
       const generalCards = [
-        {label:r[0].name, chip:'chip-general', chipLabel:'Général', img:`images/${w.id}/${w.id}_r1_general.png`, date:r[0].dept||w.label},
-        {label:`Gén. par Classe — ${r[0].name}`, chip:'chip-genclasse', chipLabel:'Gén. Classe', img:`images/${w.id}/r1_general_classe.png`, date:r[0].dept||w.label},
-        r[1] ? {label:r[1].name, chip:'chip-general', chipLabel:'Général', img:`images/${w.id}/${w.id}_r2_general.png`, date:r[1].dept||w.label} : null,
-        r[1] ? {label:`Gén. par Classe — ${r[1].name}`, chip:'chip-genclasse', chipLabel:'Gén. Classe', img:`images/${w.id}/r2_general_classe.png`, date:r[1].dept||w.label} : null,
-        {label:`Classement Général ${w.label}`, chip:'chip-general', chipLabel:'Général', img:`images/${w.id}/general.png`, date:w.label},
-        {label:`Général par Classe ${w.label}`, chip:'chip-genclasse', chipLabel:'Gén. Classe', img:`images/${w.id}/general_classe.png`, date:w.label},
-      ].filter(Boolean);
+        mkCard(`${sid}/${sid}_r1_general`, r[0].name, 'chip-general', 'Général', r[0].dept||w.label),
+        mkCard(`${sid}/r1_general_classe`, `Gén. par Classe — ${r[0].name}`, 'chip-genclasse', 'Gén. Classe', r[0].dept||w.label),
+        r[1] ? mkCard(`${sid}/${sid}_r2_general`, r[1].name, 'chip-general', 'Général', r[1].dept||w.label) : '',
+        r[1] ? mkCard(`${sid}/r2_general_classe`, `Gén. par Classe — ${r[1].name}`, 'chip-genclasse', 'Gén. Classe', r[1].dept||w.label) : '',
+        mkCard(`${sid}/general`, `Classement Général ${w.label}`, 'chip-general', 'Général', w.label),
+        mkCard(`${sid}/general_classe`, `Général par Classe ${w.label}`, 'chip-genclasse', 'Gén. Classe', w.label),
+      ].join('');
 
-      const CLASSE_KEYS = [
-        {label:'Rally2 / R5', key:'rally2_r5'},
-        {label:'Super 2000',  key:'super_2000'},
-        {label:'RGT',         key:'rgt'},
-        {label:'Rally3',      key:'rally3'},
-        {label:'A8',          key:'a8'},
-        {label:'N4',          key:'n4'},
-        {label:'R4',          key:'r4'},
-        {label:'Rally4',      key:'rally4'},
-        {label:'R3',          key:'r3'},
-        {label:'Super 1600',  key:'super_1600'},
-        {label:'R2',          key:'r2'},
-        {label:'A7',          key:'a7'},
-        {label:'A6',          key:'a6'},
-        {label:'Rally5',      key:'rally5'},
-        {label:'R1',          key:'r1'},
-      ];
+      // Cartes classes R1
+      const classesR1 = CLASSES.map(c=>
+        mkCard(`${sid}/r1_classe_${c.key}`, c.label, 'chip-classe', 'Classe', r[0].name)
+      ).join('');
 
-      // Classes du rallye N (r1) et R (r2) séparément
-      const mkClasseCards = (prefix, rallyeName) =>
-        CLASSE_KEYS.map(c=>({
-          label:c.label, chip:'chip-classe', chipLabel:'Classe',
-          img:`images/${w.id}/classe_${c.key}.png`.replace(`images/${w.id}/`, `images/${w.id}/${prefix}_`),
-          date: rallyeName
-        }));
+      // Cartes classes R2
+      const classesR2 = r[1] ? CLASSES.map(c=>
+        mkCard(`${sid}/r2_classe_${c.key}`, c.label, 'chip-classe', 'Classe', r[1].name)
+      ).join('') : '';
 
-      // On utilise le préfixe r1/r2 pour chaque rallye
-      const classeCardsR1 = CLASSE_KEYS.map(c=>({
-        label:c.label, chip:'chip-classe', chipLabel:'Classe',
-        img:`images/${w.id}/r1_classe_${c.key}.png`,
-        date: r[0].name
-      }));
-      const classeCardsR2 = r[1] ? CLASSE_KEYS.map(c=>({
-        label:c.label, chip:'chip-classe', chipLabel:'Classe',
-        img:`images/${w.id}/r2_classe_${c.key}.png`,
-        date: r[1].name
-      })) : [];
-
-      let html = `<div class="panel" id="panel-${w.id}">`;
+      let html = `<div class="panel" id="panel-${sid}">`;
       html += `<div class="sec-title">${w.title} ${stag}</div>`;
-      html += `<div class="results-grid">${generalCards.map(mkCard).join('')}</div>`;
-      html += `<div class="sec-title">Classes — ${r[0].name} <span style="color:#60a5fa;font-size:.65rem">◼ Nationale</span></div>`;
-      html += `<div class="results-grid">${classeCardsR1.map(mkCard).join('')}</div>`;
-      if(r[1]){
+      html += `<div class="results-grid">${generalCards}</div>`;
+      if(classesR1){
+        html += `<div class="sec-title">Classes — ${r[0].name} <span style="color:#60a5fa;font-size:.65rem">◼ Nationale</span></div>`;
+        html += `<div class="results-grid">${classesR1}</div>`;
+      }
+      if(classesR2){
         html += `<div class="sec-title">Classes — ${r[1].name} <span style="color:#f87171;font-size:.65rem">◼ Régionale</span></div>`;
-        html += `<div class="results-grid">${classeCardsR2.map(mkCard).join('')}</div>`;
+        html += `<div class="results-grid">${classesR2}</div>`;
       }
       html += `</div>`;
       main.insertAdjacentHTML('beforeend', html);
-
     } else {
-      // Panneau vide à venir
-      const rallyeInfo = w.rallyes.map(r=>`<span><span style="color:${r.type==='N'?'#60a5fa':'#f87171'}">◼</span> ${r.name}${r.dept?' <span style="opacity:.5;font-size:.7rem">'+r.dept+'</span>':''}</span>`).join('');
+      const info = r.map(rv=>`<span><span style="color:${rv.type==='N'?'#60a5fa':'#f87171'}">◼</span> ${rv.name}${rv.dept?' <span style="opacity:.5;font-size:.7rem">'+rv.dept+'</span>':''}</span>`).join('');
       main.insertAdjacentHTML('beforeend',`
-        <div class="panel" id="panel-${w.id}">
+        <div class="panel" id="panel-${sid}">
           <div class="sec-title">${w.title} ${stag}</div>
-          <div style="padding:.25rem 0 .75rem;color:var(--muted);font-size:.78rem;display:flex;gap:2rem;flex-wrap:wrap;">${rallyeInfo}</div>
+          <div style="padding:.25rem 0 .75rem;color:var(--muted);font-size:.78rem;display:flex;gap:2rem;flex-wrap:wrap;">${info}</div>
           <div class="empty-state"><div class="ei">🏁</div><div class="et">Résultats disponibles après la manche</div></div>
         </div>`);
     }
   });
 }
 
-function buildClasses(){
-  const g = document.getElementById('classesGrid');
-  const classeNames = [
-    'Rally2 / R5','Super 2000','RGT','Rally3','A8','N4','R4','Rally4','R3','Super 1600','R2','A7','A6','Rally5','R1'
-  ];
-  classeNames.forEach(name=>{
-    const imgKey = name.toLowerCase().replace(/[\s\/]/g,'_').replace(/[^a-z0-9_]/g,'');
-    g.innerHTML += `
-      <div class="card card-classe" onclick="openLB('images/general/classe_${imgKey}.png','Classe ${name}')">
-        <div class="card-head">
-          <span class="card-label">${name}</span>
-          <span class="card-chip chip-classe">Classe</span>
-        </div>
-        <div class="card-img"><div class="placeholder"><span>🏁</span><span>Image à ajouter</span></div></div>
-        <div class="card-foot"><span class="card-date">Saison 2026</span><span class="card-cta">Agrandir →</span></div>
-      </div>`;
-  });
-}
-
+// ══════════════════════════════════════
+// BUILD CALENDAR
+// ══════════════════════════════════════
 function buildCalendar(){
   const g = document.getElementById('calGrid');
   const wsC = {done:'ws-done',live:'ws-live',upcoming:'ws-upcoming'};
-  const wsL = {done:'Terminé',live:'En cours',upcoming:'À venir'};
   ALL_WEEKS.forEach(w=>{
-    // Toujours N (bleu) à gauche, R (rouge) à droite
     const left  = w.rallyes.find(r=>r.type==='N') || w.rallyes[0];
     const right = w.rallyes.find(r=>r.type==='R') || null;
-    const mkRally = (r, side) => r ? `
-      <div class="w-rally" style="border-left:${side==='right'?'1px solid var(--border)':'none'};border-right:none;">
-        <div class="rtype rtype-${r.type.toLowerCase()}">◼ ${r.type==='N'?'Nationale':'Régionale'}</div>
-        <div class="rname">${r.name}</div>
-        ${r.dept?`<div class="rdept">${r.dept}</div>`:''}
-      </div>` : `<div class="w-rally"></div>`;
-    g.innerHTML += `<div class="week-block">
-      <div class="week-head">
-        <span class="week-num">${w.label}</span>
-        <span class="week-label">${w.title.replace(w.label+' — ','')}</span>
-        <span class="week-status ${wsC[w.status]}">${wsL[w.status]}</span>
-      </div>
-      <div class="week-rallyes">${mkRally(left,'left')}${mkRally(right,'right')}</div>
-    </div>`;
+    const mkR = (r,side) => r ? `<div class="w-rally ${side}"><div class="rtype rtype-${r.type.toLowerCase()}">◼ ${r.type==='N'?'Nationale':'Régionale'}</div><div class="rname">${r.name}</div>${r.dept?`<div class="rdept">${r.dept}</div>`:''}</div>` : `<div class="w-rally ${side}"></div>`;
+    g.innerHTML += `<div class="week-block"><div class="week-head"><span class="week-num">${w.label}</span><span class="week-label">${w.title.replace(w.label+' — ','')}</span><span class="week-status ${wsC[w.status]}">${STATUS_LABEL[w.status]}</span></div><div class="week-rallyes">${mkR(left,'left')}${mkR(right,'right')}</div></div>`;
   });
 }
 
+// ══════════════════════════════════════
+// TABS
+// ══════════════════════════════════════
 function switchTab(id, btn){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  const panel = document.getElementById('panel-'+id);
-  if(panel) panel.classList.add('active');
+  const p = document.getElementById('panel-'+id);
+  if(p) p.classList.add('active');
   if(btn) btn.classList.add('active');
 }
 
 // ══════════════════════════════════════
-// LIGHTBOX — scroll + zoom
+// LIGHTBOX
 // ══════════════════════════════════════
 let lbScale = 1;
-
 function openLB(src, title){
   lbScale = 1;
   document.getElementById('lbImg').src = src;
@@ -610,163 +423,80 @@ function openLB(src, title){
   document.getElementById('lightbox').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
-
 function lbZoom(delta){
   lbScale = Math.min(4, Math.max(0.5, lbScale + delta));
   document.getElementById('lbWrap').style.transform = `scale(${lbScale})`;
   document.getElementById('lbWrap').style.transformOrigin = 'top center';
   document.getElementById('lbZoomInfo').textContent = Math.round(lbScale*100)+'%';
 }
-
 function lbReset(){
   lbScale = 1;
   document.getElementById('lbWrap').style.transform = 'scale(1)';
   document.getElementById('lbZoomInfo').textContent = '100%';
   document.getElementById('lbScroll').scrollTop = 0;
 }
-
-// Zoom molette souris
-document.addEventListener('DOMContentLoaded', ()=>{
-  document.getElementById('lbScroll').addEventListener('wheel', e=>{
-    if(!document.getElementById('lightbox').classList.contains('open')) return;
-    e.preventDefault();
-    lbZoom(e.deltaY < 0 ? 0.15 : -0.15);
-  }, {passive:false});
-
-  // Fermer en cliquant sur le fond
-  document.getElementById('lbScroll').addEventListener('click', e=>{
-    if(e.target === document.getElementById('lbScroll')) closeLB();
-  });
-
-  // Zoom pinch mobile
-  let lastDist = null;
-  document.getElementById('lbScroll').addEventListener('touchmove', e=>{
-    if(e.touches.length === 2){
-      e.preventDefault();
-      const dx = e.touches[0].clientX - e.touches[1].clientX;
-      const dy = e.touches[0].clientY - e.touches[1].clientY;
-      const dist = Math.sqrt(dx*dx + dy*dy);
-      if(lastDist !== null){
-        lbZoom((dist - lastDist) * 0.005);
-      }
-      lastDist = dist;
-    }
-  }, {passive:false});
-  document.getElementById('lbScroll').addEventListener('touchend', ()=>{ lastDist = null; });
-});
-
 function closeLB(){
   document.getElementById('lightbox').classList.remove('open');
   document.body.style.overflow = '';
 }
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeLB(); });
-
-// ══════════════════════════════════════
-// CLASSES — découpe auto du PNG unique
-// Le PNG général_classe contient toutes
-// les classes empilées verticalement.
-// On détecte les zones par couleur de fond
-// et on affiche chaque section dans sa carte.
-// ══════════════════════════════════════
-const CLASSE_NAMES = [
-  'Rally2 / R5','Super 2000','RGT','Rally3','A8','N4','R4','Rally4','R3','Super 1600','R2','A7','A6','Rally5','R1'
-];
-
-function buildClasses(){
-  const g = document.getElementById('classesGrid');
-  const CLASSE_KEYS = [
-    {label:'Rally2 / R5', key:'rally2_r5'},
-    {label:'Super 2000',  key:'super_2000'},
-    {label:'RGT',         key:'rgt'},
-    {label:'Rally3',      key:'rally3'},
-    {label:'A8',          key:'a8'},
-    {label:'N4',          key:'n4'},
-    {label:'R4',          key:'r4'},
-    {label:'Rally4',      key:'rally4'},
-    {label:'R3',          key:'r3'},
-    {label:'Super 1600',  key:'super_1600'},
-    {label:'R2',          key:'r2'},
-    {label:'A7',          key:'a7'},
-    {label:'A6',          key:'a6'},
-    {label:'Rally5',      key:'rally5'},
-    {label:'R1',          key:'r1'},
-  ];
-  g.innerHTML = CLASSE_KEYS.map(c => mkCard({
-    label: c.label,
-    chip: 'chip-classe',
-    chipLabel: 'Classe',
-    img: `images/general/classe_${c.key}.png`,
-    date: 'Saison 2026'
-  })).join('');
-}
-
-function buildGeneral(){
-  const g = document.getElementById('generalGrid');
-  const cards = [
-    {label:'Classement Général',chip:'chip-general',chipLabel:'Général',img:'images/general/classement_general.png',date:'Saison 2026'},
-    {label:'Général par Classe',chip:'chip-genclasse',chipLabel:'Gén. Classe',img:'images/general/general_classe.png',date:'Saison 2026'},
-  ];
-  g.innerHTML = cards.map(mkCard).join('');
-}
-
-// Charger les versions depuis JSONbin puis construire le site
-loadVersions().then(()=>{
-  buildGeneral();
-  buildNav();
-  buildWeekPanels();
-  buildClasses();
-  buildCalendar();
+document.addEventListener('DOMContentLoaded', ()=>{
+  document.getElementById('lbScroll').addEventListener('wheel', e=>{
+    if(!document.getElementById('lightbox').classList.contains('open')) return;
+    e.preventDefault();
+    lbZoom(e.deltaY < 0 ? 0.15 : -0.15);
+  },{passive:false});
+  document.getElementById('lbScroll').addEventListener('click', e=>{
+    if(e.target === document.getElementById('lbScroll')) closeLB();
+  });
 });
 
 // ══════════════════════════════════════
-// AUTO-REFRESH — vérifie JSONbin toutes les 10s
-// Met à jour uniquement les images modifiées
-// sans recharger la page
+// AUTO-REFRESH toutes les 10s
 // ══════════════════════════════════════
-setInterval(async ()=>{
+async function refreshVersions(){
   try {
-    const r = await fetch(VERSIONS_URL + '?t=' + Date.now());
+    const r = await fetch(GH_RAW + '?t=' + Date.now());
+    if(!r.ok) return;
     const d = await r.json();
-    const newVersions = d.versions || {};
-
-    // Comparer avec les versions actuelles
-    Object.keys(newVersions).forEach(key => {
-      if(newVersions[key] !== IMG_VERSIONS[key]){
-        IMG_VERSIONS[key] = newVersions[key];
-        // Mettre à jour toutes les images avec cette clé
-        document.querySelectorAll('img').forEach(img => {
-          const imgKey = img.src
-            .replace(/.*afrl\//, '')
-            .replace(/\.png.*$/, '')
-            .replace(/_\d{13}$/, ''); // enlever timestamp
-          if(imgKey === key){
-            img.src = newVersions[key];
-            const card = img.closest('.card');
-            if(card) card.style.display = '';
+    const newV = d.versions || {};
+    // Mettre à jour les images modifiées
+    Object.keys(newV).forEach(key=>{
+      if(newV[key] !== VERSIONS[key]){
+        VERSIONS[key] = newV[key];
+        document.querySelectorAll('.card').forEach(card=>{
+          const img = card.querySelector('img');
+          if(img && img.src && img.src.includes(key.split('/').pop().split('_').slice(0,-1).join('_'))){
+            img.src = newV[key];
+            card.style.display = '';
           }
         });
       }
     });
-
-    // Vérifier les images supprimées
-    Object.keys(IMG_VERSIONS).forEach(key => {
-      if(!newVersions[key]){
-        delete IMG_VERSIONS[key];
-        document.querySelectorAll('img').forEach(img => {
-          const imgKey = img.src
-            .replace(/.*afrl\//, '')
-            .replace(/\.png.*$/, '')
-            .replace(/_\d{13}$/, '');
-          if(imgKey === key){
-            const card = img.closest('.card');
-            if(card) card.style.display = 'none';
-          }
+    // Masquer les images supprimées
+    Object.keys(VERSIONS).forEach(key=>{
+      if(!newV[key]){
+        delete VERSIONS[key];
+        document.querySelectorAll('.card img').forEach(img=>{
+          if(img.src === VERSIONS[key]) img.closest('.card').style.display = 'none';
         });
       }
     });
-
+    VERSIONS = newV;
   } catch(e){}
-}, 10000);
+}
+setInterval(refreshVersions, 10000);
+
+// ══════════════════════════════════════
+// INIT
+// ══════════════════════════════════════
+loadVersions().then(()=>{
+  buildNav();
+  buildGeneral();
+  buildClasses();
+  buildWeekPanels();
+  buildCalendar();
+});
 </script>
 </body>
 </html>

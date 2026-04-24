@@ -1,140 +1,116 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AFRL — Admin</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet"/>
-  <style>
-    :root{
-      --bg:#06080f;--surface:#0d1220;--surface2:#111827;
-      --border:rgba(255,255,255,0.07);--accent:#e8192c;
-      --accent3:#3b82f6;--text:#f0f4ff;--muted:#6b7a99;
-      --gold:#fbbf24;--green:#4ade80;
-    }
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-height:100vh;}
-    body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(232,25,44,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(232,25,44,0.025) 1px,transparent 1px);background-size:44px 44px;pointer-events:none;z-index:0;}
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AFRL — Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#06080f;--surface:#0d1220;--surface2:#111827;
+  --border:rgba(255,255,255,0.07);--accent:#e8192c;
+  --accent3:#3b82f6;--text:#f0f4ff;--muted:#6b7a99;--green:#4ade80;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-height:100vh;}
 
-    /* ── LOGIN ── */
-    .login-wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:100;background:var(--bg);}
-    .login-box{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:6px;padding:2.5rem;width:100%;max-width:380px;text-align:center;}
-    .login-logo{height:40px;margin-bottom:1.5rem;}
-    .login-title{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem;}
-    .login-input{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'Exo 2',sans-serif;font-size:.9rem;padding:.75rem 1rem;border-radius:4px;margin-bottom:1rem;outline:none;transition:border-color .2s;}
-    .login-input:focus{border-color:var(--accent);}
-    .login-btn{width:100%;background:var(--accent);color:#fff;border:none;font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.75rem;border-radius:4px;cursor:pointer;transition:background .2s;}
-    .login-btn:hover{background:#c8111f;}
-    .login-error{color:var(--accent);font-size:.78rem;margin-top:.5rem;display:none;}
+/* LOGIN */
+.login-wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:100;background:var(--bg);}
+.login-box{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:6px;padding:2.5rem;width:100%;max-width:380px;text-align:center;}
+.login-logo{height:40px;margin-bottom:1.5rem;}
+.login-title{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem;}
+.login-input{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'Exo 2',sans-serif;font-size:.9rem;padding:.75rem 1rem;border-radius:4px;margin-bottom:1rem;outline:none;transition:border-color .2s;}
+.login-input:focus{border-color:var(--accent);}
+.login-btn{width:100%;background:var(--accent);color:#fff;border:none;font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.75rem;border-radius:4px;cursor:pointer;}
+.login-btn:hover{background:#c8111f;}
+.login-error{color:var(--accent);font-size:.78rem;margin-top:.5rem;display:none;}
 
-    /* ── HEADER ── */
-    header{position:relative;z-index:20;background:rgba(6,8,15,0.97);border-bottom:1px solid var(--border);}
-    .header-inner{max-width:1100px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:64px;}
-    .header-logo{height:36px;}
-    .header-right{display:flex;align-items:center;gap:1rem;}
-    .admin-badge{font-family:'Rajdhani',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.15em;background:var(--accent);color:#fff;padding:3px 9px;border-radius:2px;text-transform:uppercase;}
-    .logout-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:3px;cursor:pointer;transition:all .2s;}
-    .logout-btn:hover{color:var(--text);border-color:rgba(255,255,255,.2);}
+/* ADMIN */
+.admin-wrap{display:none;flex-direction:column;min-height:100vh;}
+.admin-wrap.visible{display:flex;}
+header{background:rgba(6,8,15,0.97);border-bottom:1px solid var(--border);}
+.header-inner{max-width:1100px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:64px;}
+.header-logo{height:36px;}
+.admin-badge{font-family:'Rajdhani',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.15em;background:var(--accent);color:#fff;padding:3px 9px;border-radius:2px;text-transform:uppercase;}
+.logout-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:3px;cursor:pointer;}
+.logout-btn:hover{color:var(--text);}
 
-    /* ── MAIN ── */
-    .admin-wrap{display:none;flex-direction:column;min-height:100vh;}
-    .admin-wrap.visible{display:flex;}
-    main{position:relative;z-index:5;max-width:1100px;margin:0 auto;padding:2rem 1.5rem;width:100%;}
+main{max-width:1100px;margin:0 auto;padding:2rem 1.5rem;width:100%;}
+.back-link{display:inline-flex;align-items:center;gap:.4rem;font-family:'Rajdhani',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;margin-bottom:1.5rem;}
+.back-link:hover{color:var(--text);}
+.page-title{font-family:'Rajdhani',sans-serif;font-size:1.5rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem;}
+.page-sub{font-size:.82rem;color:var(--muted);margin-bottom:2rem;}
 
-    /* ── PAGE TITLE ── */
-    .page-title{font-family:'Rajdhani',sans-serif;font-size:1.5rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem;}
-    .page-sub{font-size:.82rem;color:var(--muted);margin-bottom:2rem;}
+.card-box{background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1.5rem;}
+.card-box-head{background:#0a0e1a;padding:.75rem 1.2rem;border-bottom:1px solid var(--border);}
+.card-box-title{font-family:'Rajdhani',sans-serif;font-size:.9rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;}
+.card-box-body{padding:1.5rem;}
 
-    /* ── UPLOAD CARD ── */
-    .upload-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1.5rem;}
-    .upload-card-head{background:#0a0e1a;padding:.75rem 1.2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.75rem;}
-    .upload-card-title{font-family:'Rajdhani',sans-serif;font-size:.9rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;}
-    .upload-card-body{padding:1.5rem;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem;}
+.form-group{display:flex;flex-direction:column;gap:.4rem;}
+.form-label{font-family:'Rajdhani',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+.form-select{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'Exo 2',sans-serif;font-size:.85rem;padding:.6rem .9rem;border-radius:4px;outline:none;width:100%;}
+.form-select:focus{border-color:var(--accent);}
+.form-select option{background:var(--surface2);}
 
-    /* ── FORM GRID ── */
-    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem;}
-    .form-group{display:flex;flex-direction:column;gap:.4rem;}
-    .form-label{font-family:'Rajdhani',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
-    .form-select,.form-input{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'Exo 2',sans-serif;font-size:.85rem;padding:.6rem .9rem;border-radius:4px;outline:none;transition:border-color .2s;width:100%;}
-    .form-select:focus,.form-input:focus{border-color:var(--accent);}
-    .form-select option{background:var(--surface2);}
+.drop-zone{border:2px dashed rgba(232,25,44,.3);border-radius:6px;padding:2.5rem;text-align:center;cursor:pointer;background:rgba(232,25,44,.02);transition:all .25s;}
+.drop-zone:hover,.drop-zone.dragover{border-color:var(--accent);background:rgba(232,25,44,.05);}
+.drop-icon{font-size:2.5rem;opacity:.3;margin-bottom:.75rem;}
+.drop-text{font-family:'Rajdhani',sans-serif;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;}
+.drop-sub{font-size:.75rem;color:var(--muted);opacity:.6;}
 
-    /* ── DROP ZONE ── */
-    .drop-zone{border:2px dashed rgba(232,25,44,.3);border-radius:6px;padding:2.5rem;text-align:center;transition:all .25s;cursor:pointer;background:rgba(232,25,44,.02);}
-    .drop-zone:hover,.drop-zone.dragover{border-color:var(--accent);background:rgba(232,25,44,.05);}
-    .drop-icon{font-size:2.5rem;opacity:.3;margin-bottom:.75rem;}
-    .drop-text{font-family:'Rajdhani',sans-serif;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;}
-    .drop-sub{font-size:.75rem;color:var(--muted);opacity:.6;}
-    .drop-input{display:none;}
+.preview-wrap{display:none;margin-top:1rem;position:relative;}
+.preview-wrap img{width:100%;max-height:300px;object-fit:contain;border-radius:4px;border:1px solid var(--border);background:var(--surface2);}
+.preview-name{font-size:.75rem;color:var(--muted);margin-top:.4rem;text-align:center;}
+.preview-remove{position:absolute;top:.5rem;right:.5rem;background:var(--accent);border:none;color:#fff;width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center;}
 
-    /* ── PREVIEW ── */
-    .preview-wrap{display:none;margin-top:1rem;position:relative;}
-    .preview-wrap img{width:100%;max-height:300px;object-fit:contain;border-radius:4px;border:1px solid var(--border);background:var(--surface2);}
-    .preview-name{font-size:.75rem;color:var(--muted);margin-top:.4rem;text-align:center;}
-    .preview-remove{position:absolute;top:.5rem;right:.5rem;background:var(--accent);border:none;color:#fff;width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center;}
+.upload-btn{background:var(--accent);color:#fff;border:none;font-family:'Rajdhani',sans-serif;font-size:.95rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.75rem 2rem;border-radius:4px;cursor:pointer;display:flex;align-items:center;gap:.5rem;margin-top:1.2rem;}
+.upload-btn:hover{background:#c8111f;}
+.upload-btn:disabled{background:var(--muted);cursor:not-allowed;}
+.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none;}
+@keyframes spin{to{transform:rotate(360deg);}}
 
-    /* ── UPLOAD BTN ── */
-    .upload-btn{background:var(--accent);color:#fff;border:none;font-family:'Rajdhani',sans-serif;font-size:.95rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.75rem 2rem;border-radius:4px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.5rem;margin-top:1.2rem;}
-    .upload-btn:hover{background:#c8111f;}
-    .upload-btn:disabled{background:var(--muted);cursor:not-allowed;}
-    .upload-btn .spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none;}
-    @keyframes spin{to{transform:rotate(360deg);}}
+.progress-bar{height:4px;background:var(--surface2);border-radius:2px;margin-top:1rem;overflow:hidden;display:none;}
+.progress-fill{height:100%;background:var(--accent);border-radius:2px;width:0%;transition:width .3s;}
 
-    /* ── PROGRESS ── */
-    .progress-bar{height:4px;background:var(--surface2);border-radius:2px;margin-top:1rem;overflow:hidden;display:none;}
-    .progress-fill{height:100%;background:var(--accent);border-radius:2px;width:0%;transition:width .3s;}
+/* HISTORY */
+.history-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.75rem;margin-top:.5rem;}
+.history-item{background:var(--surface2);border:1px solid var(--border);border-radius:4px;overflow:hidden;position:relative;}
+.history-img{width:100%;aspect-ratio:16/9;object-fit:cover;}
+.history-info{padding:.4rem .6rem;}
+.history-slot{font-family:'Rajdhani',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);}
+.history-name{font-size:.7rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.history-del{position:absolute;top:.3rem;right:.3rem;background:rgba(232,25,44,.8);border:none;color:#fff;width:20px;height:20px;border-radius:50%;cursor:pointer;font-size:.65rem;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;}
+.history-item:hover .history-del{opacity:1;}
 
-    /* ── TOAST ── */
-    .toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:.9rem 1.2rem;display:flex;align-items:center;gap:.75rem;z-index:200;transform:translateY(100px);opacity:0;transition:all .3s;max-width:340px;}
-    .toast.show{transform:translateY(0);opacity:1;}
-    .toast.success{border-left:3px solid var(--green);}
-    .toast.error{border-left:3px solid var(--accent);}
-    .toast-icon{font-size:1.2rem;}
-    .toast-msg{font-size:.83rem;line-height:1.4;}
-    .toast-title{font-family:'Rajdhani',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.06em;}
+/* TOAST */
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:.9rem 1.2rem;display:flex;align-items:center;gap:.75rem;z-index:200;transform:translateY(100px);opacity:0;transition:all .3s;max-width:340px;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.success{border-left:3px solid var(--green);}
+.toast.error{border-left:3px solid var(--accent);}
+.toast-title{font-family:'Rajdhani',sans-serif;font-size:.85rem;font-weight:700;}
+.toast-msg{font-size:.8rem;color:var(--muted);}
 
-    /* ── HISTORY ── */
-    .history-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.75rem;margin-top:.5rem;}
-    .history-item{background:var(--surface2);border:1px solid var(--border);border-radius:4px;overflow:hidden;position:relative;}
-    .history-img{width:100%;aspect-ratio:16/9;object-fit:cover;}
-    .history-info{padding:.4rem .6rem;}
-    .history-slot{font-family:'Rajdhani',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);}
-    .history-name{font-size:.7rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .history-del{position:absolute;top:.3rem;right:.3rem;background:rgba(232,25,44,.8);border:none;color:#fff;width:20px;height:20px;border-radius:50%;cursor:pointer;font-size:.65rem;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;}
-    .history-item:hover .history-del{opacity:1;}
-
-    /* ── CLOUDINARY CONFIG ── */
-    .config-note{background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.2);border-radius:4px;padding:1rem 1.2rem;font-size:.8rem;color:var(--muted);line-height:1.6;margin-bottom:1.5rem;}
-    .config-note strong{color:var(--text);}
-    .config-note code{background:rgba(255,255,255,.07);padding:1px 5px;border-radius:2px;font-size:.78rem;color:var(--accent3);}
-
-    /* ── BACK LINK ── */
-    .back-link{display:inline-flex;align-items:center;gap:.4rem;font-family:'Rajdhani',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;margin-bottom:1.5rem;}
-    .back-link:hover{color:var(--text);}
-
-    @media(max-width:600px){.form-grid{grid-template-columns:1fr;}}
-  </style>
+@media(max-width:600px){.form-grid{grid-template-columns:1fr;}}
+</style>
 </head>
 <body>
 
-<!-- ── LOGIN ── -->
 <div class="login-wrap" id="loginWrap">
   <div class="login-box">
-    <img src="afrl_logo.png" alt="AFRL" class="login-logo" />
+    <img src="afrl_logo.png" alt="AFRL" class="login-logo"/>
     <div class="login-title">Panneau Admin</div>
-    <input type="password" class="login-input" id="loginInput" placeholder="Mot de passe admin" onkeydown="if(event.key==='Enter')doLogin()" />
+    <input type="password" class="login-input" id="loginInput" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')doLogin()"/>
     <button class="login-btn" onclick="doLogin()">Se connecter</button>
     <div class="login-error" id="loginError">Mot de passe incorrect</div>
   </div>
 </div>
 
-<!-- ── ADMIN ── -->
 <div class="admin-wrap" id="adminWrap">
-
   <header>
     <div class="header-inner">
-      <img src="afrl_logo.png" alt="AFRL" class="header-logo" />
-      <div class="header-right">
+      <img src="afrl_logo.png" alt="AFRL" class="header-logo"/>
+      <div style="display:flex;align-items:center;gap:1rem;">
         <span class="admin-badge">Admin</span>
         <button class="logout-btn" onclick="doLogout()">Déconnexion</button>
       </div>
@@ -143,48 +119,16 @@
 
   <main>
     <a href="index.html" class="back-link">← Retour au site</a>
-
     <div class="page-title">Gestion des images</div>
-    <div class="page-sub">Uploade tes PNG directement ici — ils apparaissent instantanément sur le site.</div>
+    <div class="page-sub">Glisse ton PNG, choisis l'emplacement et uploade — visible instantanément sur le site.</div>
 
-    <!-- Config Cloudinary -->
-    <div class="config-note">
-      <strong>Configuration Cloudinary</strong> — Renseigne tes identifiants ci-dessous. Ils sont sauvegardés localement dans ton navigateur.<br/>
-      Trouve-les sur <strong>cloudinary.com → Dashboard</strong> : <code>Cloud name</code>, <code>API Key</code> et <code>Upload preset</code> (non signé).
-    </div>
-
-    <div class="upload-card">
-      <div class="upload-card-head">
-        <span class="upload-card-title">⚙️ Connexion Cloudinary</span>
-      </div>
-      <div class="upload-card-body">
-        <div class="form-grid">
-          <div class="form-group">
-            <label class="form-label">Cloud Name</label>
-            <input class="form-input" id="cfCloudName" placeholder="ex: dxyz123abc" oninput="saveConfig()" />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Upload Preset (non signé)</label>
-            <input class="form-input" id="cfPreset" placeholder="ex: afrl_unsigned" oninput="saveConfig()" />
-          </div>
-        </div>
-        <div style="font-size:.75rem;color:var(--muted);">
-          💡 Dans Cloudinary → Settings → Upload → <strong>Add upload preset</strong> → mode <strong>Unsigned</strong> → copie le nom ici.
-        </div>
-      </div>
-    </div>
-
-    <!-- Upload -->
-    <div class="upload-card">
-      <div class="upload-card-head">
-        <span class="upload-card-title">📤 Uploader une image</span>
-      </div>
-      <div class="upload-card-body">
-
+    <div class="card-box">
+      <div class="card-box-head"><span class="card-box-title">📤 Uploader une image</span></div>
+      <div class="card-box-body">
         <div class="form-grid">
           <div class="form-group">
             <label class="form-label">Semaine</label>
-            <select class="form-select" id="selSemaine" onchange="updateTypeOptions()">
+            <select class="form-select" id="selSemaine" onchange="updateTypes()">
               <option value="">-- Choisir --</option>
               <option value="general">🏆 Général Saison</option>
               <optgroup label="──────────────"></optgroup>
@@ -215,13 +159,12 @@
           </div>
           <div class="form-group">
             <label class="form-label">Type d'image</label>
-            <select class="form-select" id="selType">
+            <select class="form-select" id="selType" onchange="checkReady()">
               <option value="">-- Choisir la semaine d'abord --</option>
             </select>
           </div>
         </div>
 
-        <!-- Drop zone -->
         <div class="drop-zone" id="dropZone"
           ondragover="event.preventDefault();this.classList.add('dragover')"
           ondragleave="this.classList.remove('dragover')"
@@ -230,11 +173,11 @@
           <div class="drop-icon">🖼️</div>
           <div class="drop-text">Glisse ton PNG ici</div>
           <div class="drop-sub">ou clique pour sélectionner</div>
-          <input type="file" id="fileInput" class="drop-input" accept="image/png,image/jpeg" onchange="handleFile(this.files[0])" />
+          <input type="file" id="fileInput" style="display:none" accept="image/*" onchange="handleFile(this.files[0])"/>
         </div>
 
         <div class="preview-wrap" id="previewWrap">
-          <img id="previewImg" src="" alt="preview" />
+          <img id="previewImg" src="" alt=""/>
           <div class="preview-name" id="previewName"></div>
           <button class="preview-remove" onclick="clearPreview()">✕</button>
         </div>
@@ -247,227 +190,123 @@
           <div class="spinner" id="spinner"></div>
           <span id="uploadBtnText">📤 Uploader</span>
         </button>
-
       </div>
     </div>
 
-    <!-- Historique -->
-    <div class="upload-card">
-      <div class="upload-card-head">
-        <span class="upload-card-title">🗂️ Images uploadées</span>
-      </div>
-      <div class="upload-card-body">
+    <div class="card-box">
+      <div class="card-box-head"><span class="card-box-title">🗂️ Images uploadées</span></div>
+      <div class="card-box-body">
         <div class="history-grid" id="historyGrid">
-          <div style="color:var(--muted);font-size:.8rem;grid-column:1/-1;">Aucune image uploadée pour l'instant.</div>
+          <div style="color:var(--muted);font-size:.8rem;grid-column:1/-1;">Aucune image uploadée.</div>
         </div>
       </div>
     </div>
-
   </main>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast">
-  <span class="toast-icon" id="toastIcon"></span>
   <div><div class="toast-title" id="toastTitle"></div><div class="toast-msg" id="toastMsg"></div></div>
 </div>
 
 <script>
 // ══════════════════════════════════════
-// CONFIG — change le mot de passe ici
+// CONFIG
 // ══════════════════════════════════════
 const ADMIN_PASSWORD = 'afrl2026';
+const CLOUDINARY_CLOUD  = 'doxgg82iy';
+const CLOUDINARY_PRESET = 'afrl_upload';
+const GH_TOKEN = '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';
+const GH_REPO  = 'daco2A22/afrl-resultats';
+const GH_FILE  = 'versions.json';
+const GH_API   = `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`;
 
 // ══════════════════════════════════════
-// Types d'images disponibles par contexte
+// TYPES
 // ══════════════════════════════════════
+const CLASSES_KEYS = [
+  {v:'rally2_r5',l:'Rally2/R5'},{v:'super_2000',l:'Super 2000'},{v:'rgt',l:'RGT'},
+  {v:'rally3',l:'Rally3'},{v:'a8',l:'A8'},{v:'n4',l:'N4'},{v:'r4',l:'R4'},
+  {v:'rally4',l:'Rally4'},{v:'r3',l:'R3'},{v:'super_1600',l:'Super 1600'},
+  {v:'r2',l:'R2'},{v:'a7',l:'A7'},{v:'a6',l:'A6'},{v:'rally5',l:'Rally5'},{v:'r1',l:'R1'},
+];
+
 const TYPES_GENERAL = [
-  {value:'classement_general',    label:'Classement Général Saison'},
-  {value:'general_classe',        label:'Général par Classe Saison'},
-  {value:'classe_rally2_r5',      label:'Classe Rally2/R5'},
-  {value:'classe_super_2000',     label:'Classe Super 2000'},
-  {value:'classe_rgt',            label:'Classe RGT'},
-  {value:'classe_rally3',         label:'Classe Rally3'},
-  {value:'classe_a8',             label:'Classe A8'},
-  {value:'classe_n4',             label:'Classe N4'},
-  {value:'classe_r4',             label:'Classe R4'},
-  {value:'classe_rally4',         label:'Classe Rally4'},
-  {value:'classe_r3',             label:'Classe R3'},
-  {value:'classe_r2',             label:'Classe R2'},
-  {value:'classe_a7',             label:'Classe A7'},
-  {value:'classe_a6',             label:'Classe A6'},
-  {value:'classe_rally5',         label:'Classe Rally5'},
-  {value:'classe_r1',             label:'Classe R1'},
+  {v:'classement_general',l:'Classement Général Saison'},
+  {v:'general_classe',l:'Général par Classe Saison'},
+  ...CLASSES_KEYS.map(c=>({v:`classe_${c.v}`,l:`Classe ${c.l}`})),
 ];
 
-const TYPES_SEMAINE = [
-  {value:'{id}_r1_general',      label:'🔵 Général — Rallye Nationale (R1)'},
-  {value:'r1_general_classe',    label:'🔵 Général par Classe — R1 Nationale'},
-  {value:'{id}_r2_general',      label:'🔴 Général — Rallye Régionale (R2)'},
-  {value:'r2_general_classe',    label:'🔴 Général par Classe — R2 Régionale'},
-  {value:'general',              label:'🏆 Classement Général Semaine'},
-  {value:'general_classe',       label:'📊 Général par Classe Semaine'},
-  {value:'r1_classe_rally2_r5',  label:'🔵 Classe Rally2/R5 — R1'},
-  {value:'r1_classe_super_2000', label:'🔵 Classe Super 2000 — R1'},
-  {value:'r1_classe_rgt',        label:'🔵 Classe RGT — R1'},
-  {value:'r1_classe_rally3',     label:'🔵 Classe Rally3 — R1'},
-  {value:'r1_classe_a8',         label:'🔵 Classe A8 — R1'},
-  {value:'r1_classe_n4',         label:'🔵 Classe N4 — R1'},
-  {value:'r1_classe_r4',         label:'🔵 Classe R4 — R1'},
-  {value:'r1_classe_rally4',     label:'🔵 Classe Rally4 — R1'},
-  {value:'r1_classe_r3',         label:'🔵 Classe R3 — R1'},
-  {value:'r1_classe_super_1600', label:'🔵 Classe Super 1600 — R1'},
-  {value:'r1_classe_r2',         label:'🔵 Classe R2 — R1'},
-  {value:'r1_classe_a7',         label:'🔵 Classe A7 — R1'},
-  {value:'r1_classe_a6',         label:'🔵 Classe A6 — R1'},
-  {value:'r1_classe_rally5',     label:'🔵 Classe Rally5 — R1'},
-  {value:'r1_classe_r1',         label:'🔵 Classe R1 — R1'},
-  {value:'r2_classe_rally2_r5',  label:'🔴 Classe Rally2/R5 — R2'},
-  {value:'r2_classe_super_2000', label:'🔴 Classe Super 2000 — R2'},
-  {value:'r2_classe_rgt',        label:'🔴 Classe RGT — R2'},
-  {value:'r2_classe_rally3',     label:'🔴 Classe Rally3 — R2'},
-  {value:'r2_classe_a8',         label:'🔴 Classe A8 — R2'},
-  {value:'r2_classe_n4',         label:'🔴 Classe N4 — R2'},
-  {value:'r2_classe_r4',         label:'🔴 Classe R4 — R2'},
-  {value:'r2_classe_rally4',     label:'🔴 Classe Rally4 — R2'},
-  {value:'r2_classe_r3',         label:'🔴 Classe R3 — R2'},
-  {value:'r2_classe_super_1600', label:'🔴 Classe Super 1600 — R2'},
-  {value:'r2_classe_r2',         label:'🔴 Classe R2 — R2'},
-  {value:'r2_classe_a7',         label:'🔴 Classe A7 — R2'},
-  {value:'r2_classe_a6',         label:'🔴 Classe A6 — R2'},
-  {value:'r2_classe_rally5',     label:'🔴 Classe Rally5 — R2'},
-  {value:'r2_classe_r1',         label:'🔴 Classe R1 — R2'},
-];
-
-// ══════════════════════════════════════
-// GITHUB API — versions.json dans le repo
-// ══════════════════════════════════════
-const GH_TOKEN  = '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';
-const GH_REPO   = 'daco2A22/afrl-resultats';
-const GH_FILE   = 'versions.json';
-const GH_API    = `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`;
-
-async function getVersions(){
-  try {
-    const r = await fetch(GH_API, {
-      headers:{'Authorization':`token ${GH_TOKEN}`,'Accept':'application/vnd.github.v3+json'}
-    });
-    if(!r.ok) return {};
-    const d = await r.json();
-    const content = JSON.parse(atob(d.content.replace(/\n/g,'')));
-    return content.versions || {};
-  } catch(e){ return {}; }
+function getTypesSemaine(sid){
+  return [
+    {v:`${sid}_r1_general`,l:'🔵 Général — Nationale (R1)'},
+    {v:'r1_general_classe',l:'🔵 Général par Classe — R1'},
+    {v:`${sid}_r2_general`,l:'🔴 Général — Régionale (R2)'},
+    {v:'r2_general_classe',l:'🔴 Général par Classe — R2'},
+    {v:'general',l:'🏆 Classement Général Semaine'},
+    {v:'general_classe',l:'📊 Général par Classe Semaine'},
+    ...CLASSES_KEYS.map(c=>({v:`r1_classe_${c.v}`,l:`🔵 Classe ${c.l} — R1`})),
+    ...CLASSES_KEYS.map(c=>({v:`r2_classe_${c.v}`,l:`🔴 Classe ${c.l} — R2`})),
+  ];
 }
 
-async function saveVersions(versions){
-  try {
-    // Récupérer le SHA actuel du fichier
-    let sha = '';
-    const r = await fetch(GH_API, {
-      headers:{'Authorization':`token ${GH_TOKEN}`,'Accept':'application/vnd.github.v3+json'}
-    });
-    if(r.ok){
-      const d = await r.json();
-      sha = d.sha;
-    }
-    // Mettre à jour le fichier
-    const content = btoa(JSON.stringify({versions}, null, 2));
-    await fetch(GH_API, {
-      method:'PUT',
-      headers:{'Authorization':`token ${GH_TOKEN}`,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},
-      body: JSON.stringify({
-        message:'Update versions.json',
-        content,
-        sha: sha || undefined
-      })
-    });
-  } catch(e){ console.error('saveVersions error', e); }
-}
+// ══════════════════════════════════════
+// LOGIN
+// ══════════════════════════════════════
 function doLogin(){
-  const val = document.getElementById('loginInput').value;
-  if(val === ADMIN_PASSWORD){
-    sessionStorage.setItem('afrl_admin', '1');
+  if(document.getElementById('loginInput').value === ADMIN_PASSWORD){
+    sessionStorage.setItem('afrl_admin','1');
     document.getElementById('loginWrap').style.display = 'none';
     document.getElementById('adminWrap').classList.add('visible');
-    loadConfig();
     loadHistory();
   } else {
     document.getElementById('loginError').style.display = 'block';
     document.getElementById('loginInput').value = '';
   }
 }
-
 function doLogout(){
   sessionStorage.removeItem('afrl_admin');
   location.reload();
 }
-
-// Auto-login si déjà connecté dans la session
 if(sessionStorage.getItem('afrl_admin')){
   document.getElementById('loginWrap').style.display = 'none';
   document.getElementById('adminWrap').classList.add('visible');
-  loadConfig();
   loadHistory();
 }
 
 // ══════════════════════════════════════
-// CONFIG CLOUDINARY (sauvée en localStorage)
+// TYPES SELECT
 // ══════════════════════════════════════
-function saveConfig(){
-  localStorage.setItem('afrl_cloudname', document.getElementById('cfCloudName').value);
-  localStorage.setItem('afrl_preset', document.getElementById('cfPreset').value);
-}
-
-function loadConfig(){
-  document.getElementById('cfCloudName').value = localStorage.getItem('afrl_cloudname') || 'doxgg82iy';
-  document.getElementById('cfPreset').value    = localStorage.getItem('afrl_preset') || 'afrl_upload';
-  // Sauvegarder direct si pas encore en localStorage
-  if(!localStorage.getItem('afrl_cloudname')) localStorage.setItem('afrl_cloudname','doxgg82iy');
-  if(!localStorage.getItem('afrl_preset'))    localStorage.setItem('afrl_preset','afrl_upload');
-}
-
-// ══════════════════════════════════════
-// TYPE SELECT
-// ══════════════════════════════════════
-function updateTypeOptions(){
+function updateTypes(){
   const sem = document.getElementById('selSemaine').value;
   const sel = document.getElementById('selType');
   sel.innerHTML = '';
-  if(!sem){ sel.innerHTML = '<option value="">-- Choisir la semaine d\'abord --</option>'; return; }
-
-  const types = sem === 'general' ? TYPES_GENERAL : TYPES_SEMAINE;
+  if(!sem){ sel.innerHTML = '<option value="">-- Choisir la semaine d\'abord --</option>'; checkReady(); return; }
+  const types = sem === 'general' ? TYPES_GENERAL : getTypesSemaine(sem);
   types.forEach(t=>{
-    const val = t.value.replace('{id}', sem); // ex: s01_r1_general
-    const opt = document.createElement('option');
-    opt.value = val;
-    opt.textContent = t.label;
-    sel.appendChild(opt);
+    const o = document.createElement('option');
+    o.value = t.v; o.textContent = t.l;
+    sel.appendChild(o);
   });
   checkReady();
 }
 
 // ══════════════════════════════════════
-// FILE HANDLING
+// FILE
 // ══════════════════════════════════════
 let currentFile = null;
-
 function handleDrop(e){
   e.preventDefault();
   document.getElementById('dropZone').classList.remove('dragover');
-  const file = e.dataTransfer.files[0];
-  if(file) handleFile(file);
+  handleFile(e.dataTransfer.files[0]);
 }
-
 function handleFile(file){
   if(!file) return;
   currentFile = file;
-  const url = URL.createObjectURL(file);
-  document.getElementById('previewImg').src = url;
+  document.getElementById('previewImg').src = URL.createObjectURL(file);
   document.getElementById('previewName').textContent = file.name;
   document.getElementById('previewWrap').style.display = 'block';
   checkReady();
 }
-
 function clearPreview(){
   currentFile = null;
   document.getElementById('previewWrap').style.display = 'none';
@@ -475,87 +314,87 @@ function clearPreview(){
   document.getElementById('fileInput').value = '';
   checkReady();
 }
-
 function checkReady(){
-  const ready = currentFile &&
-    document.getElementById('selSemaine').value &&
-    document.getElementById('selType').value &&
-    document.getElementById('cfCloudName').value &&
-    document.getElementById('cfPreset').value;
-  document.getElementById('uploadBtn').disabled = !ready;
+  const ok = currentFile && document.getElementById('selSemaine').value && document.getElementById('selType').value;
+  document.getElementById('uploadBtn').disabled = !ok;
 }
 
 // ══════════════════════════════════════
-// UPLOAD CLOUDINARY
+// GITHUB — lire/écrire versions.json
+// ══════════════════════════════════════
+async function ghRead(){
+  const r = await fetch(GH_API,{headers:{'Authorization':`token ${GH_TOKEN}`,'Accept':'application/vnd.github.v3+json'}});
+  if(!r.ok) return {versions:{}, sha:''};
+  const d = await r.json();
+  return {versions: JSON.parse(atob(d.content.replace(/\n/g,''))).versions || {}, sha: d.sha};
+}
+async function ghWrite(versions, sha){
+  const body = {message:'Update versions.json', content: btoa(JSON.stringify({versions},null,2))};
+  if(sha) body.sha = sha;
+  await fetch(GH_API,{
+    method:'PUT',
+    headers:{'Authorization':`token ${GH_TOKEN}`,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},
+    body: JSON.stringify(body)
+  });
+}
+
+// ══════════════════════════════════════
+// UPLOAD
 // ══════════════════════════════════════
 async function doUpload(){
-  const cloudName = document.getElementById('cfCloudName').value.trim();
-  const preset    = document.getElementById('cfPreset').value.trim();
-  const semaine   = document.getElementById('selSemaine').value;
-  const type      = document.getElementById('selType').value;
+  const sem  = document.getElementById('selSemaine').value;
+  const type = document.getElementById('selType').value;
+  if(!sem || !type || !currentFile) return;
 
-  if(!cloudName || !preset || !currentFile || !semaine || !type) return;
+  // Clé = "general/classement_general" ou "s01/s01_r1_general"
+  const key = `${sem}/${type}`;
+  // Public ID Cloudinary avec timestamp pour éviter le cache
+  const publicId = `afrl/${sem}/${type}_${Date.now()}`;
 
-  // Nom du fichier public_id = afrl/semaine/type
-  // On force "general" sans accent
-  const folder = semaine === 'general' ? 'general' : semaine;
-  const ts = Date.now();
-  const publicId = `afrl/${folder}/${type}_${ts}`;
-
-  // UI
   const btn = document.getElementById('uploadBtn');
   btn.disabled = true;
   document.getElementById('spinner').style.display = 'block';
   document.getElementById('uploadBtnText').textContent = 'Upload en cours...';
   document.getElementById('progressBar').style.display = 'block';
-  document.getElementById('progressFill').style.width = '0%';
+
+  let prog = 0;
+  const pi = setInterval(()=>{ prog = Math.min(prog+6,85); document.getElementById('progressFill').style.width=prog+'%'; },200);
 
   try {
-    const formData = new FormData();
-    formData.append('file', currentFile);
-    formData.append('upload_preset', preset);
-    formData.append('public_id', publicId);
-    // Note: overwrite non supporté en mode non signé
+    // 1. Upload vers Cloudinary
+    const fd = new FormData();
+    fd.append('file', currentFile);
+    fd.append('upload_preset', CLOUDINARY_PRESET);
+    fd.append('public_id', publicId);
 
-    // Simuler progression
-    let prog = 0;
-    const progInterval = setInterval(()=>{
-      prog = Math.min(prog + 8, 85);
-      document.getElementById('progressFill').style.width = prog + '%';
-    }, 150);
+    const cr = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`,{method:'POST',body:fd});
+    if(!cr.ok) throw new Error(`Cloudinary erreur ${cr.status}`);
+    const cd = await cr.json();
+    const imageUrl = cd.secure_url;
 
-    const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
-      method: 'POST',
-      body: formData
-    });
+    clearInterval(pi);
+    document.getElementById('progressFill').style.width = '70%';
 
-    clearInterval(progInterval);
+    // 2. Mettre à jour versions.json sur GitHub
+    const {versions, sha} = await ghRead();
+    versions[key] = imageUrl;
+    await ghWrite(versions, sha);
+
     document.getElementById('progressFill').style.width = '100%';
 
-    if(!res.ok) throw new Error(`Erreur ${res.status}`);
-    const data = await res.json();
+    // 3. Historique local
+    const hist = JSON.parse(localStorage.getItem('afrl_history')||'[]');
+    hist.unshift({url:imageUrl, slot:key, name:currentFile.name, date:new Date().toLocaleDateString('fr-FR')});
+    if(hist.length>50) hist.pop();
+    localStorage.setItem('afrl_history', JSON.stringify(hist));
 
-    // Mettre à jour JSONbin avec l'URL complète
-    const versions = await getVersions();
-    versions[`${folder}/${type}`] = data.secure_url;
-    await saveVersions(versions);
-
-    // Sauvegarder dans l'historique
-    saveHistory({
-      url: data.secure_url,
-      slot: `${semaine}/${type}`,
-      name: currentFile.name,
-      date: new Date().toLocaleDateString('fr-FR'),
-      version: data.version,
-      publicId: publicId
-    });
-
-    showToast('success', '✅ Image uploadée !', `${semaine}/${type} mis à jour sur le site.`);
+    showToast('success','✅ Uploadé !', `${key} visible sur le site.`);
     clearPreview();
     loadHistory();
 
   } catch(err){
-    showToast('error', '❌ Erreur', err.message + ' — Si l\'image existe déjà sur Cloudinary, supprime-la d\'abord puis re-uploade.');
+    clearInterval(pi);
+    showToast('error','❌ Erreur', err.message);
   } finally {
     btn.disabled = false;
     document.getElementById('spinner').style.display = 'none';
@@ -563,31 +402,41 @@ async function doUpload(){
     setTimeout(()=>{
       document.getElementById('progressBar').style.display = 'none';
       document.getElementById('progressFill').style.width = '0%';
-    }, 1500);
+    },1500);
     checkReady();
+  }
+}
+
+// ══════════════════════════════════════
+// SUPPRIMER
+// ══════════════════════════════════════
+async function deleteHistory(idx){
+  const hist = JSON.parse(localStorage.getItem('afrl_history')||'[]');
+  const item = hist[idx];
+  if(!item) return;
+  try {
+    const {versions, sha} = await ghRead();
+    delete versions[item.slot];
+    await ghWrite(versions, sha);
+    hist.splice(idx,1);
+    localStorage.setItem('afrl_history', JSON.stringify(hist));
+    loadHistory();
+    showToast('success','✅ Supprimé','Image retirée du site.');
+  } catch(e){
+    showToast('error','❌ Erreur', e.message);
   }
 }
 
 // ══════════════════════════════════════
 // HISTORIQUE
 // ══════════════════════════════════════
-function saveHistory(item){
-  const hist = JSON.parse(localStorage.getItem('afrl_history') || '[]');
-  hist.unshift(item);
-  if(hist.length > 50) hist.pop();
-  localStorage.setItem('afrl_history', JSON.stringify(hist));
-}
-
 function loadHistory(){
-  const hist = JSON.parse(localStorage.getItem('afrl_history') || '[]');
+  const hist = JSON.parse(localStorage.getItem('afrl_history')||'[]');
   const g = document.getElementById('historyGrid');
-  if(hist.length === 0){
-    g.innerHTML = '<div style="color:var(--muted);font-size:.8rem;grid-column:1/-1;">Aucune image uploadée pour l\'instant.</div>';
-    return;
-  }
+  if(!hist.length){ g.innerHTML='<div style="color:var(--muted);font-size:.8rem;grid-column:1/-1;">Aucune image uploadée.</div>'; return; }
   g.innerHTML = hist.map((h,i)=>`
     <div class="history-item">
-      <img class="history-img" src="${h.url}" alt="${h.slot}" />
+      <img class="history-img" src="${h.url}" alt="${h.slot}"/>
       <div class="history-info">
         <div class="history-slot">${h.slot}</div>
         <div class="history-name">${h.name}</div>
@@ -595,25 +444,6 @@ function loadHistory(){
       </div>
       <button class="history-del" onclick="deleteHistory(${i})">✕</button>
     </div>`).join('');
-}
-
-async function deleteHistory(idx){
-  const hist = JSON.parse(localStorage.getItem('afrl_history') || '[]');
-  const item = hist[idx];
-
-  // Supprimer dans JSONbin avec la clé semaine/type
-  if(item && item.slot){
-    try {
-      const versions = await getVersions();
-      delete versions[item.slot];
-      await saveVersions(versions);
-    } catch(e){}
-  }
-
-  hist.splice(idx, 1);
-  localStorage.setItem('afrl_history', JSON.stringify(hist));
-  loadHistory();
-  showToast('success', '✅ Supprimé', 'Image retirée du site pour tous les visiteurs.');
 }
 
 // ══════════════════════════════════════
@@ -626,7 +456,7 @@ function showToast(type, title, msg){
   document.getElementById('toastMsg').textContent = msg;
   t.className = `toast ${type} show`;
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(()=>{ t.classList.remove('show'); }, 4000);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 5000);
 }
 </script>
 </body>
