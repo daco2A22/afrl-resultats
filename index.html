@@ -288,20 +288,56 @@ const CLASSES = [
   {label:'R1',         key:'r1'},
 ];
 
-const STATUS_DOT   = {done:'dot-done',live:'dot-live',upcoming:''};
-const STATUS_STAG  = {done:'stag-done',live:'stag-live',upcoming:'stag-upcoming'};
-const STATUS_LABEL = {done:'Terminé',live:'En cours',upcoming:'À venir'};
+// ══════════════════════════════════════
+// STATUT AUTO des semaines
+// ══════════════════════════════════════
+const STATUS_STAG  = {done:'stag-done', live:'stag-live', upcoming:'stag-upcoming'};
+const STATUS_LABEL = {done:'Terminé',   live:'En cours',  upcoming:'À venir'};
 
-// ══════════════════════════════════════
-// BUILD NAV
-// ══════════════════════════════════════
+function getWeekStatus(w, idx){
+  const sid = w.id;
+  const mainKeys = [
+    `${sid}/${sid}_r1_general`,
+    `${sid}/r1_general_classe`,
+    `${sid}/${sid}_r2_general`,
+    `${sid}/r2_general_classe`,
+    `${sid}/general`,
+    `${sid}/general_classe`,
+  ];
+  const hasAll = mainKeys.every(k => VERSIONS[k]);
+  const hasAny = mainKeys.some(k => VERSIONS[k]);
+
+  if(hasAll) return 'done';
+  if(hasAny) return 'live';
+
+  // Si la semaine précédente est terminée → cette semaine est "En cours"
+  if(idx > 0){
+    const prev = ALL_WEEKS[idx - 1];
+    const psid = prev.id;
+    const prevKeys = [
+      `${psid}/${psid}_r1_general`,
+      `${psid}/r1_general_classe`,
+      `${psid}/${psid}_r2_general`,
+      `${psid}/r2_general_classe`,
+      `${psid}/general`,
+      `${psid}/general_classe`,
+    ];
+    if(prevKeys.every(k => VERSIONS[k])) return 'live';
+  }
+
+  return 'upcoming';
+}
+
 function buildNav(){
   const nav = document.getElementById('navInner');
   let html = `<button class="tab-btn" onclick="switchTab('calendrier',this)">📅 Calendrier</button>`;
   html += `<button class="tab-btn active" onclick="switchTab('general',this)">🏆 Général</button>`;
   html += `<button class="tab-btn" onclick="switchTab('classes',this)">📊 Classes</button>`;
-  ALL_WEEKS.forEach(w=>{
-    const dot = STATUS_DOT[w.status] ? `<span class="dot ${STATUS_DOT[w.status]}"></span>` : '';
+  ALL_WEEKS.forEach((w, idx)=>{
+    const status = getWeekStatus(w, idx);
+    const dot = status === 'done' ? `<span class="dot dot-done"></span>`
+              : status === 'live' ? `<span class="dot dot-live"></span>`
+              : '';
     html += `<button class="tab-btn" onclick="switchTab('${w.id}',this)">${dot}${w.label}</button>`;
   });
   nav.innerHTML = html;
@@ -333,12 +369,13 @@ function buildClasses(){
 // ══════════════════════════════════════
 function buildWeekPanels(){
   const main = document.getElementById('mainContent');
-  ALL_WEEKS.forEach(w=>{
-    const stag = `<span class="stag ${STATUS_STAG[w.status]}">${STATUS_LABEL[w.status]}</span>`;
+  ALL_WEEKS.forEach((w, idx)=>{
+    const status = getWeekStatus(w, idx);
+    const stag = `<span class="stag ${STATUS_STAG[status]}">${STATUS_LABEL[status]}</span>`;
     const r = w.rallyes;
     const sid = w.id;
 
-    if(w.status === 'done' || w.status === 'live'){
+    if(status === 'done' || status === 'live'){
       // Cartes générales
       const generalCards = [
         mkCard(`${sid}/${sid}_r1_general`, r[0].name, 'chip-general', 'Général', r[0].dept||w.label),
@@ -390,11 +427,12 @@ function buildWeekPanels(){
 function buildCalendar(){
   const g = document.getElementById('calGrid');
   const wsC = {done:'ws-done',live:'ws-live',upcoming:'ws-upcoming'};
-  ALL_WEEKS.forEach(w=>{
+  ALL_WEEKS.forEach((w, idx)=>{
+    const status = getWeekStatus(w, idx);
     const left  = w.rallyes.find(r=>r.type==='N') || w.rallyes[0];
     const right = w.rallyes.find(r=>r.type==='R') || null;
     const mkR = (r,side) => r ? `<div class="w-rally ${side}"><div class="rtype rtype-${r.type.toLowerCase()}">◼ ${r.type==='N'?'Nationale':'Régionale'}</div><div class="rname">${r.name}</div>${r.dept?`<div class="rdept">${r.dept}</div>`:''}</div>` : `<div class="w-rally ${side}"></div>`;
-    g.innerHTML += `<div class="week-block"><div class="week-head"><span class="week-num">${w.label}</span><span class="week-label">${w.title.replace(w.label+' — ','')}</span><span class="week-status ${wsC[w.status]}">${STATUS_LABEL[w.status]}</span></div><div class="week-rallyes">${mkR(left,'left')}${mkR(right,'right')}</div></div>`;
+    g.innerHTML += `<div class="week-block"><div class="week-head"><span class="week-num">${w.label}</span><span class="week-label">${w.title.replace(w.label+' — ','')}</span><span class="week-status ${wsC[status]}">${STATUS_LABEL[status]}</span></div><div class="week-rallyes">${mkR(left,'left')}${mkR(right,'right')}</div></div>`;
   });
 }
 
@@ -521,19 +559,41 @@ async function refreshVersions(){
       }
     });
     VERSIONS = newV;
+    localStorage.setItem('afrl_versions_cache', JSON.stringify(VERSIONS));
   } catch(e){}
 }
 setInterval(refreshVersions, 10000);
 
 // ══════════════════════════════════════
-// INIT
+// INIT — affichage immédiat depuis cache
 // ══════════════════════════════════════
+
+// 1. Charger le cache localStorage immédiatement
+const cached = localStorage.getItem('afrl_versions_cache');
+if(cached){ try { VERSIONS = JSON.parse(cached); } catch(e){} }
+
+// 2. Construire le site tout de suite avec le cache
+buildNav();
+buildGeneral();
+buildClasses();
+buildWeekPanels();
+buildCalendar();
+
+// 3. Charger les vraies versions depuis GitHub en arrière-plan
 loadVersions().then(()=>{
-  buildNav();
-  buildGeneral();
-  buildClasses();
-  buildWeekPanels();
-  buildCalendar();
+  // Sauvegarder dans le cache
+  localStorage.setItem('afrl_versions_cache', JSON.stringify(VERSIONS));
+  // Mettre à jour les cartes si différent du cache
+  document.querySelectorAll('img[data-key]').forEach(img=>{
+    const key = img.dataset.key;
+    const url = VERSIONS[key];
+    if(url && img.src !== url){
+      img.src = url;
+      img.closest('.card').style.display = '';
+    } else if(!url){
+      img.closest('.card').style.display = 'none';
+    }
+  });
 });
 </script>
 </body>
