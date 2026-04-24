@@ -256,7 +256,7 @@ function getTypesSemaine(sid){
 // LOGIN
 // ══════════════════════════════════════
 function doLogin(){
-  const token = document.getElementById('tokenInput').value.trim();
+  const token = document.getElementById('tokenInput').value.trim() || localStorage.getItem('afrl_gh_token') || '';
   if(document.getElementById('loginInput').value === ADMIN_PASSWORD && token){
     sessionStorage.setItem('afrl_admin','1');
     localStorage.setItem('afrl_gh_token', token);
@@ -272,7 +272,12 @@ function doLogout(){
   sessionStorage.removeItem('afrl_admin');
   location.reload();
 }
-if(sessionStorage.getItem('afrl_admin')){
+// Auto-remplir le token si déjà sauvegardé
+document.addEventListener('DOMContentLoaded', ()=>{
+  const saved = localStorage.getItem('afrl_gh_token');
+  if(saved) document.getElementById('tokenInput').value = saved;
+});
+if(sessionStorage.getItem('afrl_admin') && localStorage.getItem('afrl_gh_token')){
   document.getElementById('loginWrap').style.display = 'none';
   document.getElementById('adminWrap').classList.add('visible');
   loadHistory();
@@ -396,6 +401,13 @@ async function doUpload(){
     showToast('success','✅ Uploadé !', `${key} visible sur le site.`);
     clearPreview();
     loadHistory();
+
+    // Notifier tous les onglets du site instantanément
+    try {
+      const bc = new BroadcastChannel('afrl_updates');
+      bc.postMessage({key, url: imageUrl});
+      bc.close();
+    } catch(e){}
 
   } catch(err){
     clearInterval(pi);

@@ -213,7 +213,7 @@ function mkCard(key, label, chip, chipLabel, date){
   if(!url) return ''; // Cacher si pas d'image
   return `<div class="card" onclick="openLB('${url}','${label}')">
     <div class="card-head"><span class="card-label">${label}</span><span class="card-chip ${chip}">${chipLabel}</span></div>
-    <div class="card-img"><img src="${url}" alt="${label}" onerror="this.closest('.card').style.display='none'"/></div>
+    <div class="card-img"><img src="${url}" data-key="${key}" alt="${label}" onerror="this.closest('.card').style.display='none'"/></div>
     <div class="card-foot"><span class="card-date">${date}</span><span class="card-cta">Agrandir →</span></div>
   </div>`;
 }
@@ -452,8 +452,42 @@ document.addEventListener('DOMContentLoaded', ()=>{
 });
 
 // ══════════════════════════════════════
-// AUTO-REFRESH toutes les 10s
+// BROADCAST — mise à jour instantanée
+// depuis l'admin sans Ctrl+R
 // ══════════════════════════════════════
+try {
+  const bc = new BroadcastChannel('afrl_updates');
+  bc.onmessage = (e)=>{
+    const {key, url} = e.data;
+    if(!key || !url) return;
+    VERSIONS[key] = url;
+    // Mettre à jour toutes les cartes avec cette clé
+    document.querySelectorAll('.card').forEach(card=>{
+      const img = card.querySelector('img');
+      if(img && img.dataset.key === key){
+        img.src = url;
+        card.style.display = '';
+      }
+    });
+    // Si la carte n'existe pas encore, reconstruire le panneau
+    rebuildPanel(key);
+  };
+} catch(e){}
+
+function rebuildPanel(key){
+  const sid = key.split('/')[0];
+  const panel = document.getElementById('panel-' + sid);
+  if(!panel) return;
+  // Reconstruire juste la grille principale du panneau
+  const grid = panel.querySelector('.results-grid');
+  if(grid) grid.querySelectorAll('.card').forEach(card=>{
+    const img = card.querySelector('img');
+    if(img && img.dataset.key === key){
+      img.src = VERSIONS[key];
+      card.style.display = '';
+    }
+  });
+}
 async function refreshVersions(){
   try {
     const r = await fetch(GH_RAW + '?t=' + Date.now());
