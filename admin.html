@@ -195,8 +195,11 @@ main{max-width:1100px;margin:0 auto;padding:2rem 1.5rem;width:100%;}
     </div>
 
     <div class="card-box">
-      <div class="card-box-head"><span class="card-box-title">🗂️ Images uploadées</span></div>
-      <div class="card-box-body">
+      <div class="card-box-head" onclick="toggleHistory()" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
+        <span class="card-box-title">🗂️ Images uploadées</span>
+        <span id="historyToggle" style="font-family:Rajdhani,sans-serif;font-size:.8rem;color:var(--muted);letter-spacing:.1em;">▼ AFFICHER</span>
+      </div>
+      <div class="card-box-body" id="historyBody" style="display:none;">
         <div class="history-grid" id="historyGrid">
           <div style="color:var(--muted);font-size:.8rem;grid-column:1/-1;">Aucune image uploadée.</div>
         </div>
@@ -453,6 +456,14 @@ async function deleteHistory(idx){
 // ══════════════════════════════════════
 // HISTORIQUE
 // ══════════════════════════════════════
+function toggleHistory(){
+  const body = document.getElementById('historyBody');
+  const toggle = document.getElementById('historyToggle');
+  const open = body.style.display === 'none';
+  body.style.display = open ? 'block' : 'none';
+  toggle.textContent = open ? '▲ MASQUER' : '▼ AFFICHER';
+}
+
 function loadHistory(){
   const hist = JSON.parse(localStorage.getItem('afrl_history')||'[]');
   const g = document.getElementById('historyGrid');
