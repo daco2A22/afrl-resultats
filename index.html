@@ -210,8 +210,8 @@ function imgUrl(key){
 // ══════════════════════════════════════
 function mkCard(key, label, chip, chipLabel, date){
   const url = imgUrl(key);
-  if(!url) return ''; // Cacher si pas d'image
-  return `<div class="card" onclick="openLB('${url}','${label}')">
+  if(!url) return '';
+  return `<div class="card" data-url="${url}" data-label="${label.replace(/"/g,'&quot;')}" onclick="openLB(this.dataset.url,this.dataset.label)">
     <div class="card-head"><span class="card-label">${label}</span><span class="card-chip ${chip}">${chipLabel}</span></div>
     <div class="card-img"><img src="${url}" data-key="${key}" alt="${label}" onerror="this.closest('.card').style.display='none'"/></div>
     <div class="card-foot"><span class="card-date">${date}</span><span class="card-cta">Agrandir →</span></div>
