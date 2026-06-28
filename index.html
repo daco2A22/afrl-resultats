@@ -613,7 +613,7 @@ window.addEventListener('load', ()=>{
       .then(r=>r.json())
       .then(d=>{
         const el = document.getElementById('visitCount');
-        if(el && d.count) el.textContent = parseInt(d.count).toLocaleString('fr-FR');
+        if(el && d.count !== undefined) el.textContent = parseInt(d.count).toLocaleString('fr-FR');
       })
       .catch(()=>{});
   }, 1500);
