@@ -608,22 +608,15 @@ loadVersions().then(()=>{
 <script data-goatcounter="https://afrl-resultats.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script>
 window.addEventListener('load', ()=>{
-  const el = document.getElementById('visitCount');
-  if(!el) return;
-  // Widget officiel GoatCounter
-  const s = document.createElement('script');
-  s.src = '//gc.zgo.at/count.js';
-  s.setAttribute('data-goatcounter', 'https://afrl-resultats.goatcounter.com/count');
-  s.setAttribute('data-goatcounter-settings', JSON.stringify({
-    no_onload: true
-  }));
-  // Utiliser le compteur de page
   setTimeout(()=>{
     fetch('https://afrl-resultats.goatcounter.com/counter/'+encodeURIComponent(location.pathname)+'.json')
       .then(r=>r.json())
-      .then(d=>{ if(d.count) el.textContent = parseInt(d.count_unique||d.count).toLocaleString('fr-FR'); })
-      .catch(()=>{ el.textContent = '—'; });
-  }, 1000);
+      .then(d=>{
+        const el = document.getElementById('visitCount');
+        if(el && d.count) el.textContent = parseInt(d.count).toLocaleString('fr-FR');
+      })
+      .catch(()=>{});
+  }, 1500);
 });
 </script>
 </body>
