@@ -605,19 +605,35 @@ loadVersions().then(()=>{
   });
 });
 </script>
-<script data-goatcounter="https://afrl-resultats.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script>
-window.addEventListener('load', ()=>{
-  setTimeout(()=>{
-    fetch('https://afrl-resultats.goatcounter.com/counter/'+encodeURIComponent(location.pathname)+'.json')
-      .then(r=>r.json())
-      .then(d=>{
-        const el = document.getElementById('visitCount');
-        if(el && d.count !== undefined) el.textContent = parseInt(d.count).toLocaleString('fr-FR');
-      })
-      .catch(()=>{});
-  }, 1500);
-});
+// ══════════════════════════════════════
+// COMPTEUR DE VISITES — JSONbin public
+// sessionStorage évite de compter les rechargements
+// ══════════════════════════════════════
+(async function(){
+  const el = document.getElementById('visitCount');
+  const BIN_ID  = '6a41aba8f5f4af5e293eef9b';
+  const BIN_KEY = '$2a$10$yM9onKHZGLNgnH8dbxWPPuPabLAkcBemA6iP0l5NwRI79mFTrtPh.';
+  const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+  try {
+    const r = await fetch(BIN_URL+'/latest', {
+      headers:{'X-Master-Key':BIN_KEY,'X-Bin-Meta':'false'}
+    });
+    const d = await r.json();
+    const visits = parseInt(d.visits || 0);
+    if(el) el.textContent = visits.toLocaleString('fr-FR');
+
+    if(!sessionStorage.getItem('afrl_visited')){
+      sessionStorage.setItem('afrl_visited','1');
+      await fetch(BIN_URL, {
+        method:'PUT',
+        headers:{'Content-Type':'application/json','X-Master-Key':BIN_KEY},
+        body: JSON.stringify({visits: visits + 1})
+      });
+      if(el) el.textContent = (visits + 1).toLocaleString('fr-FR');
+    }
+  } catch(e){ if(el) el.textContent = '—'; }
+})();
 </script>
 </body>
 </html>
