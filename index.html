@@ -20,71 +20,117 @@ body::after{content:'';position:fixed;inset:0;background:url('bg.webp') center/c
 /* HEADER */
 header{position:relative;z-index:20;background:rgba(6,8,15,0.97);border-bottom:1px solid var(--border);}
 .header-inner{max-width:1300px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:64px;}
+.header-center{text-align:center;}
+.header-center-label{font-family:'Rajdhani',sans-serif;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+.header-center-count{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text);}
 .header-right{font-family:'Rajdhani',sans-serif;font-size:.8rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;}
 
 /* HERO */
-.hero{position:relative;z-index:5;text-align:center;padding:2.5rem 1rem 1.5rem;}
+.hero{position:relative;z-index:5;text-align:center;padding:2rem 1rem 1.5rem;}
 .hero-eyebrow{font-family:'Rajdhani',sans-serif;font-size:.75rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem;}
-.hero h1{font-family:'Rajdhani',sans-serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:700;letter-spacing:.06em;text-transform:uppercase;line-height:1.1;}
-.hero-line{width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);margin:1rem auto 0;}
+.hero h1{font-family:'Rajdhani',sans-serif;font-size:clamp(1.6rem,4vw,2.8rem);font-weight:700;letter-spacing:.06em;text-transform:uppercase;line-height:1.1;}
+.hero-line{width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);margin:.8rem auto 0;}
 
-/* NAV */
+/* NAV PRINCIPALE */
 .nav-wrap{position:sticky;top:0;z-index:30;background:rgba(6,8,15,0.97);border-bottom:1px solid var(--border);}
 .nav-scroll-wrap{position:relative;max-width:1300px;margin:0 auto;}
 .nav-inner{padding:0 2.2rem;display:flex;gap:.1rem;overflow-x:auto;scrollbar-width:none;}
 .nav-inner::-webkit-scrollbar{display:none;}
-.nav-arrow{position:absolute;top:0;bottom:1px;width:2rem;display:flex;align-items:center;justify-content:center;background:rgba(6,8,15,0.97);border:none;color:var(--muted);cursor:pointer;font-size:.9rem;z-index:2;}
+.nav-arrow{position:absolute;top:0;bottom:1px;width:2rem;display:flex;align-items:center;justify-content:center;border:none;color:var(--muted);cursor:pointer;font-size:.9rem;z-index:2;background:rgba(6,8,15,0.97);}
 .nav-arrow.left{left:0;background:linear-gradient(90deg,rgba(6,8,15,1),rgba(6,8,15,0));}
 .nav-arrow.right{right:0;background:linear-gradient(270deg,rgba(6,8,15,1),rgba(6,8,15,0));}
 .nav-arrow:hover{color:var(--text);}
 .tab-btn{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:.88rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:.85rem .9rem;cursor:pointer;transition:all .2s;white-space:nowrap;margin-bottom:-1px;display:flex;align-items:center;gap:.35rem;}
 .tab-btn:hover{color:var(--text);}
 .tab-btn.active{color:var(--text);border-bottom-color:var(--accent);}
-.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-.dot-done{background:#4ade80;}
-.dot-live{background:var(--gold);animation:blink 1.2s infinite;}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:.25;}}
+.tab-btn.tab-s1{color:#4ade80;}
+.tab-btn.tab-s2{color:#f59e0b;}
+.tab-btn.tab-cal{color:#60a5fa;}
+.tab-btn.active.tab-s1{border-bottom-color:#4ade80;}
+.tab-btn.active.tab-s2{border-bottom-color:#f59e0b;}
+.tab-btn.active.tab-cal{border-bottom-color:#60a5fa;}
 
 /* MAIN */
 main{position:relative;z-index:5;max-width:1300px;margin:0 auto;padding:1.5rem;}
 .panel{display:none;}
-.panel.active{display:block;animation:panelIn .25s ease;}
-@keyframes panelIn{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
+.panel.active{display:block;animation:panelIn .2s ease;}
+@keyframes panelIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
 
-/* SECTION TITLE */
-.sec-title{font-family:'Rajdhani',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;margin-top:1.8rem;}
+/* SEASON HEADER */
+.season-header{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1rem 1.2rem;margin-bottom:1.2rem;display:flex;align-items:center;justify-content:space-between;}
+.season-header.s2{border-color:rgba(251,191,36,.2);}
+.season-title{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
+.season-title.s2{color:#f59e0b;}
+.season-dates{font-size:.72rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:2px;}
+
+/* SUB NAV */
+.sub-nav{display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:1.2rem;}
+.sub-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:.45rem .85rem;border-radius:3px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:.3rem;white-space:nowrap;}
+.sub-btn:hover{color:var(--text);}
+.sub-btn.active{color:var(--text);border-color:rgba(232,25,44,.4);background:rgba(232,25,44,.05);}
+.sub-btn.done{color:#4ade80;border-color:rgba(74,222,128,.2);}
+.sub-btn.live{color:var(--gold);border-color:rgba(251,191,36,.2);}
+.sub-btn.done.active,.sub-btn.live.active{background:rgba(255,255,255,.03);}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.dot-done{background:#4ade80;}
+.dot-live{background:var(--gold);animation:blink 1.2s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.25;}}
+
+/* SUB PANELS */
+.sub-panel{display:none;}
+.sub-panel.active{display:block;}
+
+/* RALLYE HEADER */
+.rallye-header{background:#0a0e1a;border:1px solid var(--border);border-radius:4px;padding:.7rem 1rem;margin-bottom:1rem;display:flex;align-items:center;gap:.75rem;}
+.rallye-num{font-family:'Rajdhani',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.12em;background:var(--accent);color:#fff;padding:2px 8px;border-radius:2px;}
+.rallye-name{font-family:'Rajdhani',sans-serif;font-size:.95rem;font-weight:700;color:var(--text);}
+.rallye-sub{font-size:.7rem;color:var(--muted);margin-top:1px;}
+
+/* SEC TITLE */
+.sec-title{font-family:'Rajdhani',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.75rem;margin-bottom:.9rem;margin-top:1.5rem;}
 .sec-title:first-child{margin-top:0;}
 .sec-title::after{content:'';flex:1;height:1px;background:var(--border);}
-.stag{padding:2px 8px;border-radius:2px;font-size:.63rem;letter-spacing:.1em;}
+.stag{padding:2px 7px;border-radius:2px;font-size:.6rem;letter-spacing:.1em;}
 .stag-done{background:rgba(74,222,128,.12);color:#4ade80;}
 .stag-live{background:rgba(251,191,36,.18);color:var(--gold);}
 .stag-upcoming{background:rgba(107,122,153,.12);color:var(--muted);}
 
 /* CARDS */
-.results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.85rem;}
+.results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.8rem;}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden;cursor:pointer;transition:all .22s;position:relative;}
 .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),transparent);opacity:0;transition:opacity .22s;}
 .card:hover{border-color:rgba(232,25,44,.3);transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.5);}
 .card:hover::before{opacity:1;}
-.card-head{padding:.6rem .9rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
-.card-label{font-family:'Rajdhani',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;}
-.card-chip{font-family:'Rajdhani',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:2px;}
+.card-head{padding:.55rem .85rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
+.card-label{font-family:'Rajdhani',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;}
+.card-chip{font-family:'Rajdhani',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 6px;border-radius:2px;}
 .chip-general{background:rgba(251,191,36,.15);color:var(--gold);}
 .chip-classe{background:rgba(59,130,246,.15);color:var(--accent3);}
 .chip-genclasse{background:rgba(168,85,247,.15);color:#c084fc;}
 .card-img{width:100%;aspect-ratio:16/9;background:var(--surface2);overflow:hidden;display:flex;align-items:center;justify-content:center;}
 .card-img img{width:100%;height:100%;object-fit:cover;}
-.card-foot{padding:.5rem .9rem;display:flex;align-items:center;justify-content:space-between;}
-.card-date{font-size:.7rem;color:var(--muted);}
-.card-cta{font-family:'Rajdhani',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.07em;color:var(--accent);text-transform:uppercase;}
+.card-foot{padding:.45rem .85rem;display:flex;align-items:center;justify-content:space-between;}
+.card-date{font-size:.68rem;color:var(--muted);}
+.card-cta{font-family:'Rajdhani',sans-serif;font-size:.68rem;font-weight:600;color:var(--accent);text-transform:uppercase;}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:3rem;color:var(--muted);border:1px dashed var(--border);border-radius:6px;}
+.empty-state .ei{font-size:2.5rem;opacity:.15;margin-bottom:.75rem;}
+.empty-state .et{font-family:'Rajdhani',sans-serif;font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;}
+
+/* S2 EMPTY */
+.s2-empty{background:var(--surface);border:1px dashed rgba(251,191,36,.25);border-radius:8px;padding:2.5rem;text-align:center;}
+.s2-empty .ei{font-size:2.5rem;opacity:.15;margin-bottom:.75rem;}
+.s2-empty .et{font-family:'Rajdhani',sans-serif;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+.s2-empty .es{font-size:.72rem;color:var(--gold);margin-top:.4rem;opacity:.8;}
 
 /* CALENDAR */
 .cal-intro{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent3);border-radius:4px;padding:1rem 1.2rem;margin-bottom:1.2rem;font-size:.82rem;color:var(--muted);line-height:1.6;}
 .cal-intro strong{color:var(--text);}
-.cal-grid{display:flex;flex-direction:column;gap:.45rem;}
+.cal-grid{display:flex;flex-direction:column;gap:.4rem;}
 .week-block{background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden;}
 .week-head{background:#0a0e1a;padding:.5rem 1rem;display:flex;align-items:center;gap:.7rem;border-bottom:1px solid var(--border);}
-.week-num{font-family:'Rajdhani',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.12em;background:var(--accent);color:#fff;padding:2px 7px;border-radius:2px;}
+.week-num{font-family:'Rajdhani',sans-serif;font-size:.62rem;font-weight:700;background:var(--accent);color:#fff;padding:2px 7px;border-radius:2px;letter-spacing:.1em;}
 .week-label{font-family:'Rajdhani',sans-serif;font-size:.8rem;font-weight:600;color:var(--text);}
 .week-status{font-family:'Rajdhani',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.1em;padding:2px 8px;border-radius:2px;margin-left:auto;}
 .ws-done{background:rgba(74,222,128,.12);color:#4ade80;}
@@ -93,15 +139,10 @@ main{position:relative;z-index:5;max-width:1300px;margin:0 auto;padding:1.5rem;}
 .week-rallyes{display:grid;grid-template-columns:1fr 1fr;}
 .w-rally{padding:.6rem 1rem;display:flex;flex-direction:column;gap:.2rem;}
 .w-rally.right{border-left:1px solid var(--border);}
-.rtype{font-family:'Rajdhani',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.05rem;}
+.rtype{font-family:'Rajdhani',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;}
 .rtype-n{color:#60a5fa;}.rtype-r{color:#f87171;}
 .rname{font-family:'Rajdhani',sans-serif;font-size:.85rem;font-weight:600;color:var(--text);}
 .rdept{font-size:.7rem;color:var(--muted);}
-
-/* EMPTY STATE */
-.empty-state{text-align:center;padding:3rem;color:var(--muted);}
-.empty-state .ei{font-size:3rem;opacity:.15;margin-bottom:1rem;}
-.empty-state .et{font-family:'Rajdhani',sans-serif;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;}
 
 /* LIGHTBOX */
 .lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:1000;flex-direction:column;backdrop-filter:blur(6px);}
@@ -118,8 +159,8 @@ main{position:relative;z-index:5;max-width:1300px;margin:0 auto;padding:1.5rem;}
 .lb-img-wrap img{display:block;width:min(900px,90vw);border-radius:4px;border:1px solid var(--border);}
 .lb-zoom-info{font-family:'Rajdhani',sans-serif;font-size:.78rem;color:var(--muted);min-width:3.2rem;text-align:center;}
 
-footer{position:relative;z-index:5;text-align:center;padding:2rem;border-top:1px solid var(--border);color:var(--muted);font-size:.72rem;letter-spacing:.08em;}
-@media(max-width:640px){.week-rallyes{grid-template-columns:1fr;}.w-rally.right{border-left:none;border-top:1px solid var(--border);}.header-right{display:none;}.results-grid{grid-template-columns:1fr;}}
+footer{position:relative;z-index:5;text-align:center;padding:1.5rem;border-top:1px solid var(--border);color:var(--muted);font-size:.72rem;letter-spacing:.08em;}
+@media(max-width:640px){.week-rallyes{grid-template-columns:1fr;}.w-rally.right{border-left:none;border-top:1px solid var(--border);}.results-grid{grid-template-columns:1fr;}.header-right{display:none;}}
 </style>
 </head>
 <body>
@@ -127,9 +168,9 @@ footer{position:relative;z-index:5;text-align:center;padding:2rem;border-top:1px
 <header>
   <div class="header-inner">
     <img src="afrl_logo.png" alt="AFRL" style="height:38px;width:auto;"/>
-    <div style="font-family:'Rajdhani',sans-serif;font-size:.75rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;text-align:center;">
-      <div style="font-size:.65rem;margin-bottom:.2rem;">👁 Visites</div>
-      <div id="visitCount" style="color:var(--text);font-size:1rem;font-weight:700;">—</div>
+    <div class="header-center">
+      <div class="header-center-label">👁 Visites</div>
+      <div class="header-center-count" id="visitCount">—</div>
     </div>
     <div class="header-right">Coupe de France 2026</div>
   </div>
@@ -150,20 +191,14 @@ footer{position:relative;z-index:5;text-align:center;padding:2rem;border-top:1px
 </div>
 
 <main id="mainContent">
-  <div class="panel active" id="panel-general">
-    <div class="sec-title">Classement Général Saison <span class="stag stag-live">En cours</span></div>
-    <div class="results-grid" id="generalGrid"></div>
-  </div>
-  <div class="panel" id="panel-classes">
-    <div class="sec-title">Classements par Classe <span class="stag stag-live">En cours</span></div>
-    <div class="results-grid" id="classesGrid"></div>
-  </div>
-  <div class="panel" id="panel-calendrier">
-    <div class="cal-intro">Calendrier <strong>Coupe de France AFRL 2026</strong> — 23 semaines · <span style="color:#60a5fa">◼ Nationale</span> &nbsp;<span style="color:#f87171">◼ Régionale</span></div>
+  <!-- Panels générés dynamiquement -->
+  <div class="panel active" id="panel-cal">
+    <div class="cal-intro">Calendrier <strong>Coupe de France AFRL 2026</strong> · <span style="color:#60a5fa">◼ Nationale</span> &nbsp;<span style="color:#f87171">◼ Régionale</span></div>
     <div class="cal-grid" id="calGrid"></div>
   </div>
 </main>
 
+<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
   <div class="lb-bar">
     <span class="lb-title" id="lbTitle"></span>
@@ -186,90 +221,54 @@ footer{position:relative;z-index:5;text-align:center;padding:2rem;border-top:1px
 
 <script>
 // ══════════════════════════════════════
-// VERSIONS — GitHub raw (public)
+// CONFIG
 // ══════════════════════════════════════
 const GH_RAW = 'https://raw.githubusercontent.com/daco2A22/afrl-resultats/main/versions.json';
 let VERSIONS = {};
 
-async function loadVersions(){
-  try {
-    const r = await fetch(GH_RAW + '?t=' + Date.now());
-    if(r.ok){ const d = await r.json(); VERSIONS = d.versions || {}; }
-  } catch(e){ VERSIONS = {}; }
-}
-
 // ══════════════════════════════════════
-// IMAGE URL
-// Clé = "general/classement_general"
-//       "s01/s01_r1_general" etc.
+// DONNÉES — SAISONS
 // ══════════════════════════════════════
-function imgUrl(key){
-  if(VERSIONS[key]) return VERSIONS[key];
-  // Pas encore uploadé → retourne null
-  return null;
-}
-
-// ══════════════════════════════════════
-// CARD
-// ══════════════════════════════════════
-function mkCard(key, label, chip, chipLabel, date){
-  const url = imgUrl(key);
-  if(!url) return '';
-  return `<div class="card" data-url="${url}" data-label="${label.replace(/"/g,'&quot;')}" onclick="openLB(this.dataset.url,this.dataset.label)">
-    <div class="card-head"><span class="card-label">${label}</span><span class="card-chip ${chip}">${chipLabel}</span></div>
-    <div class="card-img"><img src="${url}" data-key="${key}" alt="${label}" onerror="this.closest('.card').style.display='none'"/></div>
-    <div class="card-foot"><span class="card-date">${date}</span><span class="card-cta">Agrandir →</span></div>
-  </div>`;
-}
-
-// ══════════════════════════════════════
-// DONNÉES SEMAINES
-// ══════════════════════════════════════
-const ALL_WEEKS = [
-  {id:'s01',label:'S01',status:'done',title:'S01 — Centre Alsace & Faverge',
-    rallyes:[{type:'N',name:'Centre Alsace',dept:''},{type:'R',name:'Faverge',dept:''}]},
-  {id:'s02',label:'S02',status:'done',title:'S02 — Pays du Gier & Neufchâtel-en-Bray',
-    rallyes:[{type:'N',name:'Pays du Gier',dept:''},{type:'R',name:'Neufchâtel-en-Bray',dept:''}]},
-  {id:'s03',label:'S03',title:'S03 — Rallye Autocourse & Balcon Est du Vercors',
-    rallyes:[{type:'N',name:'Rallye Autocourse',dept:'37 – Indre-et-Loire'},{type:'R',name:'Balcon Est du Vercors',dept:'38 – Isère'}]},
-  {id:'s04',label:'S04',title:'S04 — Rallye du Bassin Annonéen & Cœur de Lion',
-    rallyes:[{type:'N',name:'Rallye du Bassin Annonéen',dept:'07 – Ardèche'},{type:'R',name:'Rallye Cœur de Lion',dept:'27 – Eure'}]},
-  {id:'s05',label:'S05',title:"S05 — Rallye du Val d'Agout & Beaufortain",
-    rallyes:[{type:'N',name:"Rallye du Val d'Agout",dept:'81 – Tarn'},{type:'R',name:'Rallye du Beaufortain',dept:'73 – Savoie'}]},
-  {id:'s06',label:'S06',title:'S06 — Rallye des Monts de Blond & Monts de Vaucluse',
-    rallyes:[{type:'N',name:'Rallye des Monts de Blond',dept:'87 – Haute-Vienne'},{type:'R',name:'Rallye des Monts de Vaucluse',dept:'84 – Vaucluse'}]},
-  {id:'s07',label:'S07',title:'S07 — Rallye du Saint-Émilion & Mézidon',
-    rallyes:[{type:'N',name:'Rallye du Saint-Émilion',dept:'33 – Gironde'},{type:'R',name:'Rallye de Mézidon',dept:'14 – Calvados'}]},
-  {id:'s08',label:'S08',title:"S08 — Rallye du Pays de Seyssel & Val d'Orain",
-    rallyes:[{type:'N',name:'Rallye du Pays de Seyssel',dept:'74 – Haute-Savoie'},{type:'R',name:"Rallye du Val d'Orain",dept:'39 – Jura'}]},
-  {id:'s09',label:'S09',title:"S09 — Rallye du Val d'Ance & Lochois",
-    rallyes:[{type:'N',name:"Rallye du Val d'Ance",dept:'43 – Haute-Loire'},{type:'R',name:'Rallye du Lochois',dept:'37 – Indre-et-Loire'}]},
-  {id:'s10',label:'S10',title:'S10 — Rallye du Tréport & Clain',
-    rallyes:[{type:'N',name:'Rallye du Tréport',dept:'76 – Seine-Maritime'},{type:'R',name:'Rallye du Clain',dept:'86 – Vienne'}]},
-  {id:'s11',label:'S11',title:'S11 — Rallye Nice Jean Behra & Vienne et Glane',
-    rallyes:[{type:'N',name:'Rallye Nice – Jean Behra',dept:'06 – Alpes-Maritimes'},{type:'R',name:'Rallye Vienne et Glane',dept:'87 – Haute-Vienne'}]},
-  {id:'s12',label:'S12',title:'S12 — Rallye des Bornes & Sidobre',
-    rallyes:[{type:'N',name:'Rallye des Bornes',dept:'74 – Haute-Savoie'},{type:'R',name:'Rallye du Sidobre',dept:'81 – Tarn'}]},
-  {id:'s13',label:'S13',title:'S13 — Rallye des Vins de Chinon & Sauveterre',
-    rallyes:[{type:'N',name:'Rallye des Vins de Chinon',dept:'37 – Indre-et-Loire'},{type:'R',name:'Rallye de Sauveterre',dept:'47 – Lot-et-Garonne'}]},
-  {id:'s14',label:'S14',title:'S14 — Rallye de Saint-Marcellin & Côte Roannaise',
-    rallyes:[{type:'N',name:'Rallye de Saint-Marcellin',dept:'38 – Isère'},{type:'R',name:'Rallye de la Côte Roannaise',dept:'42 – Loire'}]},
-  {id:'s15',label:'S15',title:'S15 — Rallye de Bourgogne & Le Mans',
-    rallyes:[{type:'N',name:'Rallye de Bourgogne – Côte Chalonnaise',dept:'71 – Saône-et-Loire'},{type:'R',name:'Rallye Le Mans',dept:'72 – Sarthe'}]},
-  {id:'s16',label:'S16',title:'S16 — Rallye de Saintonge & Bagnols-les-Bains',
-    rallyes:[{type:'N',name:'Rallye de Saintonge',dept:'17 – Charente-Maritime'},{type:'R',name:'Rallye de Bagnols-les-Bains',dept:'48 – Lozère'}]},
-  {id:'s17',label:'S17',title:'S17 — Rallye Montagne Noire & Plaine',
-    rallyes:[{type:'N',name:'Rallye Montagne Noire',dept:'81 – Tarn'},{type:'R',name:'Rallye de la Plaine',dept:'88 – Vosges'}]},
-  {id:'s18',label:'S18',title:'S18 — Rallye de Fourmies en Avesnois & Gap Racing',
-    rallyes:[{type:'N',name:'Rallye de Fourmies en Avesnois',dept:'59 – Nord'},{type:'R',name:'Rallye du Gap Racing',dept:'05 – Hautes-Alpes'}]},
-  {id:'s19',label:'S19',title:"S19 — Rallye d'Autun & Florival",
-    rallyes:[{type:'N',name:"Rallye d'Autun",dept:'71 – Saône-et-Loire'},{type:'R',name:'Rallye du Florival',dept:'68 – Haut-Rhin'}]},
-  {id:'s20',label:'S20',title:'S20 — Rallye de Basse Normandie & Sel',
-    rallyes:[{type:'N',name:'Rallye de Basse Normandie',dept:'50 – Manche'},{type:'R',name:'Rallye du Sel',dept:'39 – Jura'}]},
-  {id:'s21',label:'S21',title:'S21 — Rallye du Pays Saint-Affricain & Vallées',
-    rallyes:[{type:'N',name:'Rallye du Pays Saint-Affricain',dept:'12 – Aveyron'},{type:'R',name:'Rallye des Vallées',dept:'88 – Vosges'}]},
-  {id:'s22',label:'S22',title:'S22 — Rallye du Pays Basque & Chartreuse',
-    rallyes:[{type:'N',name:'Rallye du Pays Basque',dept:'64 – Pyrénées-Atlantiques'},{type:'R',name:'Rallye de Chartreuse',dept:'38 – Isère'}]},
+const SAISONS = [
+  {
+    id: 's1',
+    label: 'Saison 1',
+    title: 'Saison 1 · Coupe de France 2026',
+    dateDebut: 'Avril 2026',
+    dateFin: 'Août 2026',
+    rallyes: [
+      {id:'r01', label:'R01', title:'Centre Alsace & Faverge', n:'Centre Alsace', r:'Faverge', dept_n:'', dept_r:''},
+      {id:'r02', label:'R02', title:'Pays du Gier & Neufchâtel-en-Bray', n:'Pays du Gier', r:'Neufchâtel-en-Bray', dept_n:'', dept_r:''},
+      {id:'r03', label:'R03', title:'Rallye Autocourse & Balcon Est du Vercors', n:'Rallye Autocourse', r:'Balcon Est du Vercors', dept_n:'37 – Indre-et-Loire', dept_r:'38 – Isère'},
+      {id:'r04', label:'R04', title:'Rallye du Bassin Annonéen & Cœur de Lion', n:'Rallye du Bassin Annonéen', r:'Rallye Cœur de Lion', dept_n:'07 – Ardèche', dept_r:'27 – Eure'},
+      {id:'r05', label:'R05', title:"Rallye du Val d'Agout & Beaufortain", n:"Rallye du Val d'Agout", r:'Rallye du Beaufortain', dept_n:'81 – Tarn', dept_r:'73 – Savoie'},
+      {id:'r06', label:'R06', title:'Rallye des Monts de Blond & Monts de Vaucluse', n:'Rallye des Monts de Blond', r:'Rallye des Monts de Vaucluse', dept_n:'87 – Haute-Vienne', dept_r:'84 – Vaucluse'},
+      {id:'r07', label:'R07', title:'Rallye du Saint-Émilion & Mézidon', n:'Rallye du Saint-Émilion', r:'Rallye de Mézidon', dept_n:'33 – Gironde', dept_r:'14 – Calvados'},
+      {id:'r08', label:'R08', title:"Rallye du Pays de Seyssel & Val d'Orain", n:'Rallye du Pays de Seyssel', r:"Rallye du Val d'Orain", dept_n:'74 – Haute-Savoie', dept_r:'39 – Jura'},
+      {id:'r09', label:'R09', title:"Rallye du Val d'Ance & Lochois", n:"Rallye du Val d'Ance", r:'Rallye du Lochois', dept_n:'43 – Haute-Loire', dept_r:'37 – Indre-et-Loire'},
+      {id:'r10', label:'R10', title:'Rallye du Tréport & Clain', n:'Rallye du Tréport', r:'Rallye du Clain', dept_n:'76 – Seine-Maritime', dept_r:'86 – Vienne'},
+      {id:'r11', label:'R11', title:'Rallye Nice Jean Behra & Vienne et Glane', n:'Rallye Nice – Jean Behra', r:'Rallye Vienne et Glane', dept_n:'06 – Alpes-Maritimes', dept_r:'87 – Haute-Vienne'},
+      {id:'r12', label:'R12', title:'Rallye des Bornes & Sidobre', n:'Rallye des Bornes', r:'Rallye du Sidobre', dept_n:'74 – Haute-Savoie', dept_r:'81 – Tarn'},
+      {id:'r13', label:'R13', title:'Rallye des Vins de Chinon & Sauveterre', n:'Rallye des Vins de Chinon', r:'Rallye de Sauveterre', dept_n:'37 – Indre-et-Loire', dept_r:'47 – Lot-et-Garonne'},
+      {id:'r14', label:'R14', title:'Rallye de Saint-Marcellin & Côte Roannaise', n:'Rallye de Saint-Marcellin', r:'Rallye de la Côte Roannaise', dept_n:'38 – Isère', dept_r:'42 – Loire'},
+      {id:'r15', label:'R15', title:'Rallye de Bourgogne & Le Mans', n:'Rallye de Bourgogne – Côte Chalonnaise', r:'Rallye Le Mans', dept_n:'71 – Saône-et-Loire', dept_r:'72 – Sarthe'},
+      {id:'r16', label:'R16', title:'Rallye de Saintonge & Bagnols-les-Bains', n:'Rallye de Saintonge', r:'Rallye de Bagnols-les-Bains', dept_n:'17 – Charente-Maritime', dept_r:'48 – Lozère'},
+      {id:'r17', label:'R17', title:'Rallye Montagne Noire & Plaine', n:'Rallye Montagne Noire', r:'Rallye de la Plaine', dept_n:'81 – Tarn', dept_r:'88 – Vosges'},
+      {id:'r18', label:'R18', title:'Rallye de Fourmies & Gap Racing', n:'Rallye de Fourmies en Avesnois', r:'Rallye du Gap Racing', dept_n:'59 – Nord', dept_r:'05 – Hautes-Alpes'},
+      {id:'r19', label:'R19', title:"Rallye d'Autun & Florival", n:"Rallye d'Autun", r:'Rallye du Florival', dept_n:'71 – Saône-et-Loire', dept_r:'68 – Haut-Rhin'},
+      {id:'r20', label:'R20', title:'Rallye de Basse Normandie & Sel', n:'Rallye de Basse Normandie', r:'Rallye du Sel', dept_n:'50 – Manche', dept_r:'39 – Jura'},
+      {id:'r21', label:'R21', title:'Rallye du Pays Saint-Affricain & Vallées', n:'Rallye du Pays Saint-Affricain', r:'Rallye des Vallées', dept_n:'12 – Aveyron', dept_r:'88 – Vosges'},
+      {id:'r22', label:'R22', title:'Rallye du Pays Basque & Chartreuse', n:'Rallye du Pays Basque', r:'Rallye de Chartreuse', dept_n:'64 – Pyrénées-Atlantiques', dept_r:'38 – Isère'},
+    ]
+  },
+  {
+    id: 's2',
+    label: 'Saison 2',
+    title: 'Saison 2 · Coupe de France 2026',
+    dateDebut: null,
+    dateFin: null,
+    rallyes: []
+  }
 ];
 
 const CLASSES = [
@@ -291,143 +290,232 @@ const CLASSES = [
 ];
 
 // ══════════════════════════════════════
-// STATUT AUTO des semaines
+// VERSIONS — GitHub
 // ══════════════════════════════════════
-const STATUS_STAG  = {done:'stag-done', live:'stag-live', upcoming:'stag-upcoming'};
-const STATUS_LABEL = {done:'Terminé',   live:'En cours',  upcoming:'À venir'};
+async function loadVersions(){
+  try {
+    const r = await fetch(GH_RAW + '?t=' + Date.now());
+    if(r.ok){ const d = await r.json(); VERSIONS = d.versions || {}; }
+  } catch(e){ VERSIONS = {}; }
+}
 
-function getWeekStatus(w, idx){
-  const sid = w.id;
+// ══════════════════════════════════════
+// IMAGE URL
+// Clé saison 1 : "s1/general/classement_general"
+//                "s1/r01/r01_n_general"
+//                "s1/r01/r01_r_general"
+//                "s1/r01/general"
+//                "s1/r01/general_classe"
+//                "s1/r01/r01_n_general_classe"
+//                "s1/r01/r01_r_general_classe"
+//                "s1/r01/n_classe_rally2_r5"
+//                "s1/r01/r_classe_rally2_r5"
+//                "s1/classes/classe_rally2_r5"
+// ══════════════════════════════════════
+function imgUrl(key){
+  return VERSIONS[key] || null;
+}
+
+function mkCard(key, label, chip, chipLabel, date){
+  const url = imgUrl(key);
+  if(!url) return '';
+  const safeLabel = label.replace(/"/g,'&quot;');
+  return `<div class="card" data-url="${url}" data-label="${safeLabel}" onclick="openLB(this.dataset.url,this.dataset.label)">
+    <div class="card-head"><span class="card-label">${label}</span><span class="card-chip ${chip}">${chipLabel}</span></div>
+    <div class="card-img"><img src="${url}" data-key="${key}" alt="${label}" onerror="this.closest('.card').style.display='none'"/></div>
+    <div class="card-foot"><span class="card-date">${date}</span><span class="card-cta">Agrandir →</span></div>
+  </div>`;
+}
+
+// ══════════════════════════════════════
+// STATUT RALLYE
+// ══════════════════════════════════════
+function getRallyeStatus(sid, rid){
   const mainKeys = [
-    `${sid}/${sid}_r1_general`,
-    `${sid}/r1_general_classe`,
-    `${sid}/${sid}_r2_general`,
-    `${sid}/r2_general_classe`,
-    `${sid}/general`,
-    `${sid}/general_classe`,
+    `${sid}/${rid}/${rid}_n_general`,
+    `${sid}/${rid}/${rid}_r_general`,
+    `${sid}/${rid}/general`,
+    `${sid}/${rid}/general_classe`,
+    `${sid}/${rid}/${rid}_n_general_classe`,
+    `${sid}/${rid}/${rid}_r_general_classe`,
   ];
-  const hasAll = mainKeys.every(k => VERSIONS[k]);
-  const hasAny = mainKeys.some(k => VERSIONS[k]);
-
+  const hasAll = mainKeys.every(k=>VERSIONS[k]);
+  const hasAny = mainKeys.some(k=>VERSIONS[k]);
   if(hasAll) return 'done';
   if(hasAny) return 'live';
-
-  // Si la semaine précédente est terminée → cette semaine est "En cours"
-  if(idx > 0){
-    const prev = ALL_WEEKS[idx - 1];
-    const psid = prev.id;
-    const prevKeys = [
-      `${psid}/${psid}_r1_general`,
-      `${psid}/r1_general_classe`,
-      `${psid}/${psid}_r2_general`,
-      `${psid}/r2_general_classe`,
-      `${psid}/general`,
-      `${psid}/general_classe`,
-    ];
-    if(prevKeys.every(k => VERSIONS[k])) return 'live';
+  // Si rallye précédent est done → live
+  const saison = SAISONS.find(s=>s.id===sid);
+  if(saison){
+    const idx = saison.rallyes.findIndex(r=>r.id===rid);
+    if(idx > 0){
+      const prevRid = saison.rallyes[idx-1].id;
+      const prevKeys = [
+        `${sid}/${prevRid}/${prevRid}_n_general`,
+        `${sid}/${prevRid}/${prevRid}_r_general`,
+        `${sid}/${prevRid}/general`,
+        `${sid}/${prevRid}/general_classe`,
+        `${sid}/${prevRid}/${prevRid}_n_general_classe`,
+        `${sid}/${prevRid}/${prevRid}_r_general_classe`,
+      ];
+      if(prevKeys.every(k=>VERSIONS[k])) return 'live';
+    } else {
+      // Premier rallye = live par défaut si saison active
+      return 'live';
+    }
   }
-
   return 'upcoming';
 }
 
+function getSaisonStatus(sid){
+  const saison = SAISONS.find(s=>s.id===sid);
+  if(!saison || !saison.rallyes.length) return 'upcoming';
+  const hasAny = Object.keys(VERSIONS).some(k=>k.startsWith(sid+'/'));
+  if(!hasAny) return 'upcoming';
+  const allDone = saison.rallyes.every(r=>getRallyeStatus(sid,r.id)==='done');
+  return allDone ? 'done' : 'live';
+}
+
+// ══════════════════════════════════════
+// BUILD NAV
+// ══════════════════════════════════════
 function buildNav(){
   const nav = document.getElementById('navInner');
-  let html = `<button class="tab-btn" onclick="switchTab('calendrier',this)">📅 Calendrier</button>`;
-  html += `<button class="tab-btn active" onclick="switchTab('general',this)">🏆 Général</button>`;
-  html += `<button class="tab-btn" onclick="switchTab('classes',this)">📊 Classes</button>`;
-  ALL_WEEKS.forEach((w, idx)=>{
-    const status = getWeekStatus(w, idx);
-    const dot = status === 'done' ? `<span class="dot dot-done"></span>`
-              : status === 'live' ? `<span class="dot dot-live"></span>`
-              : '';
-    html += `<button class="tab-btn" onclick="switchTab('${w.id}',this)">${dot}${w.label}</button>`;
+  let html = `<button class="tab-btn tab-cal" onclick="switchTab('cal',this)">📅 Calendrier</button>`;
+  SAISONS.forEach(s=>{
+    const st = getSaisonStatus(s.id);
+    const dot = st==='done'?`<span class="dot dot-done"></span>`:st==='live'?`<span class="dot dot-live"></span>`:'';
+    html += `<button class="tab-btn tab-${s.id} active" onclick="switchTab('${s.id}',this)">${dot}${s.label}</button>`;
   });
   nav.innerHTML = html;
+  // Activer Saison 1 par défaut
+  document.querySelector('.tab-btn.tab-s1').classList.add('active');
 }
 
 // ══════════════════════════════════════
-// BUILD GENERAL
+// BUILD SAISON PANEL
 // ══════════════════════════════════════
-function buildGeneral(){
-  const g = document.getElementById('generalGrid');
-  g.innerHTML = [
-    mkCard('general/classement_general','Classement Général','chip-general','Général','Saison 2026'),
-    mkCard('general/general_classe','Général par Classe','chip-genclasse','Gén. Classe','Saison 2026'),
-  ].join('');
-}
-
-// ══════════════════════════════════════
-// BUILD CLASSES
-// ══════════════════════════════════════
-function buildClasses(){
-  const g = document.getElementById('classesGrid');
-  g.innerHTML = CLASSES.map(c=>
-    mkCard(`general/classe_${c.key}`, c.label, 'chip-classe', 'Classe', 'Saison 2026')
-  ).join('');
-}
-
-// ══════════════════════════════════════
-// BUILD WEEK PANELS
-// ══════════════════════════════════════
-function buildWeekPanels(){
+function buildSaisonPanel(s){
   const main = document.getElementById('mainContent');
-  ALL_WEEKS.forEach((w, idx)=>{
-    const status = getWeekStatus(w, idx);
-    const stag = `<span class="stag ${STATUS_STAG[status]}">${STATUS_LABEL[status]}</span>`;
-    const r = w.rallyes;
-    const sid = w.id;
+  const st = getSaisonStatus(s.id);
+  const stagStr = {done:'stag-done',live:'stag-live',upcoming:'stag-upcoming'};
+  const stagLbl = {done:'Terminé',live:'En cours',upcoming:'À venir'};
 
-    if(status === 'done' || status === 'live'){
-      // Cartes générales
-      const generalCards = [
-        mkCard(`${sid}/${sid}_r1_general`, r[0].name, 'chip-general', 'Général', r[0].dept||w.label),
-        mkCard(`${sid}/r1_general_classe`, `Gén. par Classe — ${r[0].name}`, 'chip-genclasse', 'Gén. Classe', r[0].dept||w.label),
-        r[1] ? mkCard(`${sid}/${sid}_r2_general`, r[1].name, 'chip-general', 'Général', r[1].dept||w.label) : '',
-        r[1] ? mkCard(`${sid}/r2_general_classe`, `Gén. par Classe — ${r[1].name}`, 'chip-genclasse', 'Gén. Classe', r[1].dept||w.label) : '',
-        mkCard(`${sid}/general`, `Classement Général ${w.label}`, 'chip-general', 'Général', w.label),
-        mkCard(`${sid}/general_classe`, `Général par Classe ${w.label}`, 'chip-genclasse', 'Gén. Classe', w.label),
-      ].join('');
+  // Si saison 2 vide
+  if(s.id==='s2' && st==='upcoming'){
+    main.insertAdjacentHTML('beforeend',`
+      <div class="panel" id="panel-${s.id}">
+        <div class="season-header s2">
+          <div>
+            <div class="season-title s2">${s.title}</div>
+            <div class="season-dates">Date affichée dès le 1er upload</div>
+          </div>
+          <span class="stag stag-upcoming">À venir</span>
+        </div>
+        <div class="s2-empty">
+          <div class="ei">🏁</div>
+          <div class="et">Saison 2 non démarrée</div>
+          <div class="es">Uploade la 1ère image depuis l'admin → la saison démarre automatiquement</div>
+        </div>
+      </div>`);
+    return;
+  }
 
-      // Cartes classes R1
-      const classesR1 = CLASSES.map(c=>
-        mkCard(`${sid}/r1_classe_${c.key}`, c.label, 'chip-classe', 'Classe', r[0].name)
-      ).join('');
+  const dateStr = s.dateDebut ? `${s.dateDebut}${s.dateFin?' — '+s.dateFin:''}` : 'Date à définir';
 
-      // Cartes classes R2
-      const classesR2 = r[1] ? CLASSES.map(c=>
-        mkCard(`${sid}/r2_classe_${c.key}`, c.label, 'chip-classe', 'Classe', r[1].name)
-      ).join('') : '';
+  let html = `<div class="panel" id="panel-${s.id}">`;
 
-      let html = `<div class="panel" id="panel-${sid}">`;
-      html += `<div class="sec-title">${w.title} ${stag}</div>`;
-      // Toujours afficher les noms des rallyes
-      const rallyInfo = r.map(rv=>`<span><span style="color:${rv.type==='N'?'#60a5fa':'#f87171'}">◼</span> ${rv.name}${rv.dept?' <span style="opacity:.5;font-size:.7rem">'+rv.dept+'</span>':''}</span>`).join('');
-      html += `<div style="padding:.25rem 0 .75rem;color:var(--muted);font-size:.78rem;display:flex;gap:2rem;flex-wrap:wrap;">${rallyInfo}</div>`;
-      if(generalCards.trim()){
-        html += `<div class="results-grid">${generalCards}</div>`;
-      }
-      if(classesR1.trim()){
-        html += `<div class="sec-title">Classes — ${r[0].name} <span style="color:#60a5fa;font-size:.65rem">◼ Nationale</span></div>`;
-        html += `<div class="results-grid">${classesR1}</div>`;
-      }
-      if(classesR2.trim()){
-        html += `<div class="sec-title">Classes — ${r[1].name} <span style="color:#f87171;font-size:.65rem">◼ Régionale</span></div>`;
-        html += `<div class="results-grid">${classesR2}</div>`;
-      }
-      if(!generalCards.trim() && !classesR1.trim()){
-        html += `<div class="empty-state"><div class="ei">🏁</div><div class="et">Résultats disponibles après la manche</div></div>`;
-      }
-      html += `</div>`;
-      main.insertAdjacentHTML('beforeend', html);
-    } else {
-      const info = r.map(rv=>`<span><span style="color:${rv.type==='N'?'#60a5fa':'#f87171'}">◼</span> ${rv.name}${rv.dept?' <span style="opacity:.5;font-size:.7rem">'+rv.dept+'</span>':''}</span>`).join('');
-      main.insertAdjacentHTML('beforeend',`
-        <div class="panel" id="panel-${sid}">
-          <div class="sec-title">${w.title} ${stag}</div>
-          <div style="padding:.25rem 0 .75rem;color:var(--muted);font-size:.78rem;display:flex;gap:2rem;flex-wrap:wrap;">${info}</div>
-          <div class="empty-state"><div class="ei">🏁</div><div class="et">Résultats disponibles après la manche</div></div>
-        </div>`);
-    }  });
+  // Header saison
+  html += `<div class="season-header${s.id==='s2'?' s2':''}">
+    <div>
+      <div class="season-title${s.id==='s2'?' s2':''}">${s.title}</div>
+      <div class="season-dates">${dateStr}</div>
+    </div>
+    <span class="stag ${stagStr[st]}">${stagLbl[st]}</span>
+  </div>`;
+
+  // Sub nav
+  html += `<div class="sub-nav" id="subnav-${s.id}">`;
+  html += `<button class="sub-btn active" onclick="showSub('${s.id}','gen',this)">🏆 Général</button>`;
+  html += `<button class="sub-btn" onclick="showSub('${s.id}','cls',this)">📊 Classes</button>`;
+  s.rallyes.forEach(r=>{
+    const rst = getRallyeStatus(s.id, r.id);
+    const dotHtml = rst==='done'?`<span class="dot dot-done"></span>`:rst==='live'?`<span class="dot dot-live"></span>`:'';
+    const cls = rst==='done'?'done':rst==='live'?'live':'';
+    html += `<button class="sub-btn ${cls}" onclick="showSub('${s.id}','${r.id}',this)">${dotHtml}${r.label}</button>`;
+  });
+  html += `</div>`;
+
+  // Sub panels container
+  html += `<div id="subpanels-${s.id}">`;
+
+  // Général
+  html += `<div class="sub-panel active" id="sub-${s.id}-gen">`;
+  html += `<div class="sec-title">Classement Général ${s.label}</div>`;
+  const genCards = [
+    mkCard(`${s.id}/general/classement_general`, 'Classement Général', 'chip-general', 'Général', s.label),
+    mkCard(`${s.id}/general/general_classe`, 'Général par Classe', 'chip-genclasse', 'Gén. Classe', s.label),
+  ].join('');
+  html += genCards ? `<div class="results-grid">${genCards}</div>` : `<div class="empty-state"><div class="ei">🏆</div><div class="et">Pas encore d'images</div></div>`;
+  html += `</div>`;
+
+  // Classes
+  html += `<div class="sub-panel" id="sub-${s.id}-cls">`;
+  html += `<div class="sec-title">Classements par Classe · ${s.label}</div>`;
+  const clsCards = CLASSES.map(c=>mkCard(`${s.id}/classes/classe_${c.key}`, c.label, 'chip-classe', 'Classe', s.label)).join('');
+  html += clsCards ? `<div class="results-grid">${clsCards}</div>` : `<div class="empty-state"><div class="ei">📊</div><div class="et">Pas encore d'images</div></div>`;
+  html += `</div>`;
+
+  // Rallyes
+  s.rallyes.forEach(r=>{
+    const rst = getRallyeStatus(s.id, r.id);
+    html += `<div class="sub-panel" id="sub-${s.id}-${r.id}">`;
+    html += `<div class="rallye-header">
+      <span class="rallye-num">${r.label}</span>
+      <div>
+        <div class="rallye-name">${r.title}</div>
+        <div class="rallye-sub"><span style="color:#60a5fa">◼</span> ${r.n}${r.dept_n?' · '+r.dept_n:''} &nbsp;|&nbsp; <span style="color:#f87171">◼</span> ${r.r}${r.dept_r?' · '+r.dept_r:''}</div>
+      </div>
+      <span class="stag ${stagStr[rst]}" style="margin-left:auto;">${stagLbl[rst]}</span>
+    </div>`;
+
+    // Cartes générales
+    const rCards = [
+      mkCard(`${s.id}/${r.id}/${r.id}_n_general`, r.n, 'chip-general', 'Général', `${r.label} · N`),
+      mkCard(`${s.id}/${r.id}/${r.id}_n_general_classe`, `Gén. Classe · ${r.n}`, 'chip-genclasse', 'Gén. Classe', `${r.label} · N`),
+      mkCard(`${s.id}/${r.id}/${r.id}_r_general`, r.r, 'chip-general', 'Général', `${r.label} · R`),
+      mkCard(`${s.id}/${r.id}/${r.id}_r_general_classe`, `Gén. Classe · ${r.r}`, 'chip-genclasse', 'Gén. Classe', `${r.label} · R`),
+      mkCard(`${s.id}/${r.id}/general`, `Classement Général ${r.label}`, 'chip-general', 'Général', r.label),
+      mkCard(`${s.id}/${r.id}/general_classe`, `Général par Classe ${r.label}`, 'chip-genclasse', 'Gén. Classe', r.label),
+    ].join('');
+
+    if(rCards){
+      html += `<div class="sec-title">Résultats ${r.label}</div>`;
+      html += `<div class="results-grid">${rCards}</div>`;
+    }
+
+    // Classes Nationale
+    const clsN = CLASSES.map(c=>mkCard(`${s.id}/${r.id}/n_classe_${c.key}`, c.label, 'chip-classe', 'Classe', `${r.label} · N`)).join('');
+    if(clsN){
+      html += `<div class="sec-title">Classes · ${r.n} <span style="color:#60a5fa;font-size:.6rem">◼ Nationale</span></div>`;
+      html += `<div class="results-grid">${clsN}</div>`;
+    }
+
+    // Classes Régionale
+    const clsR = CLASSES.map(c=>mkCard(`${s.id}/${r.id}/r_classe_${c.key}`, c.label, 'chip-classe', 'Classe', `${r.label} · R`)).join('');
+    if(clsR){
+      html += `<div class="sec-title">Classes · ${r.r} <span style="color:#f87171;font-size:.6rem">◼ Régionale</span></div>`;
+      html += `<div class="results-grid">${clsR}</div>`;
+    }
+
+    if(!rCards && !clsN && !clsR){
+      html += `<div class="empty-state"><div class="ei">🏁</div><div class="et">Résultats disponibles après le rallye</div></div>`;
+    }
+
+    html += `</div>`;
+  });
+
+  html += `</div></div>`;
+  main.insertAdjacentHTML('beforeend', html);
 }
 
 // ══════════════════════════════════════
@@ -435,13 +523,29 @@ function buildWeekPanels(){
 // ══════════════════════════════════════
 function buildCalendar(){
   const g = document.getElementById('calGrid');
-  const wsC = {done:'ws-done',live:'ws-live',upcoming:'ws-upcoming'};
-  ALL_WEEKS.forEach((w, idx)=>{
-    const status = getWeekStatus(w, idx);
-    const left  = w.rallyes.find(r=>r.type==='N') || w.rallyes[0];
-    const right = w.rallyes.find(r=>r.type==='R') || null;
-    const mkR = (r,side) => r ? `<div class="w-rally ${side}"><div class="rtype rtype-${r.type.toLowerCase()}">◼ ${r.type==='N'?'Nationale':'Régionale'}</div><div class="rname">${r.name}</div>${r.dept?`<div class="rdept">${r.dept}</div>`:''}</div>` : `<div class="w-rally ${side}"></div>`;
-    g.innerHTML += `<div class="week-block"><div class="week-head"><span class="week-num">${w.label}</span><span class="week-label">${w.title.replace(w.label+' — ','')}</span><span class="week-status ${wsC[status]}">${STATUS_LABEL[status]}</span></div><div class="week-rallyes">${mkR(left,'left')}${mkR(right,'right')}</div></div>`;
+  const wsC={done:'ws-done',live:'ws-live',upcoming:'ws-upcoming'};
+  const wsL={done:'Terminé',live:'En cours',upcoming:'À venir'};
+  SAISONS[0].rallyes.forEach(r=>{
+    const st = getRallyeStatus('s1', r.id);
+    g.innerHTML += `<div class="week-block">
+      <div class="week-head">
+        <span class="week-num">${r.label}</span>
+        <span class="week-label">${r.title}</span>
+        <span class="week-status ${wsC[st]}">${wsL[st]}</span>
+      </div>
+      <div class="week-rallyes">
+        <div class="w-rally left">
+          <div class="rtype rtype-n">◼ Nationale</div>
+          <div class="rname">${r.n}</div>
+          ${r.dept_n?`<div class="rdept">${r.dept_n}</div>`:''}
+        </div>
+        <div class="w-rally right">
+          <div class="rtype rtype-r">◼ Régionale</div>
+          <div class="rname">${r.r}</div>
+          ${r.dept_r?`<div class="rdept">${r.dept_r}</div>`:''}
+        </div>
+      </div>
+    </div>`;
   });
 }
 
@@ -456,184 +560,150 @@ function switchTab(id, btn){
   if(btn) btn.classList.add('active');
 }
 
+function showSub(sid, subId, btn){
+  document.querySelectorAll(`#subpanels-${sid} .sub-panel`).forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll(`#subnav-${sid} .sub-btn`).forEach(b=>b.classList.remove('active'));
+  const p = document.getElementById(`sub-${sid}-${subId}`);
+  if(p) p.classList.add('active');
+  if(btn) btn.classList.add('active');
+}
+
 // ══════════════════════════════════════
 // LIGHTBOX
 // ══════════════════════════════════════
 let lbScale = 1;
 function openLB(src, title){
-  lbScale = 1;
-  document.getElementById('lbImg').src = src;
-  document.getElementById('lbTitle').textContent = title;
-  document.getElementById('lbWrap').style.transform = 'scale(1)';
-  document.getElementById('lbZoomInfo').textContent = '100%';
-  document.getElementById('lbScroll').scrollTop = 0;
+  lbScale=1;
+  document.getElementById('lbImg').src=src;
+  document.getElementById('lbTitle').textContent=title;
+  document.getElementById('lbWrap').style.transform='scale(1)';
+  document.getElementById('lbZoomInfo').textContent='100%';
+  document.getElementById('lbScroll').scrollTop=0;
   document.getElementById('lightbox').classList.add('open');
-  document.body.style.overflow = 'hidden';
+  document.body.style.overflow='hidden';
 }
-function lbZoom(delta){
-  lbScale = Math.min(4, Math.max(0.5, lbScale + delta));
-  document.getElementById('lbWrap').style.transform = `scale(${lbScale})`;
-  document.getElementById('lbWrap').style.transformOrigin = 'top center';
-  document.getElementById('lbZoomInfo').textContent = Math.round(lbScale*100)+'%';
+function lbZoom(d){
+  lbScale=Math.min(4,Math.max(0.5,lbScale+d));
+  document.getElementById('lbWrap').style.transform=`scale(${lbScale})`;
+  document.getElementById('lbWrap').style.transformOrigin='top center';
+  document.getElementById('lbZoomInfo').textContent=Math.round(lbScale*100)+'%';
 }
 function lbReset(){
-  lbScale = 1;
-  document.getElementById('lbWrap').style.transform = 'scale(1)';
-  document.getElementById('lbZoomInfo').textContent = '100%';
-  document.getElementById('lbScroll').scrollTop = 0;
+  lbScale=1;
+  document.getElementById('lbWrap').style.transform='scale(1)';
+  document.getElementById('lbZoomInfo').textContent='100%';
+  document.getElementById('lbScroll').scrollTop=0;
 }
 function closeLB(){
   document.getElementById('lightbox').classList.remove('open');
-  document.body.style.overflow = '';
+  document.body.style.overflow='';
 }
-document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeLB(); });
-document.addEventListener('DOMContentLoaded', ()=>{
-  document.getElementById('lbScroll').addEventListener('wheel', e=>{
-    if(!document.getElementById('lightbox').classList.contains('open')) return;
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLB();});
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('lbScroll').addEventListener('wheel',e=>{
+    if(!document.getElementById('lightbox').classList.contains('open'))return;
     e.preventDefault();
-    lbZoom(e.deltaY < 0 ? 0.15 : -0.15);
+    lbZoom(e.deltaY<0?0.15:-0.15);
   },{passive:false});
-  document.getElementById('lbScroll').addEventListener('click', e=>{
-    if(e.target === document.getElementById('lbScroll')) closeLB();
+  document.getElementById('lbScroll').addEventListener('click',e=>{
+    if(e.target===document.getElementById('lbScroll'))closeLB();
   });
 });
 
 // ══════════════════════════════════════
-// BROADCAST — mise à jour instantanée
-// depuis l'admin sans Ctrl+R
+// AUTO-REFRESH 10s
 // ══════════════════════════════════════
-try {
-  const bc = new BroadcastChannel('afrl_updates');
-  bc.onmessage = (e)=>{
-    const {key, url, deleted} = e.data;
-    if(!key) return;
+setInterval(async()=>{
+  try{
+    const r=await fetch(GH_RAW+'?t='+Date.now());
+    if(!r.ok)return;
+    const d=await r.json();
+    const newV=d.versions||{};
+    let changed=false;
+    Object.keys(newV).forEach(k=>{
+      if(newV[k]!==VERSIONS[k]){
+        VERSIONS[k]=newV[k];
+        changed=true;
+        document.querySelectorAll(`img[data-key="${k}"]`).forEach(img=>{
+          img.src=newV[k];
+          img.closest('.card').style.display='';
+        });
+      }
+    });
+    Object.keys(VERSIONS).forEach(k=>{
+      if(!newV[k]){
+        delete VERSIONS[k];
+        document.querySelectorAll(`img[data-key="${k}"]`).forEach(img=>{
+          img.closest('.card').style.display='none';
+        });
+      }
+    });
+  }catch(e){}
+},10000);
+
+// ══════════════════════════════════════
+// BROADCAST
+// ══════════════════════════════════════
+try{
+  const bc=new BroadcastChannel('afrl_updates');
+  bc.onmessage=(e)=>{
+    const{key,url,deleted}=e.data;
+    if(!key)return;
     if(deleted){
-      // Supprimer l'image du site
       delete VERSIONS[key];
-      document.querySelectorAll(`img[data-key="${key}"]`).forEach(img=>{
-        img.closest('.card').style.display = 'none';
-      });
-    } else if(url){
-      // Ajouter/mettre à jour l'image
-      VERSIONS[key] = url;
-      document.querySelectorAll(`img[data-key="${key}"]`).forEach(img=>{
-        img.src = url;
-        img.closest('.card').style.display = '';
-      });
-      rebuildPanel(key);
+      document.querySelectorAll(`img[data-key="${key}"]`).forEach(img=>{img.closest('.card').style.display='none';});
+    }else if(url){
+      VERSIONS[key]=url;
+      document.querySelectorAll(`img[data-key="${key}"]`).forEach(img=>{img.src=url;img.closest('.card').style.display='';});
     }
   };
-} catch(e){}
-
-function rebuildPanel(key){
-  const sid = key.split('/')[0];
-  const panel = document.getElementById('panel-' + sid);
-  if(!panel) return;
-  // Reconstruire juste la grille principale du panneau
-  const grid = panel.querySelector('.results-grid');
-  if(grid) grid.querySelectorAll('.card').forEach(card=>{
-    const img = card.querySelector('img');
-    if(img && img.dataset.key === key){
-      img.src = VERSIONS[key];
-      card.style.display = '';
-    }
-  });
-}
-async function refreshVersions(){
-  try {
-    const r = await fetch(GH_RAW + '?t=' + Date.now());
-    if(!r.ok) return;
-    const d = await r.json();
-    const newV = d.versions || {};
-    // Mettre à jour les images modifiées
-    Object.keys(newV).forEach(key=>{
-      if(newV[key] !== VERSIONS[key]){
-        VERSIONS[key] = newV[key];
-        document.querySelectorAll('.card').forEach(card=>{
-          const img = card.querySelector('img');
-          if(img && img.src && img.src.includes(key.split('/').pop().split('_').slice(0,-1).join('_'))){
-            img.src = newV[key];
-            card.style.display = '';
-          }
-        });
-      }
-    });
-    // Masquer les images supprimées
-    Object.keys(VERSIONS).forEach(key=>{
-      if(!newV[key]){
-        delete VERSIONS[key];
-        document.querySelectorAll('.card img').forEach(img=>{
-          if(img.src === VERSIONS[key]) img.closest('.card').style.display = 'none';
-        });
-      }
-    });
-    VERSIONS = newV;
-    localStorage.setItem('afrl_versions_cache', JSON.stringify(VERSIONS));
-  } catch(e){}
-}
-setInterval(refreshVersions, 10000);
+}catch(e){}
 
 // ══════════════════════════════════════
-// INIT — affichage immédiat depuis cache
-// ══════════════════════════════════════
-
-// 1. Charger le cache localStorage immédiatement
-const cached = localStorage.getItem('afrl_versions_cache');
-if(cached){ try { VERSIONS = JSON.parse(cached); } catch(e){} }
-
-// 2. Construire le site tout de suite avec le cache
-buildNav();
-buildGeneral();
-buildClasses();
-buildWeekPanels();
-buildCalendar();
-
-// 3. Charger les vraies versions depuis GitHub en arrière-plan
-loadVersions().then(()=>{
-  // Sauvegarder dans le cache
-  localStorage.setItem('afrl_versions_cache', JSON.stringify(VERSIONS));
-  // Mettre à jour les cartes si différent du cache
-  document.querySelectorAll('img[data-key]').forEach(img=>{
-    const key = img.dataset.key;
-    const url = VERSIONS[key];
-    if(url && img.src !== url){
-      img.src = url;
-      img.closest('.card').style.display = '';
-    } else if(!url){
-      img.closest('.card').style.display = 'none';
-    }
-  });
-});
-</script>
-<script>
-// ══════════════════════════════════════
-// COMPTEUR DE VISITES — JSONbin public
-// sessionStorage évite de compter les rechargements
+// COMPTEUR VISITES
 // ══════════════════════════════════════
 (async function(){
-  const el = document.getElementById('visitCount');
-  const BIN_ID  = '6a41aba8f5f4af5e293eef9b';
-  const BIN_KEY = '$2a$10$yM9onKHZGLNgnH8dbxWPPuPabLAkcBemA6iP0l5NwRI79mFTrtPh.';
-  const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
-  try {
-    const r = await fetch(BIN_URL+'/latest', {
-      headers:{'X-Master-Key':BIN_KEY,'X-Bin-Meta':'false'}
-    });
-    const d = await r.json();
-    const visits = parseInt(d.visits || 0);
-    if(el) el.textContent = visits.toLocaleString('fr-FR');
-
+  const el=document.getElementById('visitCount');
+  const BIN_ID='6a41aba8f5f4af5e293eef9b';
+  const BIN_KEY='$2a$10$yM9onKHZGLNgnH8dbxWPPuPabLAkcBemA6iP0l5NwRI79mFTrtPh.';
+  const BIN_URL=`https://api.jsonbin.io/v3/b/${BIN_ID}`;
+  try{
+    const r=await fetch(BIN_URL+'/latest',{headers:{'X-Master-Key':BIN_KEY,'X-Bin-Meta':'false'}});
+    const d=await r.json();
+    const visits=parseInt(d.visits||0);
+    if(el)el.textContent=visits.toLocaleString('fr-FR');
     if(!sessionStorage.getItem('afrl_visited')){
       sessionStorage.setItem('afrl_visited','1');
-      await fetch(BIN_URL, {
-        method:'PUT',
-        headers:{'Content-Type':'application/json','X-Master-Key':BIN_KEY},
-        body: JSON.stringify({visits: visits + 1})
-      });
-      if(el) el.textContent = (visits + 1).toLocaleString('fr-FR');
+      await fetch(BIN_URL,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':BIN_KEY},body:JSON.stringify({visits:visits+1})});
+      if(el)el.textContent=(visits+1).toLocaleString('fr-FR');
     }
-  } catch(e){ if(el) el.textContent = '—'; }
+  }catch(e){if(el)el.textContent='—';}
 })();
+
+// ══════════════════════════════════════
+// INIT
+// ══════════════════════════════════════
+const cached=localStorage.getItem('afrl_versions_cache');
+if(cached){try{VERSIONS=JSON.parse(cached);}catch(e){}}
+
+buildNav();
+SAISONS.forEach(s=>buildSaisonPanel(s));
+buildCalendar();
+// Activer Saison 1 par défaut
+switchTab('s1', document.querySelector('.tab-btn.tab-s1'));
+
+loadVersions().then(()=>{
+  localStorage.setItem('afrl_versions_cache',JSON.stringify(VERSIONS));
+  document.querySelectorAll('img[data-key]').forEach(img=>{
+    const key=img.dataset.key;
+    const url=VERSIONS[key];
+    if(url&&img.src!==url){img.src=url;img.closest('.card').style.display='';}
+    else if(!url){img.closest('.card').style.display='none';}
+  });
+  // Rebuild nav avec statuts à jour
+  buildNav();
+  switchTab('s1', document.querySelector('.tab-btn.tab-s1'));
+});
 </script>
 </body>
 </html>

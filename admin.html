@@ -6,45 +6,40 @@
 <title>AFRL — Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet"/>
 <style>
-:root{
-  --bg:#06080f;--surface:#0d1220;--surface2:#111827;
-  --border:rgba(255,255,255,0.07);--accent:#e8192c;
-  --accent3:#3b82f6;--text:#f0f4ff;--muted:#6b7a99;--green:#4ade80;
-}
+:root{--bg:#06080f;--surface:#0d1220;--surface2:#111827;--border:rgba(255,255,255,0.07);--accent:#e8192c;--accent3:#3b82f6;--text:#f0f4ff;--muted:#6b7a99;--green:#4ade80;}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-height:100vh;}
 body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(232,25,44,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(232,25,44,0.025) 1px,transparent 1px);background-size:44px 44px;pointer-events:none;z-index:0;}
 body::after{content:'';position:fixed;inset:0;background:url('bg-admin.webp') center/cover no-repeat;opacity:0.07;pointer-events:none;z-index:0;}
 
-/* LOGIN */
 .login-wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:100;background:var(--bg);}
-.login-box{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:6px;padding:2.5rem;width:100%;max-width:380px;text-align:center;}
+.login-box{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:6px;padding:2.5rem;width:100%;max-width:400px;text-align:center;}
 .login-logo{height:40px;margin-bottom:1.5rem;}
 .login-title{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem;}
-.login-input{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'Exo 2',sans-serif;font-size:.9rem;padding:.75rem 1rem;border-radius:4px;margin-bottom:1rem;outline:none;transition:border-color .2s;}
+.login-input{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'Exo 2',sans-serif;font-size:.9rem;padding:.75rem 1rem;border-radius:4px;margin-bottom:.75rem;outline:none;transition:border-color .2s;}
 .login-input:focus{border-color:var(--accent);}
 .login-btn{width:100%;background:var(--accent);color:#fff;border:none;font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.75rem;border-radius:4px;cursor:pointer;}
 .login-btn:hover{background:#c8111f;}
 .login-error{color:var(--accent);font-size:.78rem;margin-top:.5rem;display:none;}
+.login-hint{font-size:.72rem;color:var(--muted);margin-bottom:.75rem;text-align:left;line-height:1.5;}
 
-/* ADMIN */
 .admin-wrap{display:none;flex-direction:column;min-height:100vh;}
 .admin-wrap.visible{display:flex;}
-header{background:rgba(6,8,15,0.97);border-bottom:1px solid var(--border);}
+header{position:relative;z-index:20;background:rgba(6,8,15,0.97);border-bottom:1px solid var(--border);}
 .header-inner{max-width:1100px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:64px;}
 .header-logo{height:36px;}
 .admin-badge{font-family:'Rajdhani',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.15em;background:var(--accent);color:#fff;padding:3px 9px;border-radius:2px;text-transform:uppercase;}
 .logout-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:3px;cursor:pointer;}
 .logout-btn:hover{color:var(--text);}
 
-main{max-width:1100px;margin:0 auto;padding:2rem 1.5rem;width:100%;}
+main{position:relative;z-index:5;max-width:1100px;margin:0 auto;padding:2rem 1.5rem;width:100%;}
 .back-link{display:inline-flex;align-items:center;gap:.4rem;font-family:'Rajdhani',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;margin-bottom:1.5rem;}
 .back-link:hover{color:var(--text);}
 .page-title{font-family:'Rajdhani',sans-serif;font-size:1.5rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem;}
 .page-sub{font-size:.82rem;color:var(--muted);margin-bottom:2rem;}
 
-.card-box{background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1.5rem;}
-.card-box-head{background:#0a0e1a;padding:.75rem 1.2rem;border-bottom:1px solid var(--border);}
+.card-box{background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:1.5rem;position:relative;z-index:5;}
+.card-box-head{background:#0a0e1a;padding:.75rem 1.2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;cursor:pointer;}
 .card-box-title{font-family:'Rajdhani',sans-serif;font-size:.9rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;}
 .card-box-body{padding:1.5rem;}
 
@@ -62,7 +57,7 @@ main{max-width:1100px;margin:0 auto;padding:2rem 1.5rem;width:100%;}
 .drop-sub{font-size:.75rem;color:var(--muted);opacity:.6;}
 
 .preview-wrap{display:none;margin-top:1rem;position:relative;}
-.preview-wrap img{width:100%;max-height:300px;object-fit:contain;border-radius:4px;border:1px solid var(--border);background:var(--surface2);}
+.preview-wrap img{width:100%;max-height:250px;object-fit:contain;border-radius:4px;border:1px solid var(--border);background:var(--surface2);}
 .preview-name{font-size:.75rem;color:var(--muted);margin-top:.4rem;text-align:center;}
 .preview-remove{position:absolute;top:.5rem;right:.5rem;background:var(--accent);border:none;color:#fff;width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center;}
 
@@ -71,28 +66,26 @@ main{max-width:1100px;margin:0 auto;padding:2rem 1.5rem;width:100%;}
 .upload-btn:disabled{background:var(--muted);cursor:not-allowed;}
 .spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none;}
 @keyframes spin{to{transform:rotate(360deg);}}
-
 .progress-bar{height:4px;background:var(--surface2);border-radius:2px;margin-top:1rem;overflow:hidden;display:none;}
 .progress-fill{height:100%;background:var(--accent);border-radius:2px;width:0%;transition:width .3s;}
 
-/* HISTORY */
-.history-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.75rem;margin-top:.5rem;}
+.key-preview{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:.6rem 1rem;font-family:monospace;font-size:.78rem;color:#60a5fa;margin-top:.75rem;letter-spacing:.02em;}
+
+.history-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.75rem;}
 .history-item{background:var(--surface2);border:1px solid var(--border);border-radius:4px;overflow:hidden;position:relative;}
 .history-img{width:100%;aspect-ratio:16/9;object-fit:cover;}
 .history-info{padding:.4rem .6rem;}
-.history-slot{font-family:'Rajdhani',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);}
-.history-name{font-size:.7rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.history-slot{font-family:'Rajdhani',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);}
+.history-name{font-size:.68rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .history-del{position:absolute;top:.3rem;right:.3rem;background:rgba(232,25,44,.8);border:none;color:#fff;width:20px;height:20px;border-radius:50%;cursor:pointer;font-size:.65rem;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;}
 .history-item:hover .history-del{opacity:1;}
 
-/* TOAST */
 .toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:.9rem 1.2rem;display:flex;align-items:center;gap:.75rem;z-index:200;transform:translateY(100px);opacity:0;transition:all .3s;max-width:340px;}
 .toast.show{transform:translateY(0);opacity:1;}
 .toast.success{border-left:3px solid var(--green);}
 .toast.error{border-left:3px solid var(--accent);}
 .toast-title{font-family:'Rajdhani',sans-serif;font-size:.85rem;font-weight:700;}
-.toast-msg{font-size:.8rem;color:var(--muted);}
-
+.toast-msg{font-size:.78rem;color:var(--muted);}
 @media(max-width:600px){.form-grid{grid-template-columns:1fr;}}
 </style>
 </head>
@@ -102,8 +95,9 @@ main{max-width:1100px;margin:0 auto;padding:2rem 1.5rem;width:100%;}
   <div class="login-box">
     <img src="afrl_logo.png" alt="AFRL" class="login-logo"/>
     <div class="login-title">Panneau Admin</div>
-    <input type="password" class="login-input" id="loginInput" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')doLogin()"/>
-    <input type="text" class="login-input" id="tokenInput" placeholder="GitHub Token (ghp_...)" style="font-size:.75rem;"/>
+    <input type="password" class="login-input" id="loginPwd" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')doLogin()"/>
+    <div class="login-hint">GitHub Token (sauvegardé automatiquement)</div>
+    <input type="text" class="login-input" id="loginToken" placeholder="ghp_... (une seule fois)"/>
     <button class="login-btn" onclick="doLogin()">Se connecter</button>
     <div class="login-error" id="loginError">Mot de passe incorrect</div>
   </div>
@@ -123,55 +117,45 @@ main{max-width:1100px;margin:0 auto;padding:2rem 1.5rem;width:100%;}
   <main>
     <a href="index.html" class="back-link">← Retour au site</a>
     <div class="page-title">Gestion des images</div>
-    <div class="page-sub">Glisse ton PNG, choisis l'emplacement et uploade — visible instantanément sur le site.</div>
+    <div class="page-sub">Sélectionne la saison, le rallye et le type — glisse ton PNG — uploade.</div>
 
     <div class="card-box">
-      <div class="card-box-head"><span class="card-box-title">📤 Uploader une image</span></div>
+      <div class="card-box-head" style="cursor:default;">
+        <span class="card-box-title">📤 Uploader une image</span>
+      </div>
       <div class="card-box-body">
         <div class="form-grid">
           <div class="form-group">
-            <label class="form-label">Semaine</label>
-            <select class="form-select" id="selSemaine" onchange="updateTypes()">
+            <label class="form-label">Saison</label>
+            <select class="form-select" id="selSaison" onchange="updateRallyes()">
               <option value="">-- Choisir --</option>
-              <option value="general">🏆 Général Saison</option>
-              <optgroup label="──────────────"></optgroup>
-              <option value="s01">S01 — Centre Alsace & Faverge</option>
-              <option value="s02">S02 — Pays du Gier & Neufchâtel</option>
-              <option value="s03">S03 — Autocourse & Balcon Vercors</option>
-              <option value="s04">S04 — Bassin Annonéen & Cœur de Lion</option>
-              <option value="s05">S05 — Val d'Agout & Beaufortain</option>
-              <option value="s06">S06 — Monts de Blond & Monts de Vaucluse</option>
-              <option value="s07">S07 — Saint-Émilion & Mézidon</option>
-              <option value="s08">S08 — Pays de Seyssel & Val d'Orain</option>
-              <option value="s09">S09 — Val d'Ance & Lochois</option>
-              <option value="s10">S10 — Tréport & Clain</option>
-              <option value="s11">S11 — Nice Jean Behra & Vienne et Glane</option>
-              <option value="s12">S12 — Bornes & Sidobre</option>
-              <option value="s13">S13 — Vins de Chinon & Sauveterre</option>
-              <option value="s14">S14 — Saint-Marcellin & Côte Roannaise</option>
-              <option value="s15">S15 — Bourgogne & Le Mans</option>
-              <option value="s16">S16 — Saintonge & Bagnols-les-Bains</option>
-              <option value="s17">S17 — Montagne Noire & Plaine</option>
-              <option value="s18">S18 — Fourmies & Gap Racing</option>
-              <option value="s19">S19 — Autun & Florival</option>
-              <option value="s20">S20 — Basse Normandie & Sel</option>
-              <option value="s21">S21 — Pays Saint-Affricain & Vallées</option>
-              <option value="s22">S22 — Pays Basque & Chartreuse</option>
+              <option value="s1">Saison 1</option>
+              <option value="s2">Saison 2</option>
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label">Type d'image</label>
-            <select class="form-select" id="selType" onchange="checkReady()">
-              <option value="">-- Choisir la semaine d'abord --</option>
+            <label class="form-label">Rallye</label>
+            <select class="form-select" id="selRallye" onchange="updateTypes()">
+              <option value="">-- Choisir la saison d'abord --</option>
             </select>
           </div>
         </div>
+        <div class="form-grid">
+          <div class="form-group" style="grid-column:1/-1;">
+            <label class="form-label">Type d'image</label>
+            <select class="form-select" id="selType" onchange="updateKeyPreview()">
+              <option value="">-- Choisir le rallye d'abord --</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="key-preview" id="keyPreview" style="display:none;">Clé : —</div>
 
         <div class="drop-zone" id="dropZone"
           ondragover="event.preventDefault();this.classList.add('dragover')"
           ondragleave="this.classList.remove('dragover')"
           ondrop="handleDrop(event)"
-          onclick="document.getElementById('fileInput').click()">
+          onclick="document.getElementById('fileInput').click()" style="margin-top:1rem;">
           <div class="drop-icon">🖼️</div>
           <div class="drop-text">Glisse ton PNG ici</div>
           <div class="drop-sub">ou clique pour sélectionner</div>
@@ -184,9 +168,7 @@ main{max-width:1100px;margin:0 auto;padding:2rem 1.5rem;width:100%;}
           <button class="preview-remove" onclick="clearPreview()">✕</button>
         </div>
 
-        <div class="progress-bar" id="progressBar">
-          <div class="progress-fill" id="progressFill"></div>
-        </div>
+        <div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
 
         <button class="upload-btn" id="uploadBtn" onclick="doUpload()" disabled>
           <div class="spinner" id="spinner"></div>
@@ -196,9 +178,9 @@ main{max-width:1100px;margin:0 auto;padding:2rem 1.5rem;width:100%;}
     </div>
 
     <div class="card-box">
-      <div class="card-box-head" onclick="toggleHistory()" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
+      <div class="card-box-head" onclick="toggleHistory()">
         <span class="card-box-title">🗂️ Images uploadées</span>
-        <span id="historyToggle" style="font-family:Rajdhani,sans-serif;font-size:.8rem;color:var(--muted);letter-spacing:.1em;">▼ AFFICHER</span>
+        <span id="historyToggle" style="font-family:'Rajdhani',sans-serif;font-size:.8rem;color:var(--muted);letter-spacing:.1em;">▼ AFFICHER</span>
       </div>
       <div class="card-box-body" id="historyBody" style="display:none;">
         <div class="history-grid" id="historyGrid">
@@ -217,19 +199,53 @@ main{max-width:1100px;margin:0 auto;padding:2rem 1.5rem;width:100%;}
 // ══════════════════════════════════════
 // CONFIG
 // ══════════════════════════════════════
-const ADMIN_PASSWORD = 'afrl2026';
+const ADMIN_PASSWORD    = 'afrl2026';
 const CLOUDINARY_CLOUD  = 'doxgg82iy';
 const CLOUDINARY_PRESET = 'afrl_upload';
-const GH_REPO  = 'daco2A22/afrl-resultats';
-const GH_FILE  = 'versions.json';
-const GH_API   = `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`;
-
-// Token stocké dans localStorage — jamais dans le code
-function getToken(){ return localStorage.getItem('afrl_gh_token') || ''; }
+const GH_REPO = 'daco2A22/afrl-resultats';
+const GH_FILE = 'versions.json';
+const GH_API  = `https://api.github.com/repos/${GH_REPO}/contents/${GH_FILE}`;
+function getToken(){ return localStorage.getItem('afrl_gh_token')||''; }
 
 // ══════════════════════════════════════
-// TYPES
+// DONNÉES RALLYES
 // ══════════════════════════════════════
+const RALLYES_S1 = [
+  {v:'general', l:'🏆 Général Saison 1'},
+  {v:'classes', l:'📊 Classes Saison 1'},
+  {v:'r01', l:'R01 — Centre Alsace & Faverge'},
+  {v:'r02', l:'R02 — Pays du Gier & Neufchâtel'},
+  {v:'r03', l:'R03 — Autocourse & Balcon Vercors'},
+  {v:'r04', l:'R04 — Bassin Annonéen & Cœur de Lion'},
+  {v:'r05', l:"R05 — Val d'Agout & Beaufortain"},
+  {v:'r06', l:'R06 — Monts de Blond & Monts de Vaucluse'},
+  {v:'r07', l:'R07 — Saint-Émilion & Mézidon'},
+  {v:'r08', l:"R08 — Pays de Seyssel & Val d'Orain"},
+  {v:'r09', l:"R09 — Val d'Ance & Lochois"},
+  {v:'r10', l:'R10 — Tréport & Clain'},
+  {v:'r11', l:'R11 — Nice Jean Behra & Vienne et Glane'},
+  {v:'r12', l:'R12 — Bornes & Sidobre'},
+  {v:'r13', l:'R13 — Vins de Chinon & Sauveterre'},
+  {v:'r14', l:'R14 — Saint-Marcellin & Côte Roannaise'},
+  {v:'r15', l:'R15 — Bourgogne & Le Mans'},
+  {v:'r16', l:'R16 — Saintonge & Bagnols-les-Bains'},
+  {v:'r17', l:'R17 — Montagne Noire & Plaine'},
+  {v:'r18', l:'R18 — Fourmies & Gap Racing'},
+  {v:'r19', l:"R19 — Autun & Florival"},
+  {v:'r20', l:'R20 — Basse Normandie & Sel'},
+  {v:'r21', l:'R21 — Pays Saint-Affricain & Vallées'},
+  {v:'r22', l:'R22 — Pays Basque & Chartreuse'},
+];
+
+const RALLYES_S2 = [
+  {v:'general', l:'🏆 Général Saison 2'},
+  {v:'classes', l:'📊 Classes Saison 2'},
+  {v:'r01', l:'R01'},
+  {v:'r02', l:'R02'},
+  {v:'r03', l:'R03'},
+  {v:'r04', l:'R04'},
+];
+
 const CLASSES_KEYS = [
   {v:'rally2_r5',l:'Rally2/R5'},{v:'super_2000',l:'Super 2000'},{v:'rgt',l:'RGT'},
   {v:'rally3',l:'Rally3'},{v:'a8',l:'A8'},{v:'n4',l:'N4'},{v:'r4',l:'R4'},
@@ -237,22 +253,25 @@ const CLASSES_KEYS = [
   {v:'r2',l:'R2'},{v:'a7',l:'A7'},{v:'a6',l:'A6'},{v:'rally5',l:'Rally5'},{v:'r1',l:'R1'},
 ];
 
-const TYPES_GENERAL = [
-  {v:'classement_general',l:'Classement Général Saison'},
-  {v:'general_classe',l:'Général par Classe Saison'},
-  ...CLASSES_KEYS.map(c=>({v:`classe_${c.v}`,l:`Classe ${c.l}`})),
-];
-
-function getTypesSemaine(sid){
+function getTypes(rallye){
+  if(rallye==='general'){
+    return [
+      {v:'classement_general',l:'Classement Général'},
+      {v:'general_classe',l:'Général par Classe'},
+    ];
+  }
+  if(rallye==='classes'){
+    return CLASSES_KEYS.map(c=>({v:`classe_${c.v}`,l:`Classe ${c.l}`}));
+  }
   return [
-    {v:`${sid}_r1_general`,l:'🔵 Général — Nationale (R1)'},
-    {v:'r1_general_classe',l:'🔵 Général par Classe — R1'},
-    {v:`${sid}_r2_general`,l:'🔴 Général — Régionale (R2)'},
-    {v:'r2_general_classe',l:'🔴 Général par Classe — R2'},
-    {v:'general',l:'🏆 Classement Général Semaine'},
-    {v:'general_classe',l:'📊 Général par Classe Semaine'},
-    ...CLASSES_KEYS.map(c=>({v:`r1_classe_${c.v}`,l:`🔵 Classe ${c.l} — R1`})),
-    ...CLASSES_KEYS.map(c=>({v:`r2_classe_${c.v}`,l:`🔴 Classe ${c.l} — R2`})),
+    {v:`${rallye}_n_general`,      l:'🔵 Général — Nationale (N)'},
+    {v:`${rallye}_n_general_classe`,l:'🔵 Général par Classe — N'},
+    {v:`${rallye}_r_general`,      l:'🔴 Général — Régionale (R)'},
+    {v:`${rallye}_r_general_classe`,l:'🔴 Général par Classe — R'},
+    {v:'general',                  l:'🏆 Classement Général du Rallye'},
+    {v:'general_classe',           l:'📊 Général par Classe du Rallye'},
+    ...CLASSES_KEYS.map(c=>({v:`n_classe_${c.v}`,l:`🔵 Classe ${c.l} — N`})),
+    ...CLASSES_KEYS.map(c=>({v:`r_classe_${c.v}`,l:`🔴 Classe ${c.l} — R`})),
   ];
 }
 
@@ -260,197 +279,169 @@ function getTypesSemaine(sid){
 // LOGIN
 // ══════════════════════════════════════
 function doLogin(){
-  const token = document.getElementById('tokenInput').value.trim() || localStorage.getItem('afrl_gh_token') || '';
-  if(document.getElementById('loginInput').value === ADMIN_PASSWORD && token){
+  const pwd   = document.getElementById('loginPwd').value;
+  const token = document.getElementById('loginToken').value.trim() || getToken();
+  if(pwd === ADMIN_PASSWORD && token){
     sessionStorage.setItem('afrl_admin','1');
     localStorage.setItem('afrl_gh_token', token);
-    document.getElementById('loginWrap').style.display = 'none';
+    document.getElementById('loginWrap').style.display='none';
     document.getElementById('adminWrap').classList.add('visible');
     loadHistory();
   } else {
-    document.getElementById('loginError').style.display = 'block';
-    document.getElementById('loginInput').value = '';
+    document.getElementById('loginError').style.display='block';
+    document.getElementById('loginPwd').value='';
   }
 }
 function doLogout(){
   sessionStorage.removeItem('afrl_admin');
   location.reload();
 }
-// Auto-remplir le token si déjà sauvegardé
-document.addEventListener('DOMContentLoaded', ()=>{
-  const saved = localStorage.getItem('afrl_gh_token');
-  if(saved) document.getElementById('tokenInput').value = saved;
+document.addEventListener('DOMContentLoaded',()=>{
+  const saved=localStorage.getItem('afrl_gh_token');
+  if(saved) document.getElementById('loginToken').placeholder=`Token sauvegardé (${saved.substring(0,10)}...)`;
+  if(sessionStorage.getItem('afrl_admin')&&getToken()){
+    document.getElementById('loginWrap').style.display='none';
+    document.getElementById('adminWrap').classList.add('visible');
+    loadHistory();
+  }
 });
-if(sessionStorage.getItem('afrl_admin') && localStorage.getItem('afrl_gh_token')){
-  document.getElementById('loginWrap').style.display = 'none';
-  document.getElementById('adminWrap').classList.add('visible');
-  loadHistory();
-}
 
 // ══════════════════════════════════════
-// TYPES SELECT
+// SELECTS
 // ══════════════════════════════════════
+function updateRallyes(){
+  const sai=document.getElementById('selSaison').value;
+  const sel=document.getElementById('selRallye');
+  sel.innerHTML='<option value="">-- Choisir --</option>';
+  const list=sai==='s1'?RALLYES_S1:sai==='s2'?RALLYES_S2:[];
+  list.forEach(r=>{const o=document.createElement('option');o.value=r.v;o.textContent=r.l;sel.appendChild(o);});
+  document.getElementById('selType').innerHTML='<option value="">-- Choisir le rallye d\'abord --</option>';
+  updateKeyPreview(); checkReady();
+}
 function updateTypes(){
-  const sem = document.getElementById('selSemaine').value;
-  const sel = document.getElementById('selType');
-  sel.innerHTML = '';
-  if(!sem){ sel.innerHTML = '<option value="">-- Choisir la semaine d\'abord --</option>'; checkReady(); return; }
-  const types = sem === 'general' ? TYPES_GENERAL : getTypesSemaine(sem);
-  types.forEach(t=>{
-    const o = document.createElement('option');
-    o.value = t.v; o.textContent = t.l;
-    sel.appendChild(o);
-  });
+  const sai=document.getElementById('selSaison').value;
+  const ral=document.getElementById('selRallye').value;
+  const sel=document.getElementById('selType');
+  sel.innerHTML='';
+  if(!ral){sel.innerHTML='<option value="">-- Choisir le rallye d\'abord --</option>';updateKeyPreview();checkReady();return;}
+  getTypes(ral).forEach(t=>{const o=document.createElement('option');o.value=t.v;o.textContent=t.l;sel.appendChild(o);});
+  updateKeyPreview(); checkReady();
+}
+function updateKeyPreview(){
+  const sai=document.getElementById('selSaison').value;
+  const ral=document.getElementById('selRallye').value;
+  const typ=document.getElementById('selType').value;
+  const kp=document.getElementById('keyPreview');
+  if(sai&&ral&&typ){
+    const key=`${sai}/${ral}/${typ}`;
+    kp.style.display='block';
+    kp.textContent=`Clé Cloudinary : ${key}`;
+  } else {
+    kp.style.display='none';
+  }
   checkReady();
 }
 
 // ══════════════════════════════════════
 // FILE
 // ══════════════════════════════════════
-let currentFile = null;
-function handleDrop(e){
-  e.preventDefault();
-  document.getElementById('dropZone').classList.remove('dragover');
-  handleFile(e.dataTransfer.files[0]);
-}
+let currentFile=null;
+function handleDrop(e){e.preventDefault();document.getElementById('dropZone').classList.remove('dragover');handleFile(e.dataTransfer.files[0]);}
 function handleFile(file){
-  if(!file) return;
-  currentFile = file;
-  document.getElementById('previewImg').src = URL.createObjectURL(file);
-  document.getElementById('previewName').textContent = file.name;
-  document.getElementById('previewWrap').style.display = 'block';
+  if(!file)return;
+  currentFile=file;
+  document.getElementById('previewImg').src=URL.createObjectURL(file);
+  document.getElementById('previewName').textContent=file.name;
+  document.getElementById('previewWrap').style.display='block';
   checkReady();
 }
 function clearPreview(){
-  currentFile = null;
-  document.getElementById('previewWrap').style.display = 'none';
-  document.getElementById('previewImg').src = '';
-  document.getElementById('fileInput').value = '';
+  currentFile=null;
+  document.getElementById('previewWrap').style.display='none';
+  document.getElementById('previewImg').src='';
+  document.getElementById('fileInput').value='';
   checkReady();
 }
 function checkReady(){
-  const ok = currentFile && document.getElementById('selSemaine').value && document.getElementById('selType').value;
-  document.getElementById('uploadBtn').disabled = !ok;
+  const ok=currentFile&&document.getElementById('selSaison').value&&document.getElementById('selRallye').value&&document.getElementById('selType').value;
+  document.getElementById('uploadBtn').disabled=!ok;
 }
 
 // ══════════════════════════════════════
-// GITHUB — lire/écrire versions.json
+// GITHUB
 // ══════════════════════════════════════
 async function ghRead(){
-  const r = await fetch(GH_API,{headers:{'Authorization':`token ${getToken()}`,'Accept':'application/vnd.github.v3+json'}});
-  if(!r.ok) return {versions:{}, sha:''};
-  const d = await r.json();
-  return {versions: JSON.parse(atob(d.content.replace(/\n/g,''))).versions || {}, sha: d.sha};
+  const r=await fetch(GH_API,{headers:{'Authorization':`token ${getToken()}`,'Accept':'application/vnd.github.v3+json'}});
+  if(!r.ok)return{versions:{},sha:''};
+  const d=await r.json();
+  return{versions:JSON.parse(atob(d.content.replace(/\n/g,''))).versions||{},sha:d.sha};
 }
-async function ghWrite(versions, sha){
-  const body = {message:'Update versions.json', content: btoa(JSON.stringify({versions},null,2))};
-  if(sha) body.sha = sha;
-  await fetch(GH_API,{
-    method:'PUT',
-    headers:{'Authorization':`token ${getToken()}`,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},
-    body: JSON.stringify(body)
-  });
+async function ghWrite(versions,sha){
+  const body={message:'Update versions.json',content:btoa(JSON.stringify({versions},null,2))};
+  if(sha)body.sha=sha;
+  await fetch(GH_API,{method:'PUT',headers:{'Authorization':`token ${getToken()}`,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},body:JSON.stringify(body)});
 }
 
 // ══════════════════════════════════════
 // UPLOAD
 // ══════════════════════════════════════
 async function doUpload(){
-  const sem  = document.getElementById('selSemaine').value;
-  const type = document.getElementById('selType').value;
-  if(!sem || !type || !currentFile) return;
+  const sai=document.getElementById('selSaison').value;
+  const ral=document.getElementById('selRallye').value;
+  const typ=document.getElementById('selType').value;
+  if(!sai||!ral||!typ||!currentFile)return;
 
-  // Clé = "general/classement_general" ou "s01/s01_r1_general"
-  const key = `${sem}/${type}`;
-  // Public ID Cloudinary avec timestamp pour éviter le cache
-  const publicId = `afrl/${sem}/${type}_${Date.now()}`;
+  const key=`${sai}/${ral}/${typ}`;
+  const publicId=`afrl/${key}_${Date.now()}`;
 
-  const btn = document.getElementById('uploadBtn');
-  btn.disabled = true;
-  document.getElementById('spinner').style.display = 'block';
-  document.getElementById('uploadBtnText').textContent = 'Upload en cours...';
-  document.getElementById('progressBar').style.display = 'block';
+  const btn=document.getElementById('uploadBtn');
+  btn.disabled=true;
+  document.getElementById('spinner').style.display='block';
+  document.getElementById('uploadBtnText').textContent='Upload...';
+  document.getElementById('progressBar').style.display='block';
 
-  let prog = 0;
-  const pi = setInterval(()=>{ prog = Math.min(prog+6,85); document.getElementById('progressFill').style.width=prog+'%'; },200);
+  let prog=0;
+  const pi=setInterval(()=>{prog=Math.min(prog+6,85);document.getElementById('progressFill').style.width=prog+'%';},200);
 
-  try {
-    // 1. Upload vers Cloudinary
-    const fd = new FormData();
-    fd.append('file', currentFile);
-    fd.append('upload_preset', CLOUDINARY_PRESET);
-    fd.append('public_id', publicId);
-
-    const cr = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`,{method:'POST',body:fd});
-    if(!cr.ok) throw new Error(`Cloudinary erreur ${cr.status}`);
-    const cd = await cr.json();
-    const imageUrl = cd.secure_url;
+  try{
+    const fd=new FormData();
+    fd.append('file',currentFile);
+    fd.append('upload_preset',CLOUDINARY_PRESET);
+    fd.append('public_id',publicId);
+    const cr=await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`,{method:'POST',body:fd});
+    if(!cr.ok)throw new Error(`Cloudinary erreur ${cr.status}`);
+    const cd=await cr.json();
+    const imageUrl=cd.secure_url;
 
     clearInterval(pi);
-    document.getElementById('progressFill').style.width = '70%';
+    document.getElementById('progressFill').style.width='70%';
 
-    // 2. Mettre à jour versions.json sur GitHub
-    const {versions, sha} = await ghRead();
-    versions[key] = imageUrl;
-    await ghWrite(versions, sha);
+    const{versions,sha}=await ghRead();
+    versions[key]=imageUrl;
+    await ghWrite(versions,sha);
 
-    document.getElementById('progressFill').style.width = '100%';
+    document.getElementById('progressFill').style.width='100%';
 
-    // 3. Historique local
-    const hist = JSON.parse(localStorage.getItem('afrl_history')||'[]');
-    hist.unshift({url:imageUrl, slot:key, name:currentFile.name, date:new Date().toLocaleDateString('fr-FR')});
-    if(hist.length>50) hist.pop();
-    localStorage.setItem('afrl_history', JSON.stringify(hist));
+    const hist=JSON.parse(localStorage.getItem('afrl_history')||'[]');
+    hist.unshift({url:imageUrl,slot:key,name:currentFile.name,date:new Date().toLocaleDateString('fr-FR')});
+    if(hist.length>50)hist.pop();
+    localStorage.setItem('afrl_history',JSON.stringify(hist));
 
-    showToast('success','✅ Uploadé !', `${key} visible sur le site.`);
+    try{const bc=new BroadcastChannel('afrl_updates');bc.postMessage({key,url:imageUrl});bc.close();}catch(e){}
+
+    showToast('success','✅ Uploadé !',`${key} visible sur le site.`);
     clearPreview();
     loadHistory();
 
-    // Notifier tous les onglets du site instantanément
-    try {
-      const bc = new BroadcastChannel('afrl_updates');
-      bc.postMessage({key, url: imageUrl});
-      bc.close();
-    } catch(e){}
-
-  } catch(err){
+  }catch(err){
     clearInterval(pi);
-    showToast('error','❌ Erreur', err.message);
-  } finally {
-    btn.disabled = false;
-    document.getElementById('spinner').style.display = 'none';
-    document.getElementById('uploadBtnText').textContent = '📤 Uploader';
-    setTimeout(()=>{
-      document.getElementById('progressBar').style.display = 'none';
-      document.getElementById('progressFill').style.width = '0%';
-    },1500);
+    showToast('error','❌ Erreur',err.message);
+  }finally{
+    btn.disabled=false;
+    document.getElementById('spinner').style.display='none';
+    document.getElementById('uploadBtnText').textContent='📤 Uploader';
+    setTimeout(()=>{document.getElementById('progressBar').style.display='none';document.getElementById('progressFill').style.width='0%';},1500);
     checkReady();
-  }
-}
-
-// ══════════════════════════════════════
-// SUPPRIMER
-// ══════════════════════════════════════
-async function deleteHistory(idx){
-  const hist = JSON.parse(localStorage.getItem('afrl_history')||'[]');
-  const item = hist[idx];
-  if(!item) return;
-  try {
-    const {versions, sha} = await ghRead();
-    delete versions[item.slot];
-    await ghWrite(versions, sha);
-    hist.splice(idx,1);
-    localStorage.setItem('afrl_history', JSON.stringify(hist));
-    loadHistory();
-    // Notifier tous les onglets de la suppression
-    try {
-      const bc = new BroadcastChannel('afrl_updates');
-      bc.postMessage({key: item.slot, url: null, deleted: true});
-      bc.close();
-    } catch(e){}
-    showToast('success','✅ Supprimé','Image retirée du site.');
-  } catch(e){
-    showToast('error','❌ Erreur', e.message);
   }
 }
 
@@ -458,18 +449,32 @@ async function deleteHistory(idx){
 // HISTORIQUE
 // ══════════════════════════════════════
 function toggleHistory(){
-  const body = document.getElementById('historyBody');
-  const toggle = document.getElementById('historyToggle');
-  const open = body.style.display === 'none';
-  body.style.display = open ? 'block' : 'none';
-  toggle.textContent = open ? '▲ MASQUER' : '▼ AFFICHER';
+  const body=document.getElementById('historyBody');
+  const toggle=document.getElementById('historyToggle');
+  const open=body.style.display==='none';
+  body.style.display=open?'block':'none';
+  toggle.textContent=open?'▲ MASQUER':'▼ AFFICHER';
 }
-
+async function deleteHistory(idx){
+  const hist=JSON.parse(localStorage.getItem('afrl_history')||'[]');
+  const item=hist[idx];
+  if(!item)return;
+  try{
+    const{versions,sha}=await ghRead();
+    delete versions[item.slot];
+    await ghWrite(versions,sha);
+    hist.splice(idx,1);
+    localStorage.setItem('afrl_history',JSON.stringify(hist));
+    loadHistory();
+    try{const bc=new BroadcastChannel('afrl_updates');bc.postMessage({key:item.slot,deleted:true});bc.close();}catch(e){}
+    showToast('success','✅ Supprimé','Image retirée du site.');
+  }catch(e){showToast('error','❌ Erreur',e.message);}
+}
 function loadHistory(){
-  const hist = JSON.parse(localStorage.getItem('afrl_history')||'[]');
-  const g = document.getElementById('historyGrid');
-  if(!hist.length){ g.innerHTML='<div style="color:var(--muted);font-size:.8rem;grid-column:1/-1;">Aucune image uploadée.</div>'; return; }
-  g.innerHTML = hist.map((h,i)=>`
+  const hist=JSON.parse(localStorage.getItem('afrl_history')||'[]');
+  const g=document.getElementById('historyGrid');
+  if(!hist.length){g.innerHTML='<div style="color:var(--muted);font-size:.8rem;grid-column:1/-1;">Aucune image uploadée.</div>';return;}
+  g.innerHTML=hist.map((h,i)=>`
     <div class="history-item">
       <img class="history-img" src="${h.url}" alt="${h.slot}"/>
       <div class="history-info">
@@ -485,13 +490,13 @@ function loadHistory(){
 // TOAST
 // ══════════════════════════════════════
 let toastTimer;
-function showToast(type, title, msg){
-  const t = document.getElementById('toast');
-  document.getElementById('toastTitle').textContent = title;
-  document.getElementById('toastMsg').textContent = msg;
-  t.className = `toast ${type} show`;
+function showToast(type,title,msg){
+  const t=document.getElementById('toast');
+  document.getElementById('toastTitle').textContent=title;
+  document.getElementById('toastMsg').textContent=msg;
+  t.className=`toast ${type} show`;
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(()=>t.classList.remove('show'), 5000);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),5000);
 }
 </script>
 </body>
