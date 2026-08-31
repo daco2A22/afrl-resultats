@@ -461,7 +461,7 @@ function buildSaisonPanel(s){
   // Classes
   html += `<div class="sub-panel" id="sub-${s.id}-cls">`;
   html += `<div class="sec-title">Classements par Classe · ${s.label}</div>`;
-  const clsCards = CLASSES.map(c=>mkCard(`${s.id}/classes/classe_${c.key}`, c.label, 'chip-classe', 'Classe', s.label)).join('');
+  const clsCards = CLASSES.map(c=>mkCard(`${s.id}/general/classe_${c.key}`, c.label, 'chip-classe', 'Classe', s.label)).join('');
   html += clsCards ? `<div class="results-grid">${clsCards}</div>` : `<div class="empty-state"><div class="ei">📊</div><div class="et">Pas encore d'images</div></div>`;
   html += `</div>`;
 

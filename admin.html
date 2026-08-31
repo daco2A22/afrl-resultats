@@ -211,8 +211,7 @@ function getToken(){ return localStorage.getItem('afrl_gh_token')||''; }
 // DONNÉES RALLYES
 // ══════════════════════════════════════
 const RALLYES_S1 = [
-  {v:'general', l:'🏆 Général Saison 1'},
-  {v:'classes', l:'📊 Classes Saison 1'},
+  {v:'general', l:'🏆 Général Saison 1 (Classements généraux + Classes)'},
   {v:'r01', l:'R01 — Centre Alsace & Faverge'},
   {v:'r02', l:'R02 — Pays du Gier & Neufchâtel'},
   {v:'r03', l:'R03 — Autocourse & Balcon Vercors'},
@@ -258,10 +257,8 @@ function getTypes(rallye){
     return [
       {v:'classement_general',l:'Classement Général'},
       {v:'general_classe',l:'Général par Classe'},
+      ...CLASSES_KEYS.map(c=>({v:`classe_${c.v}`,l:`Classe ${c.l}`})),
     ];
-  }
-  if(rallye==='classes'){
-    return CLASSES_KEYS.map(c=>({v:`classe_${c.v}`,l:`Classe ${c.l}`}));
   }
   return [
     {v:`${rallye}_n_general`,      l:'🔵 Général — Nationale (N)'},
